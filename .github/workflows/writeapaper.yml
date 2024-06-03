@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Edit here with the names of your latex file and directory (can use ".")
-      DIR: draft
-      FILE: draft
+      DIR: paper
+      FILE: wec_as_multiport
     steps:
       - name: Checkout
         uses: actions/checkout@v2

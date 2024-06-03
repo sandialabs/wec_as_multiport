@@ -1,4 +1,7 @@
-# https://github.com/github/gitignore/
+paper/wec_as_multiport.pdf
+wec_as_multiport.nc
+
+*.pdf.autosave.ipe
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
