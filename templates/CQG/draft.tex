@@ -1,0 +1,67 @@
+\documentclass[]{iopart}
+
+\expandafter\let\csname equation*\endcsname\relax
+\expandafter\let\csname endequation*\endcsname\relax
+
+\usepackage[unicode]{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{amssymb,amsmath,verbatim,mathtools,needspace,enumitem,etoolbox,graphicx,microtype,pifont,url}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[normalem]{ulem}
+\definecolor{linkcolor}{rgb}{0.0,0.3,0.5}
+\hypersetup{colorlinks=true,linkcolor=linkcolor,citecolor=linkcolor,filecolor=linkcolor,urlcolor=linkcolor}
+\usepackage{orcidlink}
+
+\newcommand{\ndash}{-}
+\newcommand{\ssim}{\mathchar"5218\relax\,}
+
+\newcommand{\dg}[1]{{\textcolor{RedOrange}{{\bf DG:} #1}}}
+
+\newcommand{\milan}{{Dipartimento di Fisica ``G. Occhialini'', Universit\'a degli Studi di Milano-Bicocca, Piazza della Scienza 3, 20126 Milano, Italy}}
+\newcommand{\infn}{{INFN, Sezione di Milano-Bicocca, Piazza della Scienza 3, 20126 Milano, Italy}}
+
+\begin{document}
+
+\begin{center}
+\title[D.~Gerosa et al.]{Write a paper}
+\end{center}
+
+\author{
+Davide Gerosa$^{1,2,3}$ \orcidlink{0000-0002-0933-3579},
+}
+\vspace{0.1cm}
+\address{$^{1}$~\milan}
+\address{$^{2}$~\infn}
+
+\ead{\href{mailto:davide.gerosa@unimib.it}{\rm davide.gerosa@unimib.it}}
+
+\setcounter{footnote}{0}
+
+
+\begin{abstract}
+I'm an abstract. 
+\end{abstract}
+
+
+\section{Introduction}
+
+I'm a section \cite{2016PhRvL.116f1102A}.
+
+
+
+\section*{Acknowledgments}
+
+We thank people and grants.
+
+\section*{ORCID iDs}
+Davide Gerosa \orcidlink{0000-0002-0933-3579} \href{https://orcid.org/0000-0002-0933-3579}{https://orcid.org/0000-0002-0933-3579} \\
+
+
+\section*{References}
+\bibliographystyle{iopart-num_leo}
+\bibliography{draft}
+
+
+\end{document}
