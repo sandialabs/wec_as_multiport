@@ -104,20 +104,20 @@ The concept of impedance matching to minimize reflections has been applied in wa
 For reasons that are unclear, the concept was mostly only applied to the conversion stage for transferring power from the waves to the WEC's hull/input of the power take-off (PTO) system.
 As will be discussed in further detail in this paper, disregarding the subsequent power conversion stages between mechanical power on the hull and useful (e.g., electrical) power at the output of the machine has a number of adverse repercussions.
 
-This concept of transferring power between different stages is illustrated in \figurename~\ref{fig:power_transfer_stages}.
+This concept of transferring power between different stages is illustrated in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}.
 The ultimate goal of a WEC is to deliver power to a load.
 In a WEC designed to produce electrical power, this would represent the electrical outputs from a motor/generator.
-Because the source power is purely oscillatory, the power flow between the stages in \figurename~\ref{fig:power_transfer_stages} is shown to be bi-directional in general.
+Because the source power is purely oscillatory, the power flow between the stages in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} is shown to be bi-directional in general.
 In fact, the optimal condition requires that half the power be reflected \rc{XX-cite}.
-The conditions that ensure this optimal power transmission by minimizing reflections are shown at the top of \figurename~\ref{fig:power_transfer_stages}.
-The first impedance matching condition in \figurename~\ref{fig:power_transfer_stages} ($Z_{\textrm{in}} = Z_i^*$) is generally well-known and widely applied, although using somewhat different notation as the input/output distinction within the PTO is not widely utilized.
-The second impedance matching condition in \figurename~\ref{fig:power_transfer_stages} ($Z_{\textrm{out}} = Z_\ell^*$) is mostly ignored and/or lumped with first condition, thus limiting performance.
+The conditions that ensure this optimal power transmission by minimizing reflections are shown at the top of \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}.
+The first impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_{\textrm{in}} = Z_i^*$) is generally well-known and widely applied, although using somewhat different notation as the input/output distinction within the PTO is not widely utilized.
+The second impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_{\textrm{out}} = Z_\ell^*$) is mostly ignored and/or lumped with first condition, thus limiting performance.
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=1\columnwidth]{power_transfer_stages.pdf}
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_power_transfer_stages.pdf}
         \caption{XX}
-        \label{fig:power_transfer_stages}
+        \label{fig:wec_as_multiport_power_transfer_stages}
 \end{figure}
 
 Power delivered to the load is affected by both losses and reflections in this system.
@@ -149,20 +149,20 @@ This framework is then applied in a number of illustrative case-studies (Section
 % The imaginary unit is $j$ and $\omega$ is the angular frequency.
 
 % Much has been written about \eqref{eq:intrinsic_impedance_eom} and how to design a controller for $F_{\textrm{pto}}$ such that \emph{mechanical power} is maximized (see, e.g., \cite{Coe2020a} \rc{XX-cite others}).
-% Within this approach to maximize mechanical power, there is an implicit assumption that the dynamics of the PTO can be decoupled from the hydrodynamic problem and, consequently, such a design will also maximize \emph{useful power} at the load (refer back to \figurename~\ref{fig:power_transfer_stages}).
+% Within this approach to maximize mechanical power, there is an implicit assumption that the dynamics of the PTO can be decoupled from the hydrodynamic problem and, consequently, such a design will also maximize \emph{useful power} at the load (refer back to \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}).
 
 % ------------------------------------------------------------------
 \section{Two-port networks}\label{sec:two_port_networks}
 To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the two-port network model popular in electronics and microwave systems \rc{XX-cite}.
-We may describe the system with a two-port impedance model, relating the effort ($e_i$) and flow ($q_i$) at each port (see \figurename~\ref{fig:working_paper_general_two_port_network}).
+We may describe the system with a two-port impedance model, relating the effort ($e_i$) and flow ($q_i$) at each port (see \figurename~\ref{fig:wec_as_multiport_general_two_port_network}).
 The products of the effort and flow variables on each port is power.
-Note also the sign conventions illustrated in \figurename~\ref{fig:working_paper_general_two_port_network}, which result in a convention of positive power flowing into the two-port network from both sides.
+Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_general_two_port_network}, which result in a convention of positive power flowing into the two-port network from both sides.
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=0.75\columnwidth]{working_paper_general_two_port_network.pdf}
+        \includegraphics[width=0.75\columnwidth]{wec_as_multiport_general_two_port_network.pdf}
         \caption{General two-port network definition showing effort ($e_i$) and flow ($q_i$) at each port.}
-        \label{fig:working_paper_general_two_port_network}
+        \label{fig:wec_as_multiport_general_two_port_network}
 \end{figure}
 
 \begin{equation} \label{eq:Z_mat_def_general}
@@ -309,15 +309,15 @@ Similarly, coupling two lossless electric motor/generators electrically coupled 
 % ------------------------------------------------------------------
 \section{Modeling a direct drive WEC}\label{sec:modeling_a_direct_drive_wec}
 Using the general definitions for network diagram modeling presented in Section~\ref{sec:two_port_networks}, we now wish to model a WEC.
-To this end, let us consider the heaving buoy style ``WaveBot'' device with a direct drive PTO as shown in \figurename~\ref{fig:working_wec_phyiscal_diagram}.
+To this end, let us consider the heaving buoy style ``WaveBot'' device with a direct drive PTO as shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}.
 Table~\ref{tab:wec_phyiscal_params} lists key parameters for the WaveBot.
 We will first present the WEC and its governing equations in further detail (Section~\ref{sec:dynamic_and_kinematic_equations}) and then represent system via network diagrams using one- and two-port network elements (Section~\ref{sec:modeling_with_a_network_diagram}).
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=1\columnwidth]{working_wec_phyiscal_diagram.pdf}
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_phyiscal_diagram.pdf}
         \caption{WaveBot device diagram.}
-        \label{fig:working_wec_phyiscal_diagram}
+        \label{fig:wec_as_multiport_phyiscal_diagram}
 \end{figure}
 
 \begin{table}[tb]
@@ -424,22 +424,22 @@ We may define a load impedance ($Z_\ell$) that represents how current is control
 % ------------------------------------------------------------------
 \subsection{Modeling with a network diagram}\label{sec:modeling_with_a_network_diagram}
 
-The WaveBot device shown in \figurename~\ref{fig:working_wec_phyiscal_diagram} and described in Section~\ref{sec:dynamic_and_kinematic_equations} can be represented with a network diagram as shown in \figurename~\ref{fig:working_paper_circuits}.
+The WaveBot device shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram} and described in Section~\ref{sec:dynamic_and_kinematic_equations} can be represented with a network diagram as shown in \figurename~\ref{fig:wec_as_multiport_circuits}.
 Various levels of abstraction and detail can be achieved in this style of diagram.
-\figurename~\ref{fig:working_paper_circuits}a shows highest level of detail, whereas \figurename~\ref{fig:working_paper_circuits}b and \figurename~\ref{fig:working_paper_circuits}c increasingly combine elements to achieve a single two-port network to represent the PTO.
-We will return to \figurename~\ref{fig:working_paper_circuits}d-f for later discussion.
+\figurename~\ref{fig:wec_as_multiport_circuits}a shows highest level of detail, whereas \figurename~\ref{fig:wec_as_multiport_circuits}b and \figurename~\ref{fig:wec_as_multiport_circuits}c increasingly combine elements to achieve a single two-port network to represent the PTO.
+We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later discussion.
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=1\columnwidth]{working_paper_circuits.pdf}
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_circuits.pdf}
         \caption{Circuit diagrams representing a wave energy converter. Points 1, 2, 3, and 4 are consistent throughout the different diagrams. \rc{XX-direction of $I_{out}$}}
-        \label{fig:working_paper_circuits}
+        \label{fig:wec_as_multiport_circuits}
 \end{figure}
 
 % ------------------------------------------------------------------
 \subsubsection{PTO impedance matrix}\label{sec:pto_impedance_matrix}
 
-For the network shown in \figurename~\ref{fig:working_paper_circuits}c, we may write an impedance matrix to describe the two-port element representing the PTO.
+For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we may write an impedance matrix to describe the two-port element representing the PTO.
 
 \begin{equation}
         \label{eq:Z_mat_def}
@@ -493,7 +493,7 @@ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of inte
         \label{eq:pto_impedance}
  \end{equation}
 
- \noindent{}Note that \eqref{eq:pto_impedance} may also be arrived to by cascading the the one- and two-port elements shown in the more detailed diagram in \figurename~\ref{fig:working_paper_circuits}a.
+ \noindent{}Note that \eqref{eq:pto_impedance} may also be arrived to by cascading the the one- and two-port elements shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a.
 
 \clearpage
 
@@ -501,7 +501,7 @@ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of inte
 \subsubsection{PTO input and output impedances}\label{sec:pto_input_and_output_impedances}
 
 As noted in Section~\ref{sec:two_port_networks}, two-port networks may be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
-\figurename~\ref{fig:working_paper_circuits}d gives the definition for the output impedance of the PTO ($Z_{\textrm{out}}$).
+\figurename~\ref{fig:wec_as_multiport_circuits}d gives the definition for the output impedance of the PTO ($Z_{\textrm{out}}$).
 As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{exc}} = 0$) and express the impedance as the ratio of effort to flow variables at the output port.
 
 \begin{equation}
@@ -539,7 +539,7 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
         \label{eq:pto_output_port_impedance}
 \end{equation}
 
-The PTO input port's impedance (described in \figurename~\ref{fig:working_paper_circuits}e) can be expressed as the ratio of effort ($F_{\textrm{pto}}$) and flow ($v$) on the input port.
+The PTO input port's impedance (described in \figurename~\ref{fig:wec_as_multiport_circuits}e) can be expressed as the ratio of effort ($F_{\textrm{pto}}$) and flow ($v$) on the input port.
 We evaluate this scenario with input port open and with the output port fully connected such that the load impedance relates the output voltage and current.
 Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner similar as was done for the input port impedance, we find
 
@@ -612,7 +612,7 @@ The complex power at the load is half the product of the effort ($Z_\ell I_{\tex
 \end{subequations}
 
 \noindent{}The active power is power dissipated at the load.
-Returning to \figurename~\ref{fig:working_wec_phyiscal_diagram}, note that we have defined this load as the leads between the motor/generator and the motor controller.
+Returning to \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}, note that we have defined this load as the leads between the motor/generator and the motor controller.
 Thus, as defined, the activate power at represents power into the motor controller.
 Note that there are additional losses and dynamics in the motor controller before power is delivered to the DC bus.
 However, the motor controller dynamics occur at much higher frequencies than those in the rest of the system.
@@ -621,10 +621,10 @@ For this reason, we may consider those losses separately and treat the motor con
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
 
-\figurename~\ref{fig:working_paper_circuits}e shows the Th\'{e}venin equivalent network \cite{Thevenin:1883aa}, which has been considered by a number of authors with respect to WECs \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
+\figurename~\ref{fig:wec_as_multiport_circuits}e shows the Th\'{e}venin equivalent network \cite{Thevenin:1883aa}, which has been considered by a number of authors with respect to WECs \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 The Th\'{e}venin circuit defines an equivalent system containing only a source ($F_{\textrm{th}}$) and single impedance ($Z_{\textrm{th}}$).
-Reviewing \figurename~\ref{fig:working_paper_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
-Similarly, the equivalent source can be determined by by considering a effort between points C and D in \figurename~\ref{fig:working_paper_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{out}=0$).
+Reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
+Similarly, the equivalent source can be determined by by considering a effort between points C and D in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{out}=0$).
 
 \begin{subequations}
 \begin{align}
@@ -633,7 +633,7 @@ Similarly, the equivalent source can be determined by by considering a effort be
 \end{align}
 \end{subequations}
 
-Note that the bi-conjugate impedance matching condition prescribed in \eqref{eq:bi_conj_matching_out} is restated in \eqref{eq:Thevenin_impedance}  when we consider maximum power transfer for the Th\'{e}venin equivalent system shown in \figurename~\ref{fig:working_paper_circuits}e ($Z_\ell = Z_{\textrm{th}}^*$).
+Note that the bi-conjugate impedance matching condition prescribed in \eqref{eq:bi_conj_matching_out} is restated in \eqref{eq:Thevenin_impedance}  when we consider maximum power transfer for the Th\'{e}venin equivalent system shown in \figurename~\ref{fig:wec_as_multiport_circuits}e ($Z_\ell = Z_{\textrm{th}}^*$).
 Thus, these two modes of representing the system are indeed equivalent and give the same condition for maximum power transfer.
 The Th\'{e}venin equivalent system gives a clear expression for the maximum power delivered to the load.
 
@@ -642,12 +642,12 @@ The Th\'{e}venin equivalent system gives a clear expression for the maximum powe
         = \left| \frac{ Z_{21} }{ Z_i + Z_{11} } \right| ^2 \frac{ | F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} }
 \end{equation}
 
-As illustrated in \figurename~\ref{fig:working_paper_circuits}, we may represent the WEC system in many different ways (\figurename~\ref{fig:working_paper_circuits}a, b, c, and f are all equivalent).
+As illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}, we may represent the WEC system in many different ways (\figurename~\ref{fig:wec_as_multiport_circuits}a, b, c, and f are all equivalent).
 These different representations have different utilities.
-The Th\'{e}venin equivalent system in \figurename~\ref{fig:working_paper_circuits}f is the most simplified system and gives a clear condition for control design.
-The single two-port representation of the PTO used in \figurename~\ref{fig:working_paper_circuits}c provides an additional impedance matching condition, thus more clearly expressing the co-design problem.
-\figurename~\ref{fig:working_paper_circuits}b provides further detail by splitting the PTO into separate drive-train and electric machine two-port elements.
-While not explored in this paper, a three-part impedance matching condition could be written for the representation shown in \figurename~\ref{fig:working_paper_circuits}b.
+The Th\'{e}venin equivalent system in \figurename~\ref{fig:wec_as_multiport_circuits}f is the most simplified system and gives a clear condition for control design.
+The single two-port representation of the PTO used in \figurename~\ref{fig:wec_as_multiport_circuits}c provides an additional impedance matching condition, thus more clearly expressing the co-design problem.
+\figurename~\ref{fig:wec_as_multiport_circuits}b provides further detail by splitting the PTO into separate drive-train and electric machine two-port elements.
+While not explored in this paper, a three-part impedance matching condition could be written for the representation shown in \figurename~\ref{fig:wec_as_multiport_circuits}b.
 
 % ------------------------------------------------------------------
 \section{Illustrative examples}\label{sec:illustrative_examples}
@@ -880,8 +880,8 @@ XX-cross flow turbines and flapping devices\dots{}
 % \end{equation}
 
 
-% We may now conceptualize the ``wave-to-wire'' WEC system as the network shown in \figurename~\ref{fig:working_paper_circuits}.
-% On the far left hand side of \figurename~\ref{fig:working_paper_circuits}, we have the oscillating effort $F_{\textrm{exc}}$.
+% We may now conceptualize the ``wave-to-wire'' WEC system as the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}.
+% On the far left hand side of \figurename~\ref{fig:wec_as_multiport_circuits}, we have the oscillating effort $F_{\textrm{exc}}$.
 
 
 % Utilizing these relationships, the elements of the impedance matrix in \eqref{eq:Z_mat_def} written out as \rc{XX-explain definitions}
