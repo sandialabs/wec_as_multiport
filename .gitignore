@@ -1,6 +1,9 @@
 paper/wec_as_multiport.pdf
 wec_as_multiport.nc
 
+*/__pycache__/*
+*.vscode/*
+
 *.pdf.autosave.ipe
 
 ## Core latex/pdflatex auxiliary files:
