@@ -316,12 +316,12 @@ We will first present the WEC and its governing equations in further detail (Sec
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_phyiscal_diagram.pdf}
-        \caption{WaveBot device diagram.}
+        \caption{WaveBot device diagram. \rc{XX-note Park transform and modeling boundary} \rc{XX-sign conventions wrong in this diagram}}
         \label{fig:wec_as_multiport_phyiscal_diagram}
 \end{figure}
 
 \begin{table}[tb]
-        \caption{Key physical parameters of the WaveBot.\rc{XX-sign conventions wrong in this diagram}}
+        \caption{Key physical parameters of the WaveBot.}
         \label{tab:wec_phyiscal_params}
         \centering
 
@@ -353,7 +353,7 @@ Vertical motion of the buoy can be expressed as a dynamic equation dependent on 
 
 \begin{subequations}
 \begin{gather}
-        Z_i v = F_{\textrm{exc}} - F_{\textrm{pto}} \label{eq:eom_rectilinear_motion} \\
+        Z_i v = F_{\textrm{exc}} - F_{u} \label{eq:eom_rectilinear_motion} \\
         Z_i(\omega) = B(\omega) + b_f + j \left( \omega{}(m + A(\omega)) - \frac{k_{h}}{\omega}\right)
 \end{gather}
 \end{subequations}
@@ -687,7 +687,7 @@ Returning to \eqref{eq:pto_input_port_impedance}, we see that $Z_{\ell m}=Z_{\te
         \label{eq:Zl_Zlm}
 \end{subequations}
 
-\figurename~\ref{fig:working_paper_load_impedance_for_mech_power} uses \eqref{eq:Zl_Zlm} to show the resulting load impedances for two cases:
+\figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} uses \eqref{eq:Zl_Zlm} to show the resulting load impedances for two cases:
 
 \begin{itemize}
         \item the controller to maximize mechanical power: $Z_\ell \vert_{Z_{\ell m} = Z_i^*}$
@@ -696,12 +696,12 @@ Returning to \eqref{eq:pto_input_port_impedance}, we see that $Z_{\ell m}=Z_{\te
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=1\columnwidth]{working_paper_load_impedance_for_mech_power.pdf}
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power.pdf}
         \caption{Load impedances created by a controller designed to maximize mechanical power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) and a controller designed to maximize electrical power ($Z_\ell = Z_{\mathrm{out}}^*$).}
-        \label{fig:working_paper_load_impedance_for_mech_power}
+        \label{fig:wec_as_multiport_load_impedance_for_mech_power}
 \end{figure}
 
-\noindent{}From \figurename~\ref{fig:working_paper_load_impedance_for_mech_power}, we can see that the mechanical maximizing controller looks very different from the controller that maximizes electrical power.
+\noindent{}From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical maximizing controller looks very different from the controller that maximizes electrical power.
 
 It is also helpful to define the mechanical power at the input of the PTO.
 
@@ -749,7 +749,7 @@ The power produced by these controllers is shown in Table~\ref{tab:mech_controll
 % ------------------------------------------------------------------
 \subsection{PTO co-design}\label{sec:pto_codesign}
 From \eqref{eq:bi_conj_matching}, we can see clear guidance for how the machine and controller can be designed to maximize power delivered to the load (i.e., maximize electrical power output).
-Consider, for example, \figurename~\ref{fig:working_paper_in_and_out_impedances}, where we separately investigate the effects of adding a negative stiffness element\footnote{The addition of a negative stiffness has been applied by CorPower in the form a hydraulic assembly \cite{Todalshaug:2016aa} and also by Sandia Labs via a tunable magnetic spring \cite{Forbush:2024aa}.} to the drive train (\figurename~\ref{fig:working_paper_in_and_out_impedances_spring}) and adding inertia to the drive train (\figurename~\ref{fig:working_paper_in_and_out_impedances_inertia}).
+Consider, for example, \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, where we separately investigate the effects of adding a negative stiffness element\footnote{The addition of a negative stiffness has been applied by CorPower in the form a hydraulic assembly \cite{Todalshaug:2016aa} and also by Sandia Labs via a tunable magnetic spring \cite{Forbush:2024aa}.} to the drive train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) and adding inertia to the drive train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}).
 The left-hand axes in each figure show $Z_{\textrm{in}}$ (colored curves) along with $Z_i^*$ (black dashed curve), which we are essentially attempting to match by altering the machine design.
 The right-hand axes in each figure show $Z_{\textrm{out}}$.
 In each case, we enforce \eqref{eq:bi_conj_matching_out} such the controller ($Z_\ell$) is set to maximize electrical power.
@@ -758,29 +758,29 @@ In each case, we enforce \eqref{eq:bi_conj_matching_out} such the controller ($Z
      \centering
      \begin{subfigure}[b]{1\columnwidth}
          \centering
-         \includegraphics[width=\textwidth]{working_paper_in_and_out_impedances_spring.pdf}
+         \includegraphics[width=\textwidth]{wec_as_multiport_in_and_out_impedances_spring.pdf}
          \caption{Varying levels of negative stiffness on shaft ($K_d$)}
-         \label{fig:working_paper_in_and_out_impedances_spring}
+         \label{fig:wec_as_multiport_in_and_out_impedances_spring}
      \end{subfigure}
      \\
      \begin{subfigure}[b]{1\columnwidth}
          \centering
-         \includegraphics[width=\textwidth]{working_paper_in_and_out_impedances_inertia.pdf}
+         \includegraphics[width=\textwidth]{wec_as_multiport_in_and_out_impedances_inertia.pdf}
          \caption{Varying levels of shaft inertia ($I_d$)}
-         \label{fig:working_paper_in_and_out_impedances_inertia}
+         \label{fig:wec_as_multiport_in_and_out_impedances_inertia}
      \end{subfigure}
      \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve.}
-     \label{fig:working_paper_in_and_out_impedances}
+     \label{fig:wec_as_multiport_in_and_out_impedances}
 \end{figure}
 
 
 Both of the consider actions (negative stiffness and increased shaft inertia) have the effect of improving impedance matching on the input port at lower frequencies.
 Recall also that the power transported by an ocean wave is inversely proportional to the wave frequency ($J \propto f^{-1}$) such that this improved impedance matching at lower frequencies may be particularly advantageous.
-It should be noted that the range of values for $K_d$ and $I_d$ shown in \figurename~\ref{fig:working_paper_in_and_out_impedances} is somewhat arbitrary and intended only to illustrate trends -- one cannot directly compare the effects of doubling the shaft inertia with doubling the negative spring stiffness in terms of an engineering decision.
-With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:working_paper_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts), thus narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:working_paper_in_and_out_impedances_inertia}) appears to have the opposite affect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
+It should be noted that the range of values for $K_d$ and $I_d$ shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances} is somewhat arbitrary and intended only to illustrate trends -- one cannot directly compare the effects of doubling the shaft inertia with doubling the negative spring stiffness in terms of an engineering decision.
+With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts), thus narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to have the opposite affect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
 
 
-While based on \eqref{eq:drive_train_impedance} we might expect changes to $K_d$ and $I_d$ to only affect the imaginary part of the impedances, we may see by expanding \eqref{eq:pto_output_port_impedance} and \eqref{eq:pto_input_port_impedance} that these terms do indeed effect the real part of the impedances as shown in \figurename~\ref{fig:working_paper_in_and_out_impedances}.
+While based on \eqref{eq:drive_train_impedance} we might expect changes to $K_d$ and $I_d$ to only affect the imaginary part of the impedances, we may see by expanding \eqref{eq:pto_output_port_impedance} and \eqref{eq:pto_input_port_impedance} that these terms do indeed effect the real part of the impedances as shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}.
 
 \noindent{}Note that in \eqref{eq:expanded_zout}, we have left $Z_{\textrm{out}}^*$ unexpanded, but one can see rather clearly see by referencing \eqref{eq:expanded_zin} how the drive train stiffness ($K_d$) and inertia ($I_d$) enter in.
 

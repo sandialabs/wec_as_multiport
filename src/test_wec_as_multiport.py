@@ -1,4 +1,5 @@
 
+import os
 import pytest
 
 import numpy as np
@@ -6,8 +7,8 @@ import numpy as np
 import wec_as_multiport as wam
 import wecopttool as wot
 
-bem_data_fname = 'wec_as_multiport.nc'
-
+bem_data_fname = os.path.join(os.path.dirname(__file__),
+                              'wec_as_multiport.nc')
 
 @pytest.fixture(scope="module")
 def wec():
