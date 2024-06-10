@@ -78,7 +78,8 @@ class WEC:
     def Zl_opt_mech(self) -> np.ndarray:
         """Load impedance for optimal mechanical power"""
         Zlm = np.conj(self.Zi)
-        return self.Kt**2*self.N**2/(Zlm - self.N**2*self.Zd) - self.Zw
+        return self.Zpto[0, 1]*self.Zpto[1, 0] / (self.Zpto[0, 0] - Zlm) \
+            - self.Zpto[1, 1]
 
     @property
     def Z_Thevenin(self) -> np.ndarray:
@@ -99,8 +100,14 @@ class WEC:
         """Excitation spectrum"""
         return __Fexc__(self.Hexc, waves)
 
+    def power_mech(self, Fexc, Zl=None):
+        if Zl is None:
+            Zl = self.Zl_opt
+        raise NotImplementedError() #TODO
+
     def power(self, Fexc, Zl=None):
         """Complex power at load"""
+        #TODO - define in terms of Vout and Iout
         if Zl is None:
             Zl = self.Zl_opt
         return __power__(self.Zpto, self.Zi, Fexc, Zl)
@@ -132,8 +139,8 @@ def __max_active_power__(Z_Thevenin, F_Thevenin):
 def __F_Thevenin__(Zpto, Zi, Fexc):
     return Fexc*Zpto[1, 0] / (Zi + Zpto[0, 0])
 
-
 def __power__(Zpto, Zi, Fexc, Zl=None) -> np.ndarray:
+    #TODO - define in terms of flow and effort
     return np.abs(Fexc*Zpto[1, 0]
                   / ((Zpto[1, 1] + Zl)*(Zi + Zpto[0, 0]) -
                       Zpto[1, 0]*Zpto[0, 1]))**2 * 1/2*Zl

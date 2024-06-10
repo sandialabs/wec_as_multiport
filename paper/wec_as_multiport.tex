@@ -331,16 +331,16 @@ We will first present the WEC and its governing equations in further detail (Sec
         \hline
         \textbf{Parameter} & \textbf{Value} \\
         \hline
-        Rigid body mass, $m$ [kg]                       & XX \\
-        Hydrostatic stiffness, $k_h$ [N/m]              & XX \\
+        Rigid body mass, $m$ [kg]                       & 875 \\
+        Hydrostatic stiffness, $k_h$ [kN/m]             & 2.44 \\
         Linear friction coefficient, $b_f$ [Ns/m]       & XX \\
-        Linear to rot. gear ratio, $N$ [-]              & XX \\
+        Linear to rot. gear ratio, $N$ [rad/m]          & 12.4666 \\
         Shaft inertia, $J_d$ [kg\,m$^2$]                & XX \\
         Shaft friction, $b_d$ [Nm\,s/rad]               & XX \\
         Grounded shaft spring stiffness, $k_d$ [Nm/rad] & XX \\
-        Torque constant, $k_\tau$ [Nm/A]                & XX \\
-        Motor winding resistance, $R_w$ [$\Omega$]      & XX \\
-        Motor winding inductance, $L_w$ [H]             & XX \\
+        Torque constant, $k_\tau$ [Nm/A]                & 6.1745 \\
+        Motor winding resistance, $R_w$ [$\Omega$]      & 0.5 \\
+        Motor winding inductance, $L_w$ [H]             & 0 \\
         \hline
 
         \hline
@@ -349,12 +349,12 @@ We will first present the WEC and its governing equations in further detail (Sec
 
 % ------------------------------------------------------------------
 \subsection{Dynamic and kinematic equations}\label{sec:dynamic_and_kinematic_equations}
-Vertical motion of the buoy can be expressed as a dynamic equation dependent on the PTO force ($F_{\textrm{pto}}$), the excitation force ($F_{\textrm{exc}}$), and the intrinsic impedance ($Z_i$) \cite{Falnes:2002aa}.
+Vertical motion of the buoy can be expressed as a dynamic equation dependent on the PTO force ($F_{\textrm{pto}}$)\footnote{Note that we define the ``PTO'' force in the opposite direction of the excitation force and velocity as shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}. This sign convention, where, as in \eqref{eq:eom_rectilinear_motion}, we have an expression of the form $Z q = F_1 - F_2$, is most common in network diagrams and control engineering and therefore used herein.}, the excitation force ($F_{\textrm{exc}}$), and the intrinsic impedance ($Z_i$) \cite{Falnes:2002aa}.
 
 \begin{subequations}
 \begin{gather}
-        Z_i v = F_{\textrm{exc}} - F_{u} \label{eq:eom_rectilinear_motion} \\
-        Z_i(\omega) = B(\omega) + b_f + j \left( \omega{}(m + A(\omega)) - \frac{k_{h}}{\omega}\right)
+        Z_i v = F_{\textrm{exc}} - F_{\textrm{pto}} \label{eq:eom_rectilinear_motion} \\
+        Z_i(\omega) = B(\omega) + b_f + j \left( \omega \left( m + A(\omega) \right) - \frac{k_{h}}{\omega}\right)
 \end{gather}
 \end{subequations}
 
@@ -362,6 +362,7 @@ Vertical motion of the buoy can be expressed as a dynamic equation dependent on 
 The imaginary unit is $j$ and $\omega$ is the angular frequency.
 A block diagram\footnote{\label{fn:block_diagrams}Note that block diagrams are related by distinct from the network diagrams used elsewhere in this paper. To emphasize this distinction, a grey fill is used for blocks in \figurename~\ref{fig:wec_as_multiport_block_diagram}.} in \figurename~\ref{fig:wec_as_multiport_block_diagram} shows the system described by \eqref{eq:eom_rectilinear_motion}.
 In \figurename~\ref{fig:wec_as_multiport_block_diagram}, the PTO force is determined based on some mechanical load impedance ($Z_{\ell m}$) -- the details of this will be discussed in more detail later on.
+The excitation force ($F_{\textrm{exc}}$) is determined from the excitation transfer function ($H_{\textrm{exc}}$) based on the wave elevation~($\eta$).
 
 \begin{figure}[tb]
         \centering
@@ -390,7 +391,8 @@ Thus, we may describe the drive train dynamics as follows.
 \begin{subequations}
         \begin{gather}
                 Z_d v_s = \tau_{\textrm{pto}} - \tau_e \\
-                Z_d = i \omega J_d + b_d + \frac{k_d}{i \omega}
+                % Z_d = i \omega J_d + b_d + \frac{k_d}{i \omega}
+                Z_d = b_d + j \left( \omega J_d - \frac{k_d}{\omega} \right)
         \end{gather}
 \end{subequations}
 
@@ -404,7 +406,7 @@ For the gyrator element, the machine has characteristic torque constant (gyratio
         \end{gather}
 \end{subequations}
 
-\noindent{}In addition to its gyration effect, the motor has a characteristic impedance, that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage and output voltage ($\forall_{\textrm{out}}$).
+\noindent{}In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).
 
 \begin{subequations}
         \begin{gather}
@@ -413,7 +415,7 @@ For the gyrator element, the machine has characteristic torque constant (gyratio
         \end{gather}
 \end{subequations}
 
-We may define a load impedance ($Z_\ell$) that represents how current is controlled by the motor controller.
+Finally, we may define a load impedance ($Z_\ell$) that represents how current is controlled by the motor controller.
 \rc{XX-why negative?}
 
 
@@ -425,7 +427,7 @@ We may define a load impedance ($Z_\ell$) that represents how current is control
 % ------------------------------------------------------------------
 \subsection{Modeling with a network diagram}\label{sec:modeling_with_a_network_diagram}
 
-The WaveBot device shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram} and described in Section~\ref{sec:dynamic_and_kinematic_equations} can be represented with a network diagram as shown in \figurename~\ref{fig:wec_as_multiport_circuits}.
+The WaveBot device shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram} and described in Section~\ref{sec:dynamic_and_kinematic_equations} can be represented with network diagrams as shown in \figurename~\ref{fig:wec_as_multiport_circuits}.
 Various levels of abstraction and detail can be achieved in this style of diagram.
 \figurename~\ref{fig:wec_as_multiport_circuits}a shows highest level of detail, whereas \figurename~\ref{fig:wec_as_multiport_circuits}b and \figurename~\ref{fig:wec_as_multiport_circuits}c increasingly combine elements to achieve a single two-port network to represent the PTO.
 We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later discussion.
@@ -461,6 +463,8 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
 
 Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of interest presented in Section~\ref{sec:dynamic_and_kinematic_equations}, the elements of the impedance matrix in \eqref{eq:Z_mat_def} may be written out as follows.
 
+\clearpage
+
 \begin{subequations}
         \begin{align}
                 &Z_{11} = \frac{e_1}{q_1} \bigg \vert_{q_2=0} 
@@ -494,15 +498,14 @@ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of inte
         \label{eq:pto_impedance}
  \end{equation}
 
- \noindent{}Note that \eqref{eq:pto_impedance} may also be arrived to by cascading the the one- and two-port elements shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a.
+ \noindent{}Note that \eqref{eq:pto_impedance} may also be arrived to by cascading the the one- and two-port elements shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b.
 
-\clearpage
 
 % ------------------------------------------------------------------
 \subsubsection{PTO input and output impedances}\label{sec:pto_input_and_output_impedances}
 
 As noted in Section~\ref{sec:two_port_networks}, two-port networks may be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
-\figurename~\ref{fig:wec_as_multiport_circuits}d gives the definition for the output impedance of the PTO ($Z_{\textrm{out}}$).
+The ``output impedance'' of the PTO ($Z_{\textrm{out}}$) is the impedance as seen by a source connected to the output port of PTO element (see \figurename~\ref{fig:wec_as_multiport_circuits}d).
 As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{exc}} = 0$) and express the impedance as the ratio of effort to flow variables at the output port.
 
 \begin{equation}
@@ -540,7 +543,7 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
         \label{eq:pto_output_port_impedance}
 \end{equation}
 
-The PTO input port's impedance (described in \figurename~\ref{fig:wec_as_multiport_circuits}e) can be expressed as the ratio of effort ($F_{\textrm{pto}}$) and flow ($v$) on the input port.
+The PTO input port's impedance (illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}e) can be expressed as the ratio of effort ($F_{\textrm{pto}}$) and flow ($v$) on the input port.
 We evaluate this scenario with input port open and with the output port fully connected such that the load impedance relates the output voltage and current.
 Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner similar as was done for the input port impedance, we find
 
@@ -549,7 +552,7 @@ Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner sim
         \label{eq:pto_input_port_impedance}
 \end{equation}
 
-Per \cite{Bacelli:2021aa}, to maximize power transferred to the load, we can apply impedance matching at the input and output ports of the PTO.
+As shown in  \cite{Bacelli:2021aa}, to maximize power transferred to the load, we can apply impedance matching at the input and output ports of the PTO.
 
 \begin{subequations}
     \begin{align}
@@ -576,12 +579,12 @@ Per \cite{Bacelli:2021aa}, to maximize power transferred to the load, we can app
 
 % ------------------------------------------------------------------
 \subsubsection{Power at the load}\label{sec:power_at_the_load}
-The complex power at the load is half the product of the effort ($Z_\ell I_{\textrm{out}}$) and complex conjugate flow ($I_{\textrm{out}}^*$) at the load \rc{XX-cite}.
+The complex power at the load is half the product of the effort ($\forall_{\textrm{out}}$) and complex conjugate flow ($I_{\textrm{out}}^*$) at the load \rc{XX-explain why complex conjugate of flow}.
 
 \begin{equation}
 \begin{aligned}
         \mathcal{S}_{\ell} 
-        &=\forall_{\textrm{out}} I_{\textrm{out}}^* \\
+        &= \frac{1}{2} \forall_{\textrm{out}} I_{\textrm{out}}^* \\
         &= \frac{1}{2} Z_\ell I_{\textrm{out}} I_{\textrm{out}}^* \\
         &= \frac{1}{2} Z_\ell | I_{\textrm{out}} |^2 \\
         &= \frac{1}{2} Z_\ell \left| \frac{F_{\textrm{exc}} Z_{21}}{ ( Z_{22} + Z_\ell ) (Z_i + Z_{11}) - Z_{21} Z_{12}  } \right|^2 
@@ -592,67 +595,64 @@ The complex power at the load is half the product of the effort ($Z_\ell I_{\tex
 
 \begin{subequations}
 \begin{align}
-\begin{split}
-\textrm{Active: } \mathcal{P}_{\ell} 
-        &= \Re \left\{ \mathcal{S}_{\ell} \right\} \\
-        &= XX
-\end{split} \\[1em]
-%
-\begin{split}
-\textrm{Reactive: } \mathcal{Q}_{\ell} 
-        &= \Im \left\{ \mathcal{S}_{\ell} \right\} \\
-        &= XX
-\end{split} \\[1em]
-%
-\begin{split}
-\textrm{Apparent: } | \mathcal{S}_{\ell} |
-        &= XX
-\end{split}
+&\textrm{Active: } \mathcal{P}_{\ell} = \Re \left\{ \mathcal{S}_{\ell} \right\} \\[0.5em]
+&\textrm{Reactive: } \mathcal{Q}_{\ell} = \Im \left\{ \mathcal{S}_{\ell} \right\} \\[0.5em]
+&\textrm{Apparent: } | \mathcal{S}_{\ell} |
 \end{align}
 \label{eq:load_power_types}
 \end{subequations}
 
 \noindent{}The active power is power dissipated at the load.
 Returning to \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}, note that we have defined this load as the leads between the motor/generator and the motor controller.
-Thus, as defined, the activate power at represents power into the motor controller.
+Thus, as defined, the activate power represents power into \rc{(XX-into implies positive:good)} the motor controller.
 Note that there are additional losses and dynamics in the motor controller before power is delivered to the DC bus.
 However, the motor controller dynamics occur at much higher frequencies than those in the rest of the system.
-For this reason, we may consider those losses separately and treat the motor controller as a static system (e.g., representing losses in the motor controller some function of motor torque and speed).
+For this reason, we may consider those losses separately and treat the motor controller as a static system (e.g., representing losses in the motor controller as a static function of motor torque and speed).
 
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
 
-\figurename~\ref{fig:wec_as_multiport_circuits}e shows the Th\'{e}venin equivalent network \cite{Thevenin:1883aa}, which has been considered by a number of authors with respect to WECs \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
-The Th\'{e}venin circuit defines an equivalent system containing only a source ($F_{\textrm{th}}$) and single impedance ($Z_{\textrm{th}}$).
+The Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$) as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
+The Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 Reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
-Similarly, the equivalent source can be determined by by considering a effort between points C and D in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{out}=0$).
+Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{out}=0$).
+
+\begin{subequations}
+\begin{gather}
+        Z_{\textrm{th}} = Z_{\textrm{out}} = Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\[0.5em]
+        F_{\textrm{th}} = \frac{F_{\textrm{exc}} Z_{21}}{Z_i + Z_{11}} \label{eq:Thevenin_force}
+\end{gather}
+\end{subequations}
+
+Note that we may consider the well-known impedance matching condition for the Th\'{e}venin equivalent system.
 
 \begin{subequations}
 \begin{align}
-        Z_{\textrm{th}} &= Z_{\textrm{out}} = Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\[0.5em]
-        F_{\textrm{th}} &= \frac{F_{\textrm{exc}} Z_{21}}{Z_i + Z_{11}} \label{eq:Thevenin_force}
-\end{align}
+        Z_\ell &= Z_{\textrm{th}}^* \\
+        &= Z_{\textrm{out}}^* \label{eq:impedance_matching_thevenin_2}
+\end{align} \label{eq:impedance_matching_thevenin}
 \end{subequations}
 
-Note that the bi-conjugate impedance matching condition prescribed in \eqref{eq:bi_conj_matching_out} is restated in \eqref{eq:Thevenin_impedance}  when we consider maximum power transfer for the Th\'{e}venin equivalent system shown in \figurename~\ref{fig:wec_as_multiport_circuits}e ($Z_\ell = Z_{\textrm{th}}^*$).
+\noindent{}Here, in \eqref{eq:impedance_matching_thevenin_2}, we have restated \eqref{eq:bi_conj_matching_out}.
 Thus, these two modes of representing the system are indeed equivalent and give the same condition for maximum power transfer.
 The Th\'{e}venin equivalent system gives a clear expression for the maximum power delivered to the load.
 
 \begin{equation}
         \mathcal{P}_{\ell\textrm{,max}} = \frac{| F_{\textrm{th}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} }
-        = \left| \frac{ Z_{21} }{ Z_i + Z_{11} } \right| ^2 \frac{ | F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} }
+        = \left| \frac{ Z_{21} }{ Z_i + Z_{11} } \right| ^2 \frac{ | F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} } \label{eq:max_power_delivered_thevenin}
 \end{equation}
 
 As illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}, we may represent the WEC system in many different ways (\figurename~\ref{fig:wec_as_multiport_circuits}a, b, c, and f are all equivalent).
 These different representations have different utilities.
-The Th\'{e}venin equivalent system in \figurename~\ref{fig:wec_as_multiport_circuits}f is the most simplified system and gives a clear condition for control design.
-The single two-port representation of the PTO used in \figurename~\ref{fig:wec_as_multiport_circuits}c provides an additional impedance matching condition, thus more clearly expressing the co-design problem.
+The Th\'{e}venin equivalent system in \figurename~\ref{fig:wec_as_multiport_circuits}f is the most simplified system and gives a clear condition for control design in \eqref{eq:impedance_matching_thevenin} and a limit for maximum power delivered to the load in \eqref{eq:max_power_delivered_thevenin}.
+The single two-port representation of the PTO used in \figurename~\ref{fig:wec_as_multiport_circuits}c provides an additional impedance matching condition in \eqref{eq:bi_conj_matching}, thus more clearly expressing the co-design problem.
 \figurename~\ref{fig:wec_as_multiport_circuits}b provides further detail by splitting the PTO into separate drive-train and electric machine two-port elements.
 While not explored in this paper, a three-part impedance matching condition could be written for the representation shown in \figurename~\ref{fig:wec_as_multiport_circuits}b.
+\rc{XX-do we indeed have another matching condition if using \figurename~\ref{fig:wec_as_multiport_circuits}b? This can't logically mean that maximum power to load is $(1/2)^n$, where $n$ is the number of two-port elements}
 
 % ------------------------------------------------------------------
 \section{Illustrative examples}\label{sec:illustrative_examples}
-Many problems in WEC design can be considered through \eqref{eq:bi_conj_matching}.
+Many problems in WEC design can be considered through the concepts discussed in Section~\ref{sec:modeling_a_direct_drive_wec}.
 We will consider a subset of these applications in the subsequent sections.
 
 % ------------------------------------------------------------------
@@ -661,34 +661,46 @@ We will consider a subset of these applications in the subsequent sections.
 \rc{XX\dots{}}
 
 One very relevant and illustrative case is a scenario in which the machine design is considered fixed and we must maximize performance by setting the load impedance (i.e., by designing a controller).
-In this scenario so very often examined in literature, mechanical power (the product of the input port effort and flow variables) is considered as the overall problem objective.
-In this case, we shall define the \emph{mechanical} load impedance as
+Many papers in the area of WEC control have focused on this very problem.
+In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the overall problem objective.
+
+\begin{equation}
+\begin{aligned}
+        \mathcal{S}_{m} 
+        &= \frac{1}{2} F_{\textrm{pto}} v^* \\
+        &= \frac{1}{2}Z_{\ell m} v v^* \\
+        &= \frac{1}{2}Z_{\ell m} | v |^2 \\
+        &= \frac{1}{2} Z_{\ell m} \left| \frac{F_{\textrm{exc}}}{Z_i + Z_{\ell m}} \right|^2
+\end{aligned}
+\end{equation}
+
+\noindent{}Here, we define the \emph{mechanical} load impedance as
 
 \begin{equation}
         Z_{\ell m} = \frac{F_{\textrm{pto}}}{v} .
 \end{equation}
 
-Reflections up to the input of the PTO may be minimized by satisfy a single well known conjugate impedance matching condition.
+\noindent{}Returning to \eqref{eq:pto_input_port_impedance}, we see that $Z_{\ell m}=Z_{\textrm{in}}$, thus allowing us to relate $Z_{\ell m}$ and $Z_{\ell}$.
+
+\begin{subequations}
+        \begin{gather}
+                Z_{\ell m} =Z_{\textrm{in}} = Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_{22} + Z_\ell} \\
+                Z_\ell = \frac{Z_{12} \,Z_{21} }{Z_{11} -Z_{\ell m}}-Z_{22}
+        \end{gather}
+        \label{eq:Zl_Zlm}
+\end{subequations}
+
+Reflections up to the input of the PTO may be minimized by satisfy a single conjugate impedance matching condition.
 
 \begin{equation}
         Z_i^* = Z_{\ell m}
         \label{eq:mech_power_impedance_matching}
 \end{equation}
 
-\noindent{}Not surprisingly, we see that \eqref{eq:mech_power_impedance_matching} is not dependent on the PTO impedance.
+\noindent{}Not surprisingly, we see that \eqref{eq:mech_power_impedance_matching} is not dependent on the PTO impedance (i.e., this definition decouples the PTO from the control design problem).
 
-
-Returning to \eqref{eq:pto_input_port_impedance}, we see that $Z_{\ell m}=Z_{\textrm{in}}$, thus allowing us to relate $Z_{\ell m}$ and $Z_{\ell}$.
-
-\begin{subequations}
-        \begin{gather}
-                Z_{\ell m} =Z_{\textrm{in}} = N^2 Z_d + \frac{k_\tau^2 N^2}{Z_\ell + Zw} \\
-                Z_\ell = \frac{k_\tau^2 N^2}{Z_{\ell m} - N^2 Z_d} - Z_w
-        \end{gather}
-        \label{eq:Zl_Zlm}
-\end{subequations}
-
-\figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} uses \eqref{eq:Zl_Zlm} to show the resulting load impedances for two cases:
+With this in mind, it is instructive to examine the difference between controllers designed to maximize mechanical and electrical power.
+\figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} shows the resulting load impedances for two cases:
 
 \begin{itemize}
         \item the controller to maximize mechanical power: $Z_\ell \vert_{Z_{\ell m} = Z_i^*}$
@@ -697,26 +709,14 @@ Returning to \eqref{eq:pto_input_port_impedance}, we see that $Z_{\ell m}=Z_{\te
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power.pdf}
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power_real_imag.pdf}
         \caption{Load impedances created by a controller designed to maximize mechanical power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) and a controller designed to maximize electrical power ($Z_\ell = Z_{\mathrm{out}}^*$).}
         \label{fig:wec_as_multiport_load_impedance_for_mech_power}
 \end{figure}
 
-\noindent{}From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical maximizing controller looks very different from the controller that maximizes electrical power.
-
-It is also helpful to define the mechanical power at the input of the PTO.
-
-\begin{equation}
-\begin{aligned}
-        \mathcal{S}_{m} 
-        &= F_{\textrm{pto}} v^* \\
-        &= Z_{\ell m} v v^* \\
-        &= Z_{\ell m} | v |^2 \\
-        &= Z_{\ell m} \left| \frac{F_{\textrm{exc}}}{Z_i - Z_{\ell m}} \right|^2
-\end{aligned}
-\end{equation}
-
-As with the power at the load, we may similarly quantify the active, reactive, and apparent mechanical power at the PTO input as shown in \eqref{eq:load_power_types}.
+\noindent{}From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller looks very different from the controller that maximizes electrical power.
+At the hydrodynamic resonance ($\sim 0.65$\,Hz), both controllers have no reactive component ($\Im \{ Z_\ell \}=0$), but the resistive components do not match.
+\rc{XX\dots{}}
 The power produced by these controllers is shown in Table~\ref{tab:mech_controller_vs_elec_controller_power}.
 
 \begin{table}[tb]
@@ -778,7 +778,7 @@ In each case, we enforce \eqref{eq:bi_conj_matching_out} such the controller ($Z
 Both of the consider actions (negative stiffness and increased shaft inertia) have the effect of improving impedance matching on the input port at lower frequencies.
 Recall also that the power transported by an ocean wave is inversely proportional to the wave frequency ($J \propto f^{-1}$) such that this improved impedance matching at lower frequencies may be particularly advantageous.
 It should be noted that the range of values for $K_d$ and $I_d$ shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances} is somewhat arbitrary and intended only to illustrate trends -- one cannot directly compare the effects of doubling the shaft inertia with doubling the negative spring stiffness in terms of an engineering decision.
-With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts), thus narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to have the opposite affect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
+With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts) by narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to have the opposite affect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
 
 
 While based on \eqref{eq:drive_train_impedance} we might expect changes to $K_d$ and $I_d$ to only affect the imaginary part of the impedances, we may see by expanding \eqref{eq:pto_output_port_impedance} and \eqref{eq:pto_input_port_impedance} that these terms do indeed effect the real part of the impedances as shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}.
