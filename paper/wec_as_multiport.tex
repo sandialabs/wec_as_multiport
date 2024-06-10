@@ -609,6 +609,16 @@ Note that there are additional losses and dynamics in the motor controller befor
 However, the motor controller dynamics occur at much higher frequencies than those in the rest of the system.
 For this reason, we may consider those losses separately and treat the motor controller as a static system (e.g., representing losses in the motor controller as a static function of motor torque and speed).
 
+The transducer gain is the ratio of power delivered to the load to the power available at the source (i.e., the ``wave-to-wire efficiency'').
+
+\begin{equation}
+\begin{aligned}
+        G_T &= \frac{\mathcal{P}_{\ell}}{\mathcal{P}_{i}} \\
+        &= \frac{4 \left| Z_{21} \right|^2 \Re \left\{ Z_\ell \right\} \Re \left\{ Z_i \right\} }
+        {\left| (Z_{11} + Z_i)(Z_{22} + Z_\ell) - Z_{12} Z_{21} \right|^2}
+\end{aligned}
+\end{equation}
+
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
 
@@ -706,13 +716,16 @@ With this in mind, it is instructive to examine the difference between controlle
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power_real_imag.pdf}
-        \caption{Load impedances created by a controller designed to maximize mechanical power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) and a controller designed to maximize electrical power ($Z_\ell = Z_{\mathrm{out}}^*$).}
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power_Bode.pdf}
+        \caption{Load impedances (top and middle axes) created by a controller designed to maximize mechanical power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) and a controller designed to maximize electrical power ($Z_\ell = Z_{\mathrm{out}}^*$) along with the transducer gains (bottom axes) for each controller.}
         \label{fig:wec_as_multiport_load_impedance_for_mech_power}
 \end{figure}
 
-\noindent{}From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller looks very different from the controller that maximizes electrical power.
-At the hydrodynamic resonance ($\sim 0.65$\,Hz), both controllers have no reactive component ($\Im \{ Z_\ell \}=0$), but the resistive components do not match.
+\noindent{}From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller looks notably different from the controller that maximizes electrical power.
+At the hydrodynamic resonance ($\sim 0.65$\,Hz), both controllers have zero phase, but the magnitudes do not match.
+\rc{XX-shouldn't the electrical maximizing controller have zero phase at another frequency?}
+Away from resonance, the phase of the two controllers differ dramatically.
+Furthermore, the transducer gain of the two systems are dramatically different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} electrical power.
 \rc{XX\dots{}}
 The power produced by these controllers is shown in Table~\ref{tab:mech_controller_vs_elec_controller_power}.
 
@@ -767,7 +780,7 @@ In each case, we enforce \eqref{eq:bi_conj_matching_out} such the controller ($Z
          \caption{Varying levels of shaft inertia ($I_d$)}
          \label{fig:wec_as_multiport_in_and_out_impedances_inertia}
      \end{subfigure}
-     \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve.}
+     \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve. \rc{XX-use arrows instead of legends}}
      \label{fig:wec_as_multiport_in_and_out_impedances}
 \end{figure}
 
