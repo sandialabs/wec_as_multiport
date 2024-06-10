@@ -316,7 +316,7 @@ We will first present the WEC and its governing equations in further detail (Sec
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_phyiscal_diagram.pdf}
-        \caption{WaveBot device diagram. \rc{XX-note Park transform and modeling boundary} \rc{XX-sign conventions wrong in this diagram}}
+        \caption{WaveBot device diagram. \rc{XX-note Park transform and modeling boundary}}
         \label{fig:wec_as_multiport_phyiscal_diagram}
 \end{figure}
 
@@ -435,7 +435,7 @@ We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later d
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_circuits.pdf}
-        \caption{Circuit diagrams representing a wave energy converter. Points 1, 2, 3, and 4 are consistent throughout the different diagrams. \rc{XX-direction of $I_{out}$} \dg{XX: in b) Zd block is missing}}
+        \caption{Circuit diagrams representing a wave energy converter. Points 1, 2, 3, and 4 are consistent throughout the different diagrams. \rc{XX-direction of $I_{\textrm{out}}$} \dg{XX: in b) Zd block is missing}}
         \label{fig:wec_as_multiport_circuits}
 \end{figure}
 
@@ -615,7 +615,7 @@ For this reason, we may consider those losses separately and treat the motor con
 The Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$) as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
 The Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 Reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
-Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{out}=0$).
+Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{\textrm{out}}=0$).
 
 \begin{subequations}
 \begin{gather}
@@ -657,9 +657,6 @@ We will consider a subset of these applications in the subsequent sections.
 
 % ------------------------------------------------------------------
 \subsection{Control design}\label{sec:control_design}
-
-\rc{XX\dots{}}
-
 One very relevant and illustrative case is a scenario in which the machine design is considered fixed and we must maximize performance by setting the load impedance (i.e., by designing a controller).
 Many papers in the area of WEC control have focused on this very problem.
 In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the overall problem objective.
