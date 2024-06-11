@@ -406,7 +406,7 @@ For the gyrator element, the machine has characteristic torque constant (gyratio
         \end{gather}
 \end{subequations}
 
-\noindent{}In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).
+\noindent{}In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).  \rc{-XX reference figure 6b?}
 
 \begin{subequations}
         \begin{gather}
@@ -609,7 +609,13 @@ Note that there are additional losses and dynamics in the motor controller befor
 However, the motor controller dynamics occur at much higher frequencies than those in the rest of the system.
 For this reason, we may consider those losses separately and treat the motor controller as a static system (e.g., representing losses in the motor controller as a static function of motor torque and speed).
 
-The transducer gain is the ratio of power delivered to the load to the power available at the source (i.e., the ``wave-to-wire efficiency'').
+The transducer gain is the ratio of power delivered to the load to the power available at the source (i.e., the ``wave-to-wire efficiency''). The power by a wave providing excitation force $F_{exc}$ \cite{Falnes:2002aa} is
+
+\begin{equation}
+	XX move 36 here
+\end{equation}
+
+\noindent{} and thus the wave to wire efficiency can be expressed
 
 \begin{equation}
 \begin{aligned}
@@ -618,6 +624,8 @@ The transducer gain is the ratio of power delivered to the load to the power ava
         {\left| (Z_{11} + Z_i)(Z_{22} + Z_\ell) - Z_{12} Z_{21} \right|^2}
 \end{aligned}
 \end{equation}
+
+\rc{-XX no equation $P_i$ yet: probably better to present this first before obfuscating in the ratio}
 
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
