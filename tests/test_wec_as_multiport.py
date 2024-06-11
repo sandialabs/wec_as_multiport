@@ -8,7 +8,7 @@ import wec_as_multiport as wam
 import wecopttool as wot
 
 bem_data_fname = os.path.join(os.path.dirname(__file__),
-                              'wec_as_multiport.nc')
+                              '..','data','wec_as_multiport.nc')
 
 
 @pytest.fixture(scope="function")

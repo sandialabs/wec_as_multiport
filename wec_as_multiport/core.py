@@ -5,6 +5,18 @@ import copy
 # import capytaine as cpy
 # import wecopttool as wot
 
+__all__ = [
+    "WEC",
+    "__max_active_power__",
+    "__F_Thevenin__",
+    "__power__",
+    "__active_power__",
+    "__reactive_power__",
+    "__apparent_power__",
+    "__Fexc__",
+    "__Zin__",
+    "__Zout__",
+]
 
 class WEC:
 
