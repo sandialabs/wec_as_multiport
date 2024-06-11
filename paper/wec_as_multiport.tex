@@ -23,6 +23,7 @@
 
 \newcommand{\rc}[1]{\textcolor{red}{#1}}
 \newcommand{\dg}[1]{\textcolor{purple}{#1}}
+\newcommand{\ak}[1]{\textcolor{teal}{#1}}
 
 % \renewcommand{\floatpagefraction}{1}
 % \renewcommand{\topfraction}{1}
@@ -156,7 +157,7 @@ This framework is then applied in a number of illustrative case-studies (Section
 To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the two-port network model popular in electronics and microwave systems \rc{XX-cite}.
 We may describe the system with a two-port impedance model, relating the effort ($e_i$) and flow ($q_i$) at each port (see \figurename~\ref{fig:wec_as_multiport_general_two_port_network}).
 The products of the effort and flow variables on each port is power.
-Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_general_two_port_network}, which result in a convention of positive power flowing into the two-port network from both sides.
+Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_general_two_port_network}, which result in a convention of power flow into the two-port network from both sides equal zero and the two-port network is lossless. 
 
 \begin{figure}[tb]
         \centering
@@ -353,7 +354,7 @@ Vertical motion of the buoy can be expressed as a dynamic equation dependent on 
 
 \begin{subequations}
 \begin{gather}
-        Z_i v = F_{\textrm{exc}} - F_{\textrm{pto}} \label{eq:eom_rectilinear_motion} \\
+        F_{\textrm{exc}} - F_{\textrm{pto}} = Z_i v \label{eq:eom_rectilinear_motion} \\
         Z_i(\omega) = B(\omega) + b_f + j \left( \omega \left( m + A(\omega) \right) - \frac{k_{h}}{\omega}\right)
 \end{gather}
 \end{subequations}
@@ -376,7 +377,7 @@ The rectilinear vertical velocity ($v$) and force ($F_{\textrm{pto}}$) in \eqref
 \begin{subequations}
         \begin{gather}
                 N = r \\
-                v_s = -N v \\
+                v_s = N v \\
                 \tau_{\textrm{pto}} = \frac{1}{N} F_{\textrm{pto}}
         \end{gather}
         \label{eq:rack_and_pinion_transmission}
@@ -390,7 +391,7 @@ Thus, we may describe the drive train dynamics as follows.
 
 \begin{subequations}
         \begin{gather}
-                Z_d v_s = \tau_{\textrm{pto}} - \tau_e \\
+                \tau_{\textrm{pto}} - \tau_e = Z_d v_s \\
                 % Z_d = i \omega J_d + b_d + \frac{k_d}{i \omega}
                 Z_d = b_d + j \left( \omega J_d - \frac{k_d}{\omega} \right)
         \end{gather}
@@ -401,7 +402,7 @@ For the gyrator element, the machine has characteristic torque constant (gyratio
 
 \begin{subequations}
         \begin{gather}
-                \forall_{\textrm{emf}} = \frac{1}{k_\tau} v_s \\
+                v_s = \frac{1}{k_\tau}\forall_{\textrm{emf}} \\
                 \tau_e = k_\tau I_{\textrm{out}}
         \end{gather}
 \end{subequations}
@@ -410,7 +411,7 @@ For the gyrator element, the machine has characteristic torque constant (gyratio
 
 \begin{subequations}
         \begin{gather}
-                Z_w I_{\textrm{out}} = \forall_{\textrm{emf}} - \forall_{\textrm{out}} \\
+                \forall_{\textrm{emf}} - \forall_{\textrm{out}} = Z_w I_{\textrm{out}}\\
                 Z_w = R_w + j \omega L_w \label{eq:winding_impedance}
         \end{gather}
 \end{subequations}
@@ -420,7 +421,7 @@ Finally, we may define a load impedance ($Z_\ell$) that represents how current i
 
 
 \begin{equation}
-        Z_\ell = -\frac{\forall_{\textrm{out}}}{I_{\textrm{out}}}
+        Z_\ell = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}}
         \label{eq:load_impedance}
 \end{equation}
 
@@ -471,13 +472,13 @@ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of inte
                 = \frac{F_{\textrm{pto}}}{v} \bigg \vert_{I_{\textrm{out}}=0} = Z_d \, N^2 \\[0.5em]
                 %
                 &Z_{12} = \frac{e_1}{q_2} \bigg \vert_{q_1=0} 
-                = \frac{F_{\textrm{pto}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = -k_\tau \, N \\[0.5em]
+                = \frac{F_{\textrm{pto}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = k_\tau \, N \\[0.5em]
                 %
                 &Z_{21} = \frac{e_2}{q_1} \bigg \vert_{q_2=0} 
                 = \frac{\forall_{\textrm{out}}}{v} \bigg \vert_{I_{\textrm{out}}=0} = k_\tau \, N \\[0.5em]
                 %
                 &Z_{22} = \frac{e_2}{q_2} \bigg \vert_{q_1=0} 
-                = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = Z_w 
+                = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = -Z_w 
         \end{align}
 \end{subequations}
 
@@ -492,8 +493,8 @@ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of inte
         \end{bmatrix}
         =
         \begin{bmatrix} 
-        Z_d \, N^2                              & -k_\tau \, N  \\
-        k_\tau \, N          & Z_w
+        Z_d \, N^2			& k_\tau \, N  \\
+        k_\tau \, N          	& -Z_w
         \end{bmatrix}.
         \label{eq:pto_impedance}
  \end{equation}
@@ -539,7 +540,7 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 \noindent{}Finally, substituting \eqref{eq:Zout_Fpto_3} into \eqref{eq:Zout_Vout_2} gives an expression for the PTO output port impedance.
 
 \begin{equation}
-        Z_{\textrm{out}} = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg\vert_{F_{\textrm{exc}}=0} = Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}}
+        Z_{\textrm{out}} = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg\vert_{F_{\textrm{exc}}=0} = Z_{22} - \frac{Z_{12} Z_{21}}{Z_{i} + Z_{11}}
         \label{eq:pto_output_port_impedance}
 \end{equation}
 
@@ -548,7 +549,7 @@ We evaluate this scenario with input port open and with the output port fully co
 Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner similar as was done for the input port impedance, we find
 
 \begin{equation}
-        Z_{\textrm{in}} = \frac{F_{\textrm{pto}}}{v} =  Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_{22} + Z_\ell} .
+        Z_{\textrm{in}} = \frac{F_{\textrm{pto}}}{v}=  Z_{11} + \frac{Z_{12} \, Z_{21}}{Z_\ell - Z_{22}} .
         \label{eq:pto_input_port_impedance}
 \end{equation}
 
@@ -567,11 +568,11 @@ As shown in  \cite{Bacelli:2021aa}, to maximize power transferred to the load, w
 \begin{subequations}
 \begin{align}
         \begin{split}
-                Z_{\textrm{out}} &= Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \\[0.5em]
-                &=Z_w + \frac{k_\tau^2 N^2}{Z_i + Z_d N^2}
+                Z_{\textrm{out}} &= Z_{22} - \frac{Z_{12} Z_{12}}{Z_{i} + Z_{11}} \\[0.5em]
+                &= - Z_w - \frac{k_\tau^2 N^2}{Z_i + Z_d N^2}
         \end{split}\label{eq:expanded_zin} \\[1em]
         \begin{split}
-                Z_{\textrm{in}} &= Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_{22} + Z_\ell} \\[0.5em]
+                Z_{\textrm{in}} &= Z_{11} + \frac{Z_{12} \, Z_{21}}{Z_\ell - Z_{22}} \\[0.5em]
                 &= Z_d N^2 + \frac{k_\tau^2 N^2}{Z_\ell + Z_w}
         \end{split}\label{eq:expanded_zout}
 \end{align}
