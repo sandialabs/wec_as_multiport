@@ -124,7 +124,7 @@ Power delivered to the load is affected by both losses and reflections in this s
 These two effects are distinct and must addressed with an appreciation as such.
 Losses are due to friction or electrical resistance -- this effect is often more intuitive and will not be discussed here in detail.
 Reflections are due to a mismatch in the system impedances.
-
+%%% Dom feels this is a bit of an over-simplification maybe better suited for a discussion section later on. While minimizing losses is important, friction and resistance are contributors to the real part of impedance and, especially in absence of other contributors (gear ratio, Kt) being called out explicitly I think this might yield confusion.
 This paper will further explore concepts of bi-conjugate impedance matching in wave energy previously raised by \cite{Bacelli:2021aa}, with the goal of generating a more practical understanding for the utility and application of this theory.
 First, an basic review of network modeling and elements is presented (Section~\ref{sec:two_port_networks}).
 Next, this framework is applied to a WEC and used to formulate the bi-conjugate impedance matching condition (Section~\ref{sec:modeling_a_direct_drive_wec}).
@@ -366,7 +366,7 @@ In \figurename~\ref{fig:wec_as_multiport_block_diagram}, the PTO force is determ
 \begin{figure}[tb]
         \centering
         \includegraphics[width=0.8\columnwidth]{wec_as_multiport_block_diagram.pdf}
-        \caption{Generic block diagram for a wave energy converter.}
+        \caption{Generic block diagram for a wave energy converter. XX THIS IS WRONG SHOULD BE 1/Zi}
         \label{fig:wec_as_multiport_block_diagram}
 \end{figure}
 
