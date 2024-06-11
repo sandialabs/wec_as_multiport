@@ -19,10 +19,18 @@
  	- plots should not generally have titles as this information is captured in the figure caption
  	- use PDF vector figures when possible
  - Edit diagrams: edit the PDF files using [IPE](https://ipe.otfried.org/)
- - Update plots: edit `wec_as_multiport.ipynb`, output figures as PDFs to `gfx` directory
+ - Update plots: 
+ 	1. Install package (assuming you have [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) or [mamba](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html))
+ 		1. Create an environment: `conda create -n wam pip "python=3.11"`
+ 		2. Activate environment: `conda activate wam`
+ 		3. Install package in editable mode (from within the root directory of this repository): `pip install -e .`
+ 	2. Run/edit 
+ 		- plotting script: [`wec_as_multiport.ipynb`](wec_as_multiport.ipynb)
+ 		- source: [`core.py`](wec_as_multiport/core.py)
+ 	3. Output figures to `gfx` directory for inclusion in paper
 
 ## Structure
 
  - `gfx`: figures (preferably vector PDFs) for the paper
  - `paper`: LaTeX source (including BibTex file)
- - `src`: Python and MATLAB code
+ - `wec_as_multiport`: Python package

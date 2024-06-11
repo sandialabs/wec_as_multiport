@@ -125,7 +125,7 @@ Power delivered to the load is affected by both losses and reflections in this s
 These two effects are distinct and must addressed with an appreciation as such.
 Losses are due to friction or electrical resistance -- this effect is often more intuitive and will not be discussed here in detail.
 Reflections are due to a mismatch in the system impedances.
-
+%%% Dom feels this is a bit of an over-simplification maybe better suited for a discussion section later on. While minimizing losses is important, friction and resistance are contributors to the real part of impedance and, especially in absence of other contributors (gear ratio, Kt) being called out explicitly I think this might yield confusion.
 This paper will further explore concepts of bi-conjugate impedance matching in wave energy previously raised by \cite{Bacelli:2021aa}, with the goal of generating a more practical understanding for the utility and application of this theory.
 First, an basic review of network modeling and elements is presented (Section~\ref{sec:two_port_networks}).
 Next, this framework is applied to a WEC and used to formulate the bi-conjugate impedance matching condition (Section~\ref{sec:modeling_a_direct_drive_wec}).
@@ -317,7 +317,7 @@ We will first present the WEC and its governing equations in further detail (Sec
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_phyiscal_diagram.pdf}
-        \caption{WaveBot device diagram. \rc{XX-note Park transform and modeling boundary} \rc{XX-sign conventions wrong in this diagram}}
+        \caption{WaveBot device diagram. \rc{XX-note Park transform and modeling boundary}}
         \label{fig:wec_as_multiport_phyiscal_diagram}
 \end{figure}
 
@@ -368,7 +368,7 @@ The excitation force ($F_{\textrm{exc}}$) is determined from the excitation tran
 \begin{figure}[tb]
         \centering
         \includegraphics[width=0.8\columnwidth]{wec_as_multiport_block_diagram.pdf}
-        \caption{Generic block diagram for a wave energy converter.}
+        \caption{Generic block diagram for a wave energy converter. XX THIS IS WRONG SHOULD BE 1/Zi}
         \label{fig:wec_as_multiport_block_diagram}
 \end{figure}
 
@@ -407,7 +407,7 @@ For the gyrator element, the machine has characteristic torque constant (gyratio
         \end{gather}
 \end{subequations}
 
-\noindent{}In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).
+\noindent{}In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).  \rc{-XX reference figure 6b?}
 
 \begin{subequations}
         \begin{gather}
@@ -436,7 +436,7 @@ We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later d
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_circuits.pdf}
-        \caption{Circuit diagrams representing a wave energy converter. Points 1, 2, 3, and 4 are consistent throughout the different diagrams. \rc{XX-direction of $I_{out}$} \dg{XX: in b) Zd block is missing}}
+        \caption{Circuit diagrams representing a wave energy converter. Points 1, 2, 3, and 4 are consistent throughout the different diagrams. \rc{XX-direction of $I_{\textrm{out}}$} \dg{XX: in b) Zd block is missing}}
         \label{fig:wec_as_multiport_circuits}
 \end{figure}
 
@@ -499,7 +499,7 @@ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of inte
         \label{eq:pto_impedance}
  \end{equation}
 
- \noindent{}Note that \eqref{eq:pto_impedance} may also be arrived to by cascading the the one- and two-port elements shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b.
+ \noindent{}Note that \eqref{eq:pto_impedance} may also be arrived to by cascading the the one- and two-port elements shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b. \rc{-XX pretty sure this is a sign error and should be negative Zw}
 
 
 % ------------------------------------------------------------------
@@ -546,7 +546,7 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 
 The PTO input port's impedance (illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}e) can be expressed as the ratio of effort ($F_{\textrm{pto}}$) and flow ($v$) on the input port.
 We evaluate this scenario with input port open and with the output port fully connected such that the load impedance relates the output voltage and current.
-Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner similar as was done for the input port impedance, we find
+Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner similar as was done for the output port impedance, we find
 
 \begin{equation}
         Z_{\textrm{in}} = \frac{F_{\textrm{pto}}}{v}=  Z_{11} + \frac{Z_{12} \, Z_{21}}{Z_\ell - Z_{22}} .
@@ -610,13 +610,31 @@ Note that there are additional losses and dynamics in the motor controller befor
 However, the motor controller dynamics occur at much higher frequencies than those in the rest of the system.
 For this reason, we may consider those losses separately and treat the motor controller as a static system (e.g., representing losses in the motor controller as a static function of motor torque and speed).
 
+The transducer gain is the ratio of power delivered to the load to the power available at the source (i.e., the ``wave-to-wire efficiency''). The power by a wave providing excitation force $F_{exc}$ \cite{Falnes:2002aa} is
+
+\begin{equation}
+	XX move 36 here
+\end{equation}
+
+\noindent{} and thus the wave to wire efficiency can be expressed
+
+\begin{equation}
+\begin{aligned}
+        G_T &= \frac{\mathcal{P}_{\ell}}{\mathcal{P}_{i}} \\
+        &= \frac{4 \left| Z_{21} \right|^2 \Re \left\{ Z_\ell \right\} \Re \left\{ Z_i \right\} }
+        {\left| (Z_{11} + Z_i)(Z_{22} + Z_\ell) - Z_{12} Z_{21} \right|^2}
+\end{aligned}
+\end{equation}
+
+\rc{-XX no equation $P_i$ yet: probably better to present this first before obfuscating in the ratio}
+
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
 
 The Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$) as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
 The Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 Reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
-Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{out}=0$).
+Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{\textrm{out}}=0$).
 
 \begin{subequations}
 \begin{gather}
@@ -658,9 +676,6 @@ We will consider a subset of these applications in the subsequent sections.
 
 % ------------------------------------------------------------------
 \subsection{Control design}\label{sec:control_design}
-
-\rc{XX\dots{}}
-
 One very relevant and illustrative case is a scenario in which the machine design is considered fixed and we must maximize performance by setting the load impedance (i.e., by designing a controller).
 Many papers in the area of WEC control have focused on this very problem.
 In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the overall problem objective.
@@ -710,13 +725,16 @@ With this in mind, it is instructive to examine the difference between controlle
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power_real_imag.pdf}
-        \caption{Load impedances created by a controller designed to maximize mechanical power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) and a controller designed to maximize electrical power ($Z_\ell = Z_{\mathrm{out}}^*$).}
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power_Bode.pdf}
+        \caption{Load impedances (top and middle axes) created by a controller designed to maximize mechanical power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) and a controller designed to maximize electrical power ($Z_\ell = Z_{\mathrm{out}}^*$) along with the transducer gains (bottom axes) for each controller.}
         \label{fig:wec_as_multiport_load_impedance_for_mech_power}
 \end{figure}
 
-\noindent{}From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller looks very different from the controller that maximizes electrical power.
-At the hydrodynamic resonance ($\sim 0.65$\,Hz), both controllers have no reactive component ($\Im \{ Z_\ell \}=0$), but the resistive components do not match.
+\noindent{}From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller looks notably different from the controller that maximizes electrical power.
+At the hydrodynamic resonance ($\sim 0.65$\,Hz), both controllers have zero phase, but the magnitudes do not match.
+\rc{XX-shouldn't the electrical maximizing controller have zero phase at another frequency?}
+Away from resonance, the phase of the two controllers differ dramatically.
+Furthermore, the transducer gain of the two systems are dramatically different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} electrical power.
 \rc{XX\dots{}}
 The power produced by these controllers is shown in Table~\ref{tab:mech_controller_vs_elec_controller_power}.
 
@@ -771,7 +789,7 @@ In each case, we enforce \eqref{eq:bi_conj_matching_out} such the controller ($Z
          \caption{Varying levels of shaft inertia ($I_d$)}
          \label{fig:wec_as_multiport_in_and_out_impedances_inertia}
      \end{subfigure}
-     \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve.}
+     \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve. \rc{XX-use arrows instead of legends}}
      \label{fig:wec_as_multiport_in_and_out_impedances}
 \end{figure}
 

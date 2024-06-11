@@ -8,21 +8,22 @@ import wec_as_multiport as wam
 import wecopttool as wot
 
 bem_data_fname = os.path.join(os.path.dirname(__file__),
-                              'wec_as_multiport.nc')
+                              '..','data','wec_as_multiport.nc')
 
-@pytest.fixture(scope="module")
+
+@pytest.fixture(scope="function")
 def wec():
     bem_data = wot.read_netcdf(bem_data_fname)
     wec = wam.WEC(omega=bem_data['omega'].values,
-                 N=12.4666,
-                 Kt=6.1745,
-                 Rw=0.5,
-                 Lw=0,
-                 Jd=2,
-                 Bd=1,
-                 Kd=0,
-                 Zi=np.squeeze(wot.hydrodynamic_impedance(bem_data)).values,
-                 Hexc=np.squeeze(bem_data['excitation_force'].values))
+                  N=12.4666,
+                  Kt=6.1745,
+                  Rw=0.5,
+                  Lw=0,
+                  Jd=2,
+                  Bd=1,
+                  Kd=0,
+                  Zi=np.squeeze(wot.hydrodynamic_impedance(bem_data)).values,
+                  Hexc=np.squeeze(bem_data['excitation_force'].values))
     return wec
 
 
@@ -39,6 +40,16 @@ def test_low_freq_wave_hydrostatics(wec):
     Fhs = 1*Kh
 
     assert Fexc == pytest.approx(Fhs, rel=1e-1)
+
+
+def test_Zlm_matching(wec):
+    """Mechanical load impedance when maximizing mechanical power should 
+    equal the complex conjugate of the intrinsic impedance"""
+
+    Z1 = wec.Zlm(Zl=wec.Zl_opt_mech)
+    Z2 = np.conj(wec.Zi)
+
+    assert (Z1 == Z2).all
 
 
 def test_Zl_opt(wec):
