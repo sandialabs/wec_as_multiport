@@ -623,7 +623,7 @@ The transducer gain is the ratio of power delivered to the load to the power ava
         G_T &= \frac{\mathcal{P}_{\ell}}{\mathcal{P}_{i}} \\
         &= \frac{4 \left| Z_{21} \right|^2 \Re \left\{ Z_\ell \right\} \Re \left\{ Z_i \right\} }
         {\left| (Z_{11} + Z_i)(Z_{22} + Z_\ell) - Z_{12} Z_{21} \right|^2}
-\end{aligned}
+\end{aligned} \label{eq:transducer_gain}
 \end{equation}
 
 \rc{-XX no equation $P_i$ yet: probably better to present this first before obfuscating in the ratio}
@@ -749,22 +749,22 @@ At the hydrodynamic resonance ($\sim 0.65$\,Hz), both controllers have zero phas
 Away from resonance, the phase of the two controllers differ dramatically.
 Furthermore, the transducer gain of the two systems are dramatically different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} electrical power.
 \rc{XX\dots{}}
-The power produced by these controllers is shown in Table~\ref{tab:mech_controller_vs_elec_controller_power}.
+% The power produced by these controllers is shown in Table~\ref{tab:mech_controller_vs_elec_controller_power}.
 
-\begin{table}[tb]
-        \caption{Power absorption for controllers that maximize mechanical versus electrical power. \rc{XX-different sea states}}
-        \label{tab:mech_controller_vs_elec_controller_power}
-        \centering
+% \begin{table}[tb]
+%         \caption{Power absorption for controllers that maximize mechanical versus electrical power. \rc{XX-different sea states}}
+%         \label{tab:mech_controller_vs_elec_controller_power}
+%         \centering
 
-        \begin{tabular}{rcc}
-        \toprule
-         & Mechanical [W] & Electrical [W] \\ 
-        \midrule
-        Max. mech.  power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) & XX & XX \\
-        Max. elec.  power ($Z_\ell = Z_{\mathrm{out}}^*$) & XX & XX \\
-        \bottomrule
-        \end{tabular}
-\end{table}
+%         \begin{tabular}{rcc}
+%         \toprule
+%          & Mechanical [W] & Electrical [W] \\ 
+%         \midrule
+%         Max. mech.  power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) & XX & XX \\
+%         Max. elec.  power ($Z_\ell = Z_{\mathrm{out}}^*$) & XX & XX \\
+%         \bottomrule
+%         \end{tabular}
+% \end{table}
 
 % \rc{
 % \begin{itemize}
@@ -807,13 +807,14 @@ In each case, we enforce \eqref{eq:bi_conj_matching_out} such the controller ($Z
 \end{figure}
 
 
-Both of the consider actions (negative stiffness and increased shaft inertia) have the effect of improving impedance matching on the input port at lower frequencies.
+Both of the considered design alterations (negative stiffness and increased shaft inertia) have the effect of improving impedance matching on the input port at lower frequencies.
 Recall also that the power transported by an ocean wave is inversely proportional to the wave frequency ($J \propto f^{-1}$) such that this improved impedance matching at lower frequencies may be particularly advantageous.
 It should be noted that the range of values for $K_d$ and $I_d$ shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances} is somewhat arbitrary and intended only to illustrate trends -- one cannot directly compare the effects of doubling the shaft inertia with doubling the negative spring stiffness in terms of an engineering decision.
 With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts) by narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to have the opposite affect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
 
 
 While based on \eqref{eq:drive_train_impedance} we might expect changes to $K_d$ and $I_d$ to only affect the imaginary part of the impedances, we may see by expanding \eqref{eq:pto_output_port_impedance} and \eqref{eq:pto_input_port_impedance} that these terms do indeed effect the real part of the impedances as shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}.
+\rc{XX-reference expanded versions of these equations}
 
 \noindent{}Note that in \eqref{eq:expanded_zout}, we have left $Z_{\textrm{out}}^*$ unexpanded, but one can see rather clearly see by referencing \eqref{eq:expanded_zin} how the drive train stiffness ($K_d$) and inertia ($I_d$) enter in.
 
@@ -828,6 +829,18 @@ While based on \eqref{eq:drive_train_impedance} we might expect changes to $K_d$
                 \item Higher feedback gains, more challenges with stability/sensitivity
         \end{itemize}
 \end{itemize}}
+
+The resulting performance of these different designs can be characterized using the transducer gain defined in \eqref{eq:transducer_gain}, as shown in \figurename~\ref{fig:wec_as_multiport_spring_inertia_transducer_gains}.
+As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the negative spring creates a broader impedance matching, and thus we observe that the ``wave-to-wire'' efficiency for the spring designs than the shaft inertia designs.
+Of course that we do not need to apply these design strategies exclusively, and that in practice we would consider altering the shaft inertia and negative spring effect.
+Different WEC archetypes will have different design parameters; for example, an oscillating water column design could consider the shaft inertia, air chamber volume (related to stiffness), and many other factors.
+
+\begin{figure}[tb]
+        \centering
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_spring_inertia_transducer_gains.pdf}
+        \caption{\rc{XX-improve colors} \rc{XX-add legend or arrows?}}
+        \label{fig:wec_as_multiport_spring_inertia_transducer_gains}
+\end{figure}
 
 % ------------------------------------------------------------------
 \subsection{Steady input}\label{sec:steady_input}

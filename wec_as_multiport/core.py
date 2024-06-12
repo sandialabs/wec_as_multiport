@@ -1,6 +1,7 @@
 
 import numpy as np
 import copy
+from scipy.constants import golden
 
 # import capytaine as cpy
 # import wecopttool as wot
@@ -16,6 +17,7 @@ __all__ = [
     "__Fexc__",
     "__Zin__",
     "__Zout__",
+    "figsize",
 ]
 
 class WEC:
@@ -247,3 +249,22 @@ def __Zin__(Zpto, Zl) -> np.ndarray:
 
 def __Zout__(Zpto, Zi) -> np.ndarray:
     return Zpto[1, 1] - Zpto[1, 0] * Zpto[0, 1] / (Zi + Zpto[0, 0])
+
+
+def figsize(wf=1, hf=1, columnwidth=250):
+    """Parameters:
+      - wf [float]:  width fraction in columnwidth units
+      - hf [float]:  height fraction in columnwidth units.
+                     Set by default to golden ratio.
+      - columnwidth [float]: width of the column in latex. Get this from LaTeX 
+                             using \showthe\columnwidth
+    Returns:  [fig_width,fig_height]: that should be given to matplotlib
+    https://stackoverflow.com/questions/29187618/matplotlib-and-latex-beamer-correct-size/30170343
+    """
+
+    hf = hf/golden
+    fig_width_pt = columnwidth*wf 
+    inches_per_pt = 1.0/72.27               # Convert pt to inch
+    fig_width = fig_width_pt*inches_per_pt  # width in inches
+    fig_height = fig_width*hf      # height in inches
+    return [fig_width, fig_height]
