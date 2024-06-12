@@ -18,6 +18,7 @@ __all__ = [
     "__Zin__",
     "__Zout__",
     "figsize",
+    "pid_controller",
 ]
 
 class WEC:
@@ -207,6 +208,15 @@ class WEC:
     def max_active_power_mech(self, Fexc):
         """Maximum active mechanical power"""
         return __max_active_power__(self.Zi, Fexc)
+    
+    def pi_opt(self, freq, use_i=True):
+        indx = np.argmin(np.abs(self.freq - freq))
+        kp = np.real(np.conj(self.Z_Thevenin[indx]))
+        if use_i is True:
+            ki = self.omega[indx]*np.imag(np.conj(self.Z_Thevenin[indx]))
+        else:
+            ki = 0
+        return pid_controller(self.omega, kp=kp, ki=ki)
 
     def copy(self):
         return copy.deepcopy(self)
@@ -268,3 +278,6 @@ def figsize(wf=1, hf=1, columnwidth=250):
     fig_width = fig_width_pt*inches_per_pt  # width in inches
     fig_height = fig_width*hf      # height in inches
     return [fig_width, fig_height]
+
+def pid_controller(omega, kp=0, ki=0, kd=0) -> np.ndarray:
+    return kp + 1j*ki/omega + kd*1j*omega

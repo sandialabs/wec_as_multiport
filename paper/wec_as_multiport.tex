@@ -416,14 +416,31 @@ For the gyrator element, the machine has characteristic torque constant (gyratio
         \end{gather}
 \end{subequations}
 
-Finally, we may define a load impedance ($Z_\ell$) that represents how current is controlled by the motor controller.
-\rc{XX-why negative?}
-
+Finally, we may define a load impedance ($Z_\ell$) that represents how current is modulated by the motor controller relative to voltage.
 
 \begin{equation}
         Z_\ell = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}}
         \label{eq:load_impedance}
 \end{equation}
+
+\noindent{}In practice, the load impedance will be defined by a controller ($C$).
+It is generally convenient to implement a feedback controller that commands motor current based on the velocity ($v$ in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}).
+
+\begin{subequations}
+\begin{gather}
+        I_{\textrm{out}} = C v \\
+        Z_\ell = \frac{N}{C} k_\tau - Z_w     
+\end{gather}
+\end{subequations}
+
+\noindent{}While many forms may be used for $C$, a simple proportional-integral (PI) structure, can be quite effective \cite{Coe2020a}.
+
+\begin{equation}
+        C_{PI} = v k_p + \frac{v}{j \omega} k_i \label{eq:pi_controller_structure}
+\end{equation}
+
+\noindent{}The current command in \eqref{eq:pi_controller_structure} is thus defined as the sum of products proportional to velocity ($v k_p$) and the integral of velocity ($\frac{v}{j \omega} k_i$, i.e., position).
+
 
 % ------------------------------------------------------------------
 \subsection{Modeling with a network diagram}\label{sec:modeling_with_a_network_diagram}
@@ -439,6 +456,8 @@ We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later d
         \caption{Circuit diagrams representing a wave energy converter. Points 1, 2, 3, and 4 are consistent throughout the different diagrams. \rc{XX-direction of $I_{\textrm{out}}$} \dg{XX: in b) Zd block is missing}}
         \label{fig:wec_as_multiport_circuits}
 \end{figure}
+
+\clearpage
 
 % ------------------------------------------------------------------
 \subsubsection{PTO impedance matrix}\label{sec:pto_impedance_matrix}
@@ -463,8 +482,6 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
 \end{equation}
 
 Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of interest presented in Section~\ref{sec:dynamic_and_kinematic_equations}, the elements of the impedance matrix in \eqref{eq:Z_mat_def} may be written out as follows.
-
-\clearpage
 
 \begin{subequations}
         \begin{align}
@@ -527,8 +544,6 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 
 \noindent{}Similarly, the expression for the second output of \eqref{eq:Z_mat_def} may be rearranged as
 
-
-
 \begin{subequations}
         \begin{align}
                 \forall_{\textrm{out}} = Z_{21} v + Z_{22} I_{\textrm{out}} \label{eq:Zout_Vout_1} \\[0.5em]
@@ -563,7 +578,8 @@ As shown in  \cite{Bacelli:2021aa}, to maximize power transferred to the load, w
 \label{eq:bi_conj_matching}
 \end{subequations}
 
-\noindent{}Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z_{\textrm{out}}$ may be expanded, giving us some insight into the design implications of the bi-conjugate impedance matching condition specified by \eqref{eq:bi_conj_matching}
+\noindent{}From \eqref{eq:bi_conj_matching}, we can explicitly see how different factors of the device design affect impedance matching and therefore power delivered to the load.
+Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z_{\textrm{out}}$ may be expanded, giving us some insight into the design implications of the bi-conjugate impedance matching condition specified by \eqref{eq:bi_conj_matching}.
 
 \begin{subequations}
 \begin{align}
@@ -782,36 +798,18 @@ At the hydrodynamic resonance ($\sim 0.65$\,Hz), both controllers have zero phas
 \rc{XX-shouldn't the electrical maximizing controller have zero phase at another frequency?}
 Away from resonance, the phase of the two controllers differ dramatically.
 Furthermore, the transducer gain of the two systems are dramatically different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} electrical power.
-\rc{XX\dots{}}
-% The power produced by these controllers is shown in Table~\ref{tab:mech_controller_vs_elec_controller_power}.
 
-% \begin{table}[tb]
-%         \caption{Power absorption for controllers that maximize mechanical versus electrical power. \rc{XX-different sea states}}
-%         \label{tab:mech_controller_vs_elec_controller_power}
-%         \centering
+As noted in Section~\ref{sec:pto_input_and_output_impedances}, a controller is needed to realize a desired load impedance.
+While higher-order controllers can \emph{approach} a perfect realization of the optimal load impedance per \eqref{eq:bi_conj_matching_out}, perfect matching at all frequencies cannot be achieved in practice\footnote{\rc{Bode-Fano limit\dots{}XX}}.
+However, as noted in \cite{Coe2020a}, real ocean sea states have relatively narrow bandwidths, meaning that a given controller only need match desired load impedance matters over a narrow frequency range -- the controller can be updated to accommodate changing sea states \rc{XX-cite}.
+These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_controllers_real_imag}, where controllers are tuned for waves with frequencies XX, XX, and XX\,Hz.
 
-%         \begin{tabular}{rcc}
-%         \toprule
-%          & Mechanical [W] & Electrical [W] \\ 
-%         \midrule
-%         Max. mech.  power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) & XX & XX \\
-%         Max. elec.  power ($Z_\ell = Z_{\mathrm{out}}^*$) & XX & XX \\
-%         \bottomrule
-%         \end{tabular}
-% \end{table}
-
-% \rc{
-% \begin{itemize}
-%         \item XX-Compare $Z_\ell$ vs. $Z_{\textrm{out}}$ for different realistic options of $Z_{\ell m}$
-%         \begin{itemize}
-%                 \item $Z_{\ell m} = Z_i^*$
-%                 \item $Z_{\ell m} = \Re \{ Z_i^* \}$
-%                 \item $Z_{\textrm{out}} = Z_\ell^*$ (the true optimal controller)
-%         \end{itemize}
-%         \item $P_m$ and $P_e$ for each of the above scenarios
-%         \item XX-do the elec. and mech. maximizing controllers look more alike as you re-design the hardware (e.g., add negative spring)?
-% \end{itemize}
-% }
+\begin{figure}[tb]
+        \centering
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_pi_controllers_real_imag.pdf}
+        \caption{\rc{XX-double check this}
+        \label{fig:gfx/wec_as_multiport_pi_controllers_real_imag}
+\end{figure}
 
 % ------------------------------------------------------------------
 \subsection{PTO co-design}\label{sec:pto_codesign}
