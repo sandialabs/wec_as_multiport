@@ -630,6 +630,19 @@ The transducer gain is the ratio of power delivered to the load to the power ava
 
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
+\ak{To design optimal load in order to maximize the power flow from the source to the load, we can simplify the upstream components using Thevenin's theorem. 
+The theorem states that a complex electrical network can be replaced by an equivalent circuit, known as the Thevenin equivalent circuit, which consists of a single voltage source in series with a single impedance. 
+Using \eqref{eq:eom_rectilinear_motion} and the equation of the two-port network \eqref{fig:wec_as_multiport_circuits}, the following follows:}
+\begin{subequations}
+        \begin{align}
+                F_{\textrm{exc}} &= Z_i v + Z_{11} v + Z_{12}I_{\textrm{out}} \\
+                v &= \frac{F_{\textrm{exc}} - Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} \\
+                \forall_{\textrm{out}}  &= Z_{21}\frac{F_{\textrm{exc}} - Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} + Z_{22}I_{\textrm{out}} \\
+                &= \frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc} + \left(Z_{22} - \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right) I_{\textrm{out}} \\
+                &= F_{\textrm{th}} + Z_{\textrm{th}}I_{\textrm{out}}
+        \end{align}
+\end{subequations}
+\ak{Using maximum power transfer theorem from circuit theory and the load impedance defined in \eqref{eq:load_impedance}, maximum power transfer occurs when $ Z_\ell = Z_{\textrm{th}}^*$ }
 
 The Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$) as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
 The Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
