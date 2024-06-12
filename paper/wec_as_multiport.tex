@@ -626,6 +626,40 @@ The transducer gain is the ratio of power delivered to the load to the power ava
 \end{aligned} \label{eq:transducer_gain}
 \end{equation}
 
+
+\ak{Let $P_{\textrm{AVS}}$ be the power avaible at the source, $P_{\textrm{AVN}}$ be the power available at the output of the network, $P_{\textrm{in}}$ be the power delivered to the input port of the network, and $P_\ell$ be the power delivered to the load.
+$P_{\textrm{AVS}}$ is defined when $Z_{\textrm{in}} = Z_i^*$ and $P_{\textrm{AVN}}$ is defined when $Z_{\ell} = Z_{\textrm{out}}^*$ , }such that
+\begin{subequations}
+        \begin{align}
+                P_{\textrm{AVS}} &= \frac{1}{8} \frac{F_{\textrm{exc}}^2}{\Re \left\{ Z_i \right\}} \\
+                P_{\textrm{AVN}} &= \frac{1}{8} \frac{F_{\textrm{th}}^2}{\Re \left\{ Z_{\textrm{out}} \right\}} \\
+                P_{\textrm{in}} &= \frac{1}{2} v^2 \Re \left\{ Z_{\textrm{in}} \right\}\\
+                P_\ell &= \frac{1}{2} I_{\textrm{out}}^2 \Re \left\{ Z_{\ell} \right\}
+        \end{align}
+\end{subequations}
+We shall next define $G_T$ as the transducer power gain, $G_A$ as the available power gain, and $G_O$ as the operating power gain, such that
+\begin{subequations}
+        \begin{align}
+                G_T &= \frac{P_\ell}{P_{\textrm{AVS}}}  = 4\left(\frac{I_{\textrm{out}}}{F_{\textrm{exc}}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\} \\
+                &= 4\left(\frac{Z_{21}}{(Z_{\ell} - Z_{22})(Z_i + Z_{11}) + Z_{12}Z_{21}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}
+        \end{align}
+\end{subequations}
+\begin{subequations}
+        \begin{align}
+                G_A &= \frac{P_{\textrm{AVN}}}{P_{\textrm{AVS}}}  = \left(\frac{F_{\textrm{th}}}{F_{\textrm{exc}}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \\
+                &= \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} 
+        \end{align}
+\end{subequations}
+\begin{subequations}
+        \begin{align}
+                G_O &= \frac{P_\ell}{P_{\textrm{in}}}  = \left(\frac{I_{\textrm{out}}}{v}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \\
+                &=  \left(\frac{Z_{21}}{Z_{\ell} - Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} 
+        \end{align}
+\end{subequations}
+
+
+
+
 \rc{-XX no equation $P_i$ yet: probably better to present this first before obfuscating in the ratio}
 
 % ------------------------------------------------------------------
