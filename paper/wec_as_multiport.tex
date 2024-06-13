@@ -599,15 +599,16 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
 The Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$) as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
 The Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 Using \eqref{eq:eom_rectilinear_motion} and the equation of the two-port network \eqref{fig:wec_as_multiport_circuits}, the following follows:
-\begin{subequations}
-        \begin{align}
+\begin{equation}
+        \nonumber
+        \begin{split}
                 F_{\textrm{exc}} &= Z_i v + Z_{11} v + Z_{12}I_{\textrm{out}} \\
                 v &= \frac{F_{\textrm{exc}} - Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} \\
                 \forall_{\textrm{out}}  &= Z_{21}\left(\frac{F_{\textrm{exc}} - Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}}\right) + Z_{22}I_{\textrm{out}} \\
                 &= \frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc} + \left(Z_{22} - \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right) I_{\textrm{out}} \\
                 &= F_{\textrm{th}} + Z_{\textrm{th}}I_{\textrm{out}}
-        \end{align}
-\end{subequations}
+        \end{split}
+\end{equation}
 Reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
 Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{\textrm{out}}=0$).
 \begin{subequations}
@@ -626,12 +627,6 @@ We may consider the well-known impedance matching condition for the Th\'{e}venin
 \end{subequations}
 \noindent{}Here, in \eqref{eq:impedance_matching_thevenin_2}, we have restated \eqref{eq:bi_conj_matching_out}.
 Thus, these two modes of representing the system are indeed equivalent and give the same condition for maximum power transfer.
-The Th\'{e}venin equivalent system gives a clear expression for the maximum power delivered to the load.
-
-\begin{equation}
-        \mathcal{P}_{\ell\textrm{,max}} = \frac{| F_{\textrm{th}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} }
-        = \left| \frac{ Z_{21} }{ Z_i + Z_{11} } \right| ^2 \frac{ | F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} } \label{eq:max_power_delivered_thevenin}
-\end{equation}
 
 As illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}, we may represent the WEC system in many different ways (\figurename~\ref{fig:wec_as_multiport_circuits}a, b, c, and f are all equivalent).
 These different representations have different utilities.
@@ -644,8 +639,7 @@ While not explored in this paper, a three-part impedance matching condition coul
 
 % ------------------------------------------------------------------
 \subsubsection{Power at the load}\label{sec:power_at_the_load}
-The complex power at the load is half the product of the effort ($\forall_{\textrm{out}}$) and complex conjugate flow ($I_{\textrm{out}}^*$) at the load \rc{XX-explain why complex conjugate of flow}.
-
+Complex power delivered to the load is defined as 
 \begin{equation}
 \begin{aligned}
         \mathcal{S}_{\ell} 
@@ -655,7 +649,6 @@ The complex power at the load is half the product of the effort ($\forall_{\text
         &= \frac{1}{2} Z_\ell \left| \frac{F_{\textrm{exc}} Z_{21}}{ ( Z_{22} + Z_\ell ) (Z_i + Z_{11}) - Z_{21} Z_{12}  } \right|^2 
 \end{aligned}
 \end{equation}
-
 \noindent{}We may write active, reactive, and apparent power at the load as.
 
 \begin{subequations}
@@ -666,7 +659,6 @@ The complex power at the load is half the product of the effort ($\forall_{\text
 \end{align}
 \label{eq:load_power_types}
 \end{subequations}
-
 \noindent{}The active power is power dissipated at the load.
 Returning to \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}, note that we have defined this load as the leads between the motor/generator and the motor controller.
 Thus, as defined, the activate power represents power into \rc{(XX-into implies positive:good)} the motor controller.
@@ -674,57 +666,58 @@ Note that there are additional losses and dynamics in the motor controller befor
 However, the motor controller dynamics occur at much higher frequencies than those in the rest of the system.
 For this reason, we may consider those losses separately and treat the motor controller as a static system (e.g., representing losses in the motor controller as a static function of motor torque and speed).
 
-The transducer gain is the ratio of power delivered to the load to the power available at the source (i.e., the ``wave-to-wire efficiency''). The power by a wave providing excitation force $F_{exc}$ \cite{Falnes:2002aa} is
+% \begin{equation}
+% \begin{aligned}
+%         G_T &= \frac{\mathcal{P}_{\ell}}{\mathcal{P}_{i}} \\
+%         &= \frac{4 \left| Z_{21} \right|^2 \Re \left\{ Z_\ell \right\} \Re \left\{ Z_i \right\} }
+%         {\left| (Z_{11} + Z_i)(Z_{22} + Z_\ell) - Z_{12} Z_{21} \right|^2}
+% \end{aligned} \label{eq:transducer_gain}
+% \end{equation}
 
+\rc{-XX no equation $\mathcal{P}_i$ yet: probably better to present this first before obfuscating in the ratio}
+
+When the condition \eqref{eq:bi_conj_matching_in} is satisfied, the maximum power that can be delivered to the power take-off (the input port of the two-port network) by a wave exerting an excitation force of $F_{exc}$ \cite{Falnes:2002aa} is
 \begin{equation}
-	XX move 36 here
+        \mathcal{P}_{\textrm{in,max}} = \frac{| F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{i}} \right\} }
 \end{equation}
-
-\noindent{} and thus the wave to wire efficiency can be expressed
-
+Similarly, when condition \eqref{eq:bi_conj_matching_out} is satisfied, the Th\'{e}venin equivalent system gives a clear expression for the maximum power delivered to the load.
 \begin{equation}
-\begin{aligned}
-        G_T &= \frac{\mathcal{P}_{\ell}}{\mathcal{P}_{i}} \\
-        &= \frac{4 \left| Z_{21} \right|^2 \Re \left\{ Z_\ell \right\} \Re \left\{ Z_i \right\} }
-        {\left| (Z_{11} + Z_i)(Z_{22} + Z_\ell) - Z_{12} Z_{21} \right|^2}
-\end{aligned} \label{eq:transducer_gain}
+        \mathcal{P}_{\ell\textrm{,max}} = \frac{| F_{\textrm{th}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} }
+        = \left| \frac{ Z_{21} }{ Z_i + Z_{11} } \right| ^2 \frac{ | F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} } \label{eq:max_power_delivered_thevenin}
 \end{equation}
-
-
-\ak{Let $P_{\textrm{AVS}}$ be the power avaible at the source, $P_{\textrm{AVN}}$ be the power available at the output of the network, $P_{\textrm{in}}$ be the power delivered to the input port of the network, and $P_\ell$ be the power delivered to the load.
-$P_{\textrm{AVS}}$ is defined when $Z_{\textrm{in}} = Z_i^*$ and $P_{\textrm{AVN}}$ is defined when $Z_{\ell} = Z_{\textrm{out}}^*$ , }such that
+If the impedances are not matched, power delivered to the power take-off $\mathcal{P}_{\textrm{in}}$ and power delievered to the load $\mathcal{P}_\ell$ are
 \begin{subequations}
         \begin{align}
-                P_{\textrm{AVS}} &= \frac{1}{8} \frac{F_{\textrm{exc}}^2}{\Re \left\{ Z_i \right\}} \\
-                P_{\textrm{AVN}} &= \frac{1}{8} \frac{F_{\textrm{th}}^2}{\Re \left\{ Z_{\textrm{out}} \right\}} \\
-                P_{\textrm{in}} &= \frac{1}{2} v^2 \Re \left\{ Z_{\textrm{in}} \right\}\\
-                P_\ell &= \frac{1}{2} I_{\textrm{out}}^2 \Re \left\{ Z_{\ell} \right\}
-        \end{align}
-\end{subequations}
-We shall next define $G_T$ as the transducer power gain, $G_A$ as the available power gain, and $G_O$ as the operating power gain, such that
-\begin{subequations}
-        \begin{align}
-                G_T &= \frac{P_\ell}{P_{\textrm{AVS}}}  = 4\left(\frac{I_{\textrm{out}}}{F_{\textrm{exc}}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\} \\
-                &= 4\left(\frac{Z_{21}}{(Z_{\ell} - Z_{22})(Z_i + Z_{11}) + Z_{12}Z_{21}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}
-        \end{align}
-\end{subequations}
-\begin{subequations}
-        \begin{align}
-                G_A &= \frac{P_{\textrm{AVN}}}{P_{\textrm{AVS}}}  = \left(\frac{F_{\textrm{th}}}{F_{\textrm{exc}}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \\
-                &= \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} 
-        \end{align}
-\end{subequations}
-\begin{subequations}
-        \begin{align}
-                G_O &= \frac{P_\ell}{P_{\textrm{in}}}  = \left(\frac{I_{\textrm{out}}}{v}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \\
-                &=  \left(\frac{Z_{21}}{Z_{\ell} - Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} 
+                \mathcal{P}_{\textrm{in}} &= \frac{1}{2} v^2 \Re \left\{ Z_{\textrm{in}} \right\}\\
+                \mathcal{P}_\ell &= \frac{1}{2} I_{\textrm{out}}^2 \Re \left\{ Z_{\ell} \right\}
         \end{align}
 \end{subequations}
 
+Next, we provide three power gains (ratio of output power to input power) that are useful for system analysis. 
+They are 
+\begin{itemize}
+        \item transducer power gain $G_T$: the ratio of power delivered to the load to the maximum power available at the source (i.e., the ``wave-to-wire efficiency'')
+        \item available power gain $G_A$: the ratio of maximum power delivered to the load to the maximum power available at the source, and \ak{XX- Ideal efficiency?}
+        \item operating power gain $G_O$: the ratio of power delivered to the load to the power delievered to the power take-off \ak{XX- PTO efficiency?}
+\end{itemize}
+\begin{subequations}
+        \begin{align}
+                G_T &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in,max}}} \nonumber \\
+                &= 4\left(\frac{I_{\textrm{out}}}{F_{\textrm{exc}}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}  \nonumber \\
+                &= \frac{4 Z_{21}^2 \Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}}{((Z_{\ell} - Z_{22})(Z_i + Z_{11}) + Z_{12}Z_{21})^2} \label{eq:transducer_gain}
+        \end{align}
+        \begin{align}
+                G_A &= \frac{\mathcal{P}_{\ell\textrm{,max}}}{\mathcal{P}_{\textrm{in,max}}}  \nonumber \\
+                &= \left(\frac{F_{\textrm{th}}}{F_{\textrm{exc}}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \nonumber \\
+                &= \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \label{eq:available_gain}
+        \end{align}
+        \begin{align}
+                G_O &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in}}}  \nonumber \\
+                &= \left(\frac{I_{\textrm{out}}}{v}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \nonumber \\
+                &=  \left(\frac{Z_{21}}{Z_{\ell} - Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \label{eq:operating_gain}
+        \end{align}
+\end{subequations}
 
-
-
-\rc{-XX no equation $P_i$ yet: probably better to present this first before obfuscating in the ratio}
 
 % ------------------------------------------------------------------
 \section{Illustrative examples}\label{sec:illustrative_examples}
@@ -881,7 +874,7 @@ XX-show that, for a wind turbine, \eqref{eq:bi_conj_matching} reduces to minimiz
 XX-How does reducing the real part of the impedance factor in?}
 
 \begin{equation}
-        P_{in} = \frac{ | F_{\textrm{exc}} |^2 }{8 \Re \{ Z_i \}}
+        \mathcal{P}_{in} = \frac{ | F_{\textrm{exc}} |^2 }{8 \Re \{ Z_i \}}
 \end{equation}
 
 \rc{XX-Perhaps you must also consider how changes in $Z_i$ affect $H$ (and therefore $F_{\textrm{exc}}$)?
