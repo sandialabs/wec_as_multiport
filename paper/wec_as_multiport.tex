@@ -317,7 +317,7 @@ We will first present the WEC and its governing equations in further detail (Sec
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_phyiscal_diagram.pdf}
-        \caption{WaveBot device diagram. \rc{XX-note Park transform and modeling boundary}}
+        \caption{WaveBot device diagram.}
         \label{fig:wec_as_multiport_phyiscal_diagram}
 \end{figure}
 
@@ -368,7 +368,7 @@ The excitation force ($F_{\textrm{exc}}$) is determined from the excitation tran
 \begin{figure}[tb]
         \centering
         \includegraphics[width=0.8\columnwidth]{wec_as_multiport_block_diagram.pdf}
-        \caption{Generic block diagram for a wave energy converter. XX THIS IS WRONG SHOULD BE 1/Zi}
+        \caption{Generic block diagram for a wave energy converter.}
         \label{fig:wec_as_multiport_block_diagram}
 \end{figure}
 
@@ -398,7 +398,7 @@ Thus, we may describe the drive train dynamics as follows.
 \end{subequations}
 
 The electric motor/generator can be considered to have the composite characteristics of a pure gyrator and an impedance.
-For the gyrator element, the machine has characteristic torque constant (gyration modulus) $k_\tau$ that relates back EMF voltage ($\forall_{\textrm{emf}}$) to shaft speed and electromagnetic torque to current ($I_{\textrm{out}}$).
+For the gyrator element, the machine has characteristic torque constant (gyration modulus) $k_\tau$ that relates back EMF voltage ($\forall_{\textrm{emf}}$) to shaft speed and electromagnetic torque to the quadrature current ($I_{\textrm{out}}$) when using a Park power invariant transformation.
 
 \begin{subequations}
         \begin{gather}
@@ -596,7 +596,7 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
 
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
-The Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$) as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
+Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$) as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
 The Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 Using \eqref{eq:eom_rectilinear_motion} and the equation of the two-port network \eqref{fig:wec_as_multiport_circuits}, the following follows:
 \begin{equation}
@@ -1005,12 +1005,9 @@ XX-cross flow turbines and flapping devices\dots{}
 \section{Discussion and conclusions}
 The interrelated nature of the WEC design process becomes quite clear when viewed as an impedance matching problem.
 In practice, the bi-conjugate impedance matching requirement expressed by \eqref{eq:bi_conj_matching} cannot be perfectly satisfied at all frequencies and the cost of improving the matching condition must be balanced with the resulting benefits.
-However, we can quite easily restrict our frequency band of interest given then nature of ocean waves \cite{Coe2020a}.
-Furthermore, constraints (e.g., maximum torque from a generator or maximum travel of a linear piston) and nonlinear dynamics must be considered.
-
+Furthermore, this formulation does not capture constraints (e.g., maximum torque from a generator or maximum travel of a linear piston) and nonlinear dynamics, which eventually must be considered.
 Given these practical considerations, numerical optimization becomes a useful tool becomes useful in practice.
-Nonetheless, the linear modeling approach presented here can provide a useful starting point, in particular XX
-% We should also remember that, in practice, we must restrict our focus to a finite bandwidth of interest, both because of the band-limited nature of ocean waves (see, e.g., \cite{Coe2020a}) and because a practical design that balances cost and revenue likely needs to be discerning about the added value of improved performance.
+Nonetheless, the linear modeling approach presented here provides a critical starting point and foundation to build from.
 
 % ------------------------------------------------------------------
 \section{Acknowledgements}
