@@ -101,7 +101,7 @@ Wave energy converters (WECs) must be designed to capture a purely oscillatory p
 Amongst other energy generation technologies (e.g., wind turbines, hydro-electric dams, nuclear power plants), this is a unique characteristic.
 However, given the broad application of AC electrical power, there are useful tools at the disposal of a WEC designer for maximizing useful power output.
 
-The concept of impedance matching to minimize reflections has been applied in wave energy since at least \rc{XX-find first reference}.
+The concept of impedance matching to minimize reflections has been applied in wave energy since at least the 1970s \cite{Falnes:1980aa}.
 For reasons that are unclear, the concept was mostly only applied to the conversion stage for transferring power from the waves to the WEC's hull/input of the power take-off (PTO) system.
 As will be discussed in further detail in this paper, disregarding the subsequent power conversion stages between mechanical power on the hull and useful (e.g., electrical) power at the output of the machine has a number of adverse repercussions.
 
@@ -154,7 +154,7 @@ This framework is then applied in a number of illustrative case-studies (Section
 
 % ------------------------------------------------------------------
 \section{Two-port networks}\label{sec:two_port_networks}
-To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the two-port network model popular in electronics and microwave systems \rc{XX-cite}.
+To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the two-port network model popular in electronics and microwave systems \cite{Marrocco:2008aa}.
 We may describe the system with a two-port impedance model, relating the effort ($e_i$) and flow ($q_i$) at each port (see \figurename~\ref{fig:wec_as_multiport_general_two_port_network}).
 The products of the effort and flow variables on each port is power.
 Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_general_two_port_network}, which result in a convention of power flow into the two-port network from both sides equal zero and the two-port network is lossless. 
@@ -788,7 +788,7 @@ Furthermore, the transducer gain of the two systems are dramatically different, 
 
 As noted in Section~\ref{sec:pto_input_and_output_impedances}, a controller is needed to realize a desired load impedance.
 While higher-order controllers can \emph{approach} a perfect realization of the optimal load impedance per \eqref{eq:bi_conj_matching_out}, perfect matching at all frequencies cannot be achieved in practice\footnote{\rc{Bode-Fano limit\dots{}XX}}.
-However, as noted in \cite{Coe2020a}, real ocean sea states have relatively narrow bandwidths, meaning that a given controller only need match desired load impedance matters over a narrow frequency range -- the controller can be updated to accommodate changing sea states \rc{XX-cite}.
+However, as noted in \cite{Coe2020a}, real ocean sea states have relatively narrow bandwidths, meaning that a given controller only need match desired load impedance matters over a narrow frequency range -- the controller can be updated to accommodate changing sea states \cite{Forbush:2022aa}.
 These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_controllers_real_imag}, where controllers are tuned for waves with frequencies XX, XX, and XX\,Hz.
 
 \begin{figure}[tb]
