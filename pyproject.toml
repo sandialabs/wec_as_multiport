@@ -33,4 +33,6 @@ dependencies = [
     "ipython",
     "wecopttool[geometry]",
     "pytest",
+    "matlabengine",
+    "ipywidgets",
 ]

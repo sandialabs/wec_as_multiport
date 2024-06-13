@@ -1,8 +1,11 @@
 paper/wec_as_multiport.pdf
-wec_as_multiport.nc
+*.nc
+matlab/*.png
 
+## VS Code
 *.vscode/*
 
+## IPE
 *.pdf.autosave.ipe
 
 ## Python package
