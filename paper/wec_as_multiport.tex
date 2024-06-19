@@ -230,7 +230,8 @@ Transformers and gyrators (see \figurename~\ref{fig:wec_as_multiport_transformer
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=\columnwidth]{wec_as_multiport_transformer_gyrator.pdf}
+        % \includegraphics[width=\columnwidth]{wec_as_multiport_transformer_gyrator.pdf}   
+        \includegraphics[width=\columnwidth]{wec_as_multiport_transformer_gyrator_impedance.pdf}
         \caption{Transformer and gyrator diagrams and mathematics.}
         \label{fig:wec_as_multiport_transformer_gyrator}
 \end{figure}
@@ -305,6 +306,34 @@ In that case, the gyration modulus is the motor constant ($\gamma_g=k_\tau$).
 Note that a cascade of two gyrators has the composite effect of a transformer.
 For example, two lossless electric motor/generators with coupled shafts would be equivalent to an electrical transformer with a winding ratio of $\gamma_t=N_p/N_s=\gamma_{g1}/\gamma_{g2}$.
 Similarly, coupling two lossless electric motor/generators electrically coupled would be equivalent to a mechanical transmission with a gear ratio of \rc{XX\dots{}}.
+
+\subsection{Impedances (one-ports)}\label{sec:gyrators}
+\dg{XX: Should we incorporate an impedance / resistor in Fig3? Also, we need to introduce impedances. I don't know if I'm doing this justice right here... }\\
+To incorporate dynamics and losses into the system description we utilize one-port elements, impedances $Z$, which describe how components impede flow by opposing effort. In general, for an impedance in a close loop we may write,
+
+\begin{subequations}
+	\begin{align}
+		e_1 = Zq_1 + e_2 \\
+		q_1 = -q_2 ,
+	\end{align}
+	\label{eq:impedance_eom}
+\end{subequations}
+
+\noindent{} which can be equivalently represented in $ABCD$ form as,
+
+\begin{equation}
+	\begin{bmatrix}
+		e_1 \\ q_1
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1 & Z \\ 0 & 1
+	\end{bmatrix}
+	\begin{bmatrix}
+		e_2 \\ - q_2
+	\end{bmatrix} .
+	\label{eq:impedance_abcd}
+\end{equation}
 
 
 % ------------------------------------------------------------------
@@ -515,10 +544,9 @@ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of inte
         \end{bmatrix}.
         \label{eq:pto_impedance}
  \end{equation}
-
- \noindent{}Note that \eqref{eq:pto_impedance} may also be arrived to by cascading the the one- and two-port elements shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b. 
-
-
+% ------------------------------------------------------------------
+\subsubsection{PTO transmission matrix}\label{sec:pto_transmission_matrix}
+ The PTO impedance matrix \eqref{eq:pto_impedance} may also be arrived to by cascading the one- and two-port elements, shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b, by interrelating the overall transmission matrix ($ABCD$) with \eqref{eq:abcd_to_Z}.
 % ------------------------------------------------------------------
 \subsubsection{PTO input and output impedances}\label{sec:pto_input_and_output_impedances}
 
@@ -1001,7 +1029,7 @@ XX-cross flow turbines and flapping devices\dots{}
 % % i \omega I_d  + B_d  + \frac{K_d}{i \omega}
 % % R_w + j \omega L_w
 
-\input{secSteadyInput}
+%\input{secSteadyInput}
 
 % ------------------------------------------------------------------
 \section{Discussion and conclusions}
