@@ -296,7 +296,7 @@ In $ABCD$ form, the two-port system can be represented as
         \begin{bmatrix}
                 e_2 \\ - q_2
         \end{bmatrix} .
-        \label{eq:transformer_abcd}
+        \label{eq:gyrator_abcd}
 \end{equation}
 
 \noindent{}A electric motor/generator is a very relevant example of a gyrator.
@@ -510,7 +510,7 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
         \end{bmatrix} .
 \end{equation}
 
-Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of interest presented in Section~\ref{sec:dynamic_and_kinematic_equations}, the elements of the impedance matrix in \eqref{eq:Z_mat_def} may be written out as follows.
+\noindent{} Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of interest presented in Section~\ref{sec:dynamic_and_kinematic_equations}, the elements of the impedance matrix in \eqref{eq:Z_mat_def} may be written out as follows.
 
 \begin{subequations}
         \begin{align}
@@ -546,7 +546,71 @@ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of inte
  \end{equation}
 % ------------------------------------------------------------------
 \subsubsection{PTO transmission matrix}\label{sec:pto_transmission_matrix}
- The PTO impedance matrix \eqref{eq:pto_impedance} may also be arrived to by cascading the one- and two-port elements, shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b, by interrelating the overall transmission matrix ($ABCD$) with \eqref{eq:abcd_to_Z}.
+ The PTO impedance matrix \eqref{eq:pto_impedance} may also be arrived to by cascading the one- and two-port elements, shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b, by interrelating the PTO-$ABCD$ matrix
+ \begin{equation}
+ 	\label{eq:pto_ABCD_mat_def}
+ 	\begin{bmatrix} 
+ 		F_{\textrm{pto}} \\
+ 		v 
+ 	\end{bmatrix} 
+ 	= 
+	\begin{bmatrix} 
+		A_{\textrm{pto}} & B_{\textrm{pto}} \\ 
+		C_{\textrm{pto}} & D_{\textrm{pto}} 
+	\end{bmatrix}
+ 	\begin{bmatrix} 
+ 		\forall_{\textrm{out}} \\
+ 		I_{\textrm{out}} 
+ 	\end{bmatrix},
+ \end{equation}
+ \noindent{}with \eqref{eq:abcd_to_Z}.
+ This is convenient because the cascading matrices are multiplied in the same order that a network diagram would be drawn, from wave-to-wire.
+ Opening the circuit diagrams across 1-2 and 3-4 keeps the individual elements in this order: linear to rotary gear transformer, drive-train impedance, electric machine gyrator, and winding impedance. Using the general expressions for the individual elements \eqref{eq:transformer_abcd}, \eqref{eq:gyrator_abcd}, and \eqref{eq:impedance_abcd} yields, 
+ \begin{equation}
+ 	\label{eq:Z_cascade_to_ABCD}
+ 	\begin{bmatrix} 
+ 		F_{\textrm{pto}} \\
+ 		v 
+ 	\end{bmatrix} 
+ 	\! = \!
+ 	\begin{bmatrix} 
+ 		N & 0 \\ 
+ 		0 & 1/N 
+ 	\end{bmatrix} \!\!\!
+  	\begin{bmatrix} 
+	 	1 & Z_d \\ 
+ 		0 & 1 
+	 \end{bmatrix}  \!\!\!
+   	\begin{bmatrix} 
+	 	0 & k_{\tau} \\ 
+	 	1/k_{\tau} & 0 
+	 \end{bmatrix} \!\!\!
+   	\begin{bmatrix} 
+	 	1 & Z_w \\ 
+	 	0 & 1 
+	 \end{bmatrix} \!
+ 	\begin{bmatrix} 
+ 		\forall_{\textrm{out}} \\
+ 		I_{\textrm{out}} 
+ 	\end{bmatrix} \!, 
+ \end{equation}
+ which gives
+  \begin{equation}
+ 	Z_{\textrm{pto}}^{ABCD} 
+ 	= 
+ 	\begin{bmatrix} 
+ 		A_{\textrm{pto}} & B_{\textrm{pto}} \\ 
+ 		C_{\textrm{pto}} & D_{\textrm{pto}} 
+ 	\end{bmatrix}
+ 	=
+ 	\begin{bmatrix} 
+ 		\frac{N}{k_{\tau}}  Z_d			& k_\tau N +\frac{N}{k_{\tau}}  Z_dZ_w  \\
+ 		\frac{1}{k_{\tau}N}           	& \frac{Z_w}{k_{\tau}N} 
+ 	\end{bmatrix}.
+ 	\label{eq:pto_abcd}
+ \end{equation}
+
+\noindent{}The PTO-$ABCD$ transmission matrix enables direct conversion from electrical power variables to mechanical, and reciprocally, if the mechanical power variables are known the inverse of \eqref{eq:pto_abcd} allows quick computation of the electrical counter parts.
 % ------------------------------------------------------------------
 \subsubsection{PTO input and output impedances}\label{sec:pto_input_and_output_impedances}
 
