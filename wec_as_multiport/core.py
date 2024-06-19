@@ -21,6 +21,7 @@ __all__ = [
     "pid_controller",
 ]
 
+
 class WEC:
 
     def __init__(self, omega, N, Kt, Rw, Lw, Jd, Bd, Kd, Zi, Hexc) -> None:
@@ -156,8 +157,8 @@ class WEC:
         if Zl is None:
             Zl = self.Zl_opt
         return 4*np.abs(self.Zpto[1, 0])**2 * np.real(Zl)*np.real(self.Zi) \
-            / np.abs((self.Zpto[0, 0] + self.Zi)*(self.Zpto[1, 1] + Zl) \
-                - self.Zpto[0, 1]*self.Zpto[1, 0])**2
+            / np.abs((self.Zpto[0, 0] + self.Zi)*(self.Zpto[1, 1] + Zl)
+                     - self.Zpto[0, 1]*self.Zpto[1, 0])**2
 
     def Zlm(self, Zl) -> np.ndarray:
         """Mechanical load impedance"""
@@ -204,12 +205,15 @@ class WEC:
     def max_active_power(self, Fexc):
         """Maximum active power"""
         return __max_active_power__(self.Z_Thevenin, self.F_Thevenin(Fexc))
-    
+
     def max_active_power_mech(self, Fexc):
         """Maximum active mechanical power"""
         return __max_active_power__(self.Zi, Fexc)
-    
+
     def pi_opt(self, freq, use_i=True):
+        """Generate optimal PI controller for a given frequency"""
+        # TODO have the controller act on Iout based on v
+        # TODO write separate method/property (?) load impedance a feedback controller
         indx = np.argmin(np.abs(self.freq - freq))
         kp = np.real(np.conj(self.Z_Thevenin[indx]))
         if use_i is True:
@@ -253,12 +257,14 @@ def __Fexc__(Hexc, waves) -> np.ndarray:
     return Hexc * waves
 
 
-def __Zin__(Zpto, Zl) -> np.ndarray:
-    return Zpto[0, 0] - Zpto[0, 1] * Zpto[1, 0] / (Zpto[1, 1] + Zl)
+def __Zin__(Z_2port, Zl) -> np.ndarray:
+    return Z_2port[0, 0] - Z_2port[0, 1] * Z_2port[1, 0] \
+        / (Z_2port[1, 1] + Zl)
 
 
-def __Zout__(Zpto, Zi) -> np.ndarray:
-    return Zpto[1, 1] - Zpto[1, 0] * Zpto[0, 1] / (Zi + Zpto[0, 0])
+def __Zout__(Z_2port, Zi) -> np.ndarray:
+    return Z_2port[1, 1] - Z_2port[1, 0] * Z_2port[0, 1] \
+        / (Zi + Z_2port[0, 0])
 
 
 def figsize(wf=1, hf=1, columnwidth=250):
@@ -273,11 +279,12 @@ def figsize(wf=1, hf=1, columnwidth=250):
     """
 
     hf = hf/golden
-    fig_width_pt = columnwidth*wf 
+    fig_width_pt = columnwidth*wf
     inches_per_pt = 1.0/72.27               # Convert pt to inch
     fig_width = fig_width_pt*inches_per_pt  # width in inches
     fig_height = fig_width*hf      # height in inches
     return [fig_width, fig_height]
+
 
 def pid_controller(omega, kp=0, ki=0, kd=0) -> np.ndarray:
     return kp + 1j*ki/omega + kd*1j*omega

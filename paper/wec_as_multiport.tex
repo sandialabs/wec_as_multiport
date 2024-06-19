@@ -486,8 +486,6 @@ We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later d
         \label{fig:wec_as_multiport_circuits}
 \end{figure}
 
-\clearpage
-
 % ------------------------------------------------------------------
 \subsubsection{PTO impedance matrix}\label{sec:pto_impedance_matrix}
 
@@ -544,6 +542,7 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
         \end{bmatrix}.
         \label{eq:pto_impedance}
  \end{equation}
+
 % ------------------------------------------------------------------
 \subsubsection{PTO transmission matrix}\label{sec:pto_transmission_matrix}
  The PTO impedance matrix \eqref{eq:pto_impedance} may also be arrived to by cascading the one- and two-port elements, shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b, by interrelating the PTO-$ABCD$ matrix
@@ -643,6 +642,8 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
         \end{align} 
         \label{eq:Zout_Vout}
 \end{subequations}
+
+\clearpage
 
 \noindent{}Finally, substituting \eqref{eq:Zout_Fpto_3} into \eqref{eq:Zout_Vout_2} gives an expression for the PTO output port impedance.
 
@@ -768,7 +769,7 @@ For this reason, we may consider those losses separately and treat the motor con
 
 \rc{-XX no equation $\mathcal{P}_i$ yet: probably better to present this first before obfuscating in the ratio}
 
-When the condition \eqref{eq:bi_conj_matching_in} is satisfied, the maximum power that can be delivered to the power take-off (the input port of the two-port network) by a wave exerting an excitation force of $F_{exc}$ \cite{Falnes:2002aa} is
+When the condition \eqref{eq:bi_conj_matching_in} is satisfied, the maximum power that can be delivered to the power take-off (the input port of the two-port network) by a wave exerting an excitation force of $F_{\textrm{exc}}$ \cite{Falnes:2002aa} is \rc{XX-explain limitations of this}
 \begin{equation}
         \mathcal{P}_{\textrm{in,max}} = \frac{| F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{i}} \right\} }
 \end{equation}
@@ -949,7 +950,7 @@ Different WEC archetypes will have different design parameters; for example, an 
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_spring_inertia_transducer_gains.pdf}
-        \caption{\rc{XX-improve colors} \rc{XX-add legend or arrows?}}
+        \caption{\rc{XX-improve colors} \rc{XX-add legend or arrows?} \rc{XX-how do PI controllers look for each of these?} \rc{XX-if you have no losses, does this hit unity?}}
         \label{fig:wec_as_multiport_spring_inertia_transducer_gains}
 \end{figure}
 
@@ -1093,7 +1094,7 @@ XX-cross flow turbines and flapping devices\dots{}
 % % i \omega I_d  + B_d  + \frac{K_d}{i \omega}
 % % R_w + j \omega L_w
 
-%\input{secSteadyInput}
+% \input{secSteadyInput}
 
 % ------------------------------------------------------------------
 \section{Discussion and conclusions}
