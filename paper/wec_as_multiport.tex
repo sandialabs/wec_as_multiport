@@ -959,40 +959,40 @@ Different WEC archetypes will have different design parameters; for example, an 
 Much of the theory presented here could be interpreted to indicate that WECs are a special case amongst energy conversion systems when compared with, e.g., wind turbines, which utilize a mostly steady power input.
 However, it is actually the opposite: the bi-conjugate impedance matching condition given by \eqref{eq:bi_conj_matching} is general and the steady input energy conversion systems are a special case of that general theory.
 
-Assuming a similar PTO architecture, the expressions XX remain the same.
-The fundamental difference is that the excitation is steady ($\Im \{ Fe \} = 0$) and has no frequency dependence.
+%Assuming a similar PTO architecture, the expressions XX remain the same.
+%The fundamental difference is that the excitation is steady ($\Im \{ Fe \} = 0$) and has no frequency dependence.
 
-\rc{
-XX-show that, for a wind turbine, \eqref{eq:bi_conj_matching} reduces to minimizing losses -- actually not sure if this follows from \eqref{eq:bi_conj_matching} or not? -- and setting $Z_\ell$ to some real value.
-XX-How does reducing the real part of the impedance factor in?}
+%\rc{
+%XX-show that, for a wind turbine, \eqref{eq:bi_conj_matching} reduces to minimizing losses -- actually not sure if this follows from \eqref{eq:bi_conj_matching} or not? -- and setting $Z_\ell$ to some real value.
+%XX-How does reducing the real part of the impedance factor in?}
 
-\begin{equation}
-        \mathcal{P}_{in} = \frac{ | F_{\textrm{exc}} |^2 }{8 \Re \{ Z_i \}}
-\end{equation}
+%\begin{equation}
+%        \mathcal{P}_{in} = \frac{ | F_{\textrm{exc}} |^2 }{8 \Re \{ Z_i \}}
+%\end{equation}
 
-\rc{XX-Perhaps you must also consider how changes in $Z_i$ affect $H$ (and therefore $F_{\textrm{exc}}$)?
-XX-The Haskind relations connect the excitation transfer function and radiation damping ($\Re \{ Z_i \}$) \cite[pg. 304]{Newman:1978aa}.
-For example, for a symmetric 2D body,}
+%\rc{XX-Perhaps you must also consider how changes in $Z_i$ affect $H$ (and therefore $F_{\textrm{exc}}$)?
+%XX-The Haskind relations connect the excitation transfer function and radiation damping ($\Re \{ Z_i \}$) \cite[pg. 304]{Newman:1978aa}.
+%For example, for a symmetric 2D body,}
 
-\begin{equation}
-        B_{ii}(\omega) = \frac{| H_{ii} |^2}{2 \rho g v_g} .
-\end{equation}
+%\begin{equation}
+ %       B_{ii}(\omega) = \frac{| H_{ii} |^2}{2 \rho g v_g} .
+%\end{equation}
 
-\rc{
-\noindent{}Alternatively, Falnes presents \cite[pg. 149]{Falnes:2002aa} the following for an axisymmetric body in heave.}
+%{
+%\noindent{}Alternatively, Falnes presents \cite[pg. 149]{Falnes:2002aa} the following for an axisymmetric body in heave.}
 
-\begin{equation}
-        B_{33}(\omega) = \frac{k}{8J} | F_{e,3} |^2
-\end{equation}
+%\begin{equation}
+%        B_{33}(\omega) = \frac{k}{8J} | F_{e,3} |^2
+%\end{equation}
 
-\rc{
-\noindent{}Therefore, increases in the radiation damping result in quadratic increases in the excitation transfer function.
-XX-cross flow turbines and flapping devices\dots{}
-\begin{itemize}
-        \item Input power is steady? - or is it oscillatory once you get moving?
-        \item Doesn't this mean that by oscillating you are creating a mismatch?
-        \item Gust control for wind turbines - they inject power to speed up, if analyzed in the frequency domain, this is impedance conjugate matching controller
-\end{itemize}}
+%\rc{
+%\noindent{}Therefore, increases in the radiation damping result in quadratic increases in the excitation transfer function.
+%XX-cross flow turbines and flapping devices\dots{}
+%\begin{itemize}
+ %       \item Input power is steady? - or is it oscillatory once you get moving?
+ %       \item Doesn't this mean that by oscillating you are creating a mismatch?
+ %       \item Gust control for wind turbines - they inject power to speed up, if analyzed in the frequency domain, this is impedance conjugate matching controller
+%\end{itemize}}
 
 
 % \cleardoublepage
@@ -1094,7 +1094,7 @@ XX-cross flow turbines and flapping devices\dots{}
 % % i \omega I_d  + B_d  + \frac{K_d}{i \omega}
 % % R_w + j \omega L_w
 
-% \input{secSteadyInput}
+\input{secSteadyInput}
 
 % ------------------------------------------------------------------
 \section{Discussion and conclusions}
