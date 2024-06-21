@@ -452,24 +452,25 @@ Finally, we may define a load impedance ($Z_\ell$) that represents how current i
         \label{eq:load_impedance}
 \end{equation}
 
+\ak{I edited below to use $v_s$ instead of $v$, since the velocity should be the motor's angular velocity.}
 \noindent{}In practice, the load impedance will be defined by a controller ($C$).
-It is generally convenient to implement a feedback controller that commands motor current based on the velocity ($v$ in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}).
+It is generally convenient to implement a feedback controller that commands motor current based on the angular velocity ($v_s$ in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}).
 
 \begin{subequations}
 \begin{gather}
-        I_{\textrm{out}} = C v \\
-        Z_\ell = \frac{N}{C} k_\tau - Z_w     
+        I_{\textrm{out}} = C v_s \\  
+        Z_\ell = \frac{1}{C} k_\tau - Z_w     
 \end{gather}
 \end{subequations}
 
 \noindent{}While many forms may be used for $C$, a simple proportional-integral (PI) structure, can be quite effective \cite{Coe2020a}.
 
 \begin{equation}
-        C_{PI} = v k_p + \frac{v}{j \omega} k_i \label{eq:pi_controller_structure}
+        C_{PI} = k_p + \frac{1}{j \omega} k_i 
+        \label{eq:pi_controller_structure}
 \end{equation}
 
-\noindent{}The current command in \eqref{eq:pi_controller_structure} is thus defined as the sum of products proportional to velocity ($v k_p$) and the integral of velocity ($\frac{v}{j \omega} k_i$, i.e., position).
-
+\noindent{}The current command in \eqref{eq:pi_controller_structure} is thus defined as the sum of products proportional to velocity ($v_s k_p$) and the integral of velocity ($\frac{v_s}{j \omega} k_i$, i.e., position).
 
 % ------------------------------------------------------------------
 \subsection{Modeling with a network diagram}\label{sec:modeling_with_a_network_diagram}
@@ -615,10 +616,10 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
 
 As noted in Section~\ref{sec:two_port_networks}, two-port networks may be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
 The ``output impedance'' of the PTO ($Z_{\textrm{out}}$) is the impedance as seen by a source connected to the output port of PTO element (see \figurename~\ref{fig:wec_as_multiport_circuits}d).
-As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{exc}} = 0$) and express the impedance as the ratio of effort to flow variables at the output port.
+As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{exc}} = 0$) and express the impedance as the ratio of effort to flow variables at the output port. Note that the negative sign flips the direction of current $I_{\textrm{out}}$ to follow the convention that impedance/load that absorbs power has current flowing into the positive terminal~\cite{CircuitFundamental}. 
 
 \begin{equation}
-        Z_{\textrm{out}} = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg\vert_{F_{\textrm{exc}}=0}
+        Z_{\textrm{out}} = -\frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg\vert_{F_{\textrm{exc}}=0}
         \label{eq:Zout_1}
 \end{equation}
 
@@ -648,7 +649,7 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 \noindent{}Finally, substituting \eqref{eq:Zout_Fpto_3} into \eqref{eq:Zout_Vout_2} gives an expression for the PTO output port impedance.
 
 \begin{equation}
-        Z_{\textrm{out}} = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg\vert_{F_{\textrm{exc}}=0} = Z_{22} - \frac{Z_{12} Z_{21}}{Z_{i} + Z_{11}}
+        Z_{\textrm{out}} = - \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg\vert_{F_{\textrm{exc}}=0} = - Z_{22} + \frac{Z_{12} Z_{21}}{Z_{i} + Z_{11}}
         \label{eq:pto_output_port_impedance}
 \end{equation}
 
@@ -677,8 +678,8 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
 \begin{subequations}
 \begin{align}
         \begin{split}
-                Z_{\textrm{out}} &= Z_{22} - \frac{Z_{12} Z_{12}}{Z_{i} + Z_{11}} \\[0.5em]
-                &= - Z_w - \frac{k_\tau^2 N^2}{Z_i + Z_d N^2}
+                Z_{\textrm{out}} &= - Z_{22} + \frac{Z_{12} Z_{12}}{Z_{i} + Z_{11}} \\[0.5em]
+                &=  Z_w + \frac{k_\tau^2 N^2}{Z_i + Z_d N^2}
         \end{split}\label{eq:expanded_zin} \\[1em]
         \begin{split}
                 Z_{\textrm{in}} &= Z_{11} + \frac{Z_{12} \, Z_{21}}{Z_\ell - Z_{22}} \\[0.5em]
@@ -699,15 +700,15 @@ Using \eqref{eq:eom_rectilinear_motion} and the equation of the two-port network
                 v &= \frac{F_{\textrm{exc}} - Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} \\
                 \forall_{\textrm{out}}  &= Z_{21}\left(\frac{F_{\textrm{exc}} - Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}}\right) + Z_{22}I_{\textrm{out}} \\
                 &= \frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc} + \left(Z_{22} - \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right) I_{\textrm{out}} \\
-                &= F_{\textrm{th}} + Z_{\textrm{th}}I_{\textrm{out}}
+                &= F_{\textrm{th}} - Z_{\textrm{th}}I_{\textrm{out}}
         \end{split}
 \end{equation}
 Reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
 Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{\textrm{out}}=0$).
 \begin{subequations}
 \begin{gather}
-        Z_{\textrm{th}} = Z_{\textrm{out}} = Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\[0.5em]
-        F_{\textrm{th}} = \frac{F_{\textrm{exc}} Z_{21}}{Z_i + Z_{11}} \label{eq:Thevenin_force}
+        Z_{\textrm{th}} = Z_{\textrm{out}} = - Z_{22} + \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\[0.5em]
+        F_{\textrm{th}} = \frac{Z_{21}}{Z_i + Z_{11}}F_{\textrm{exc}}  \label{eq:Thevenin_force}
 \end{gather}
 \end{subequations}
 
@@ -732,14 +733,14 @@ While not explored in this paper, a three-part impedance matching condition coul
 
 % ------------------------------------------------------------------
 \subsubsection{Power at the load}\label{sec:power_at_the_load}
-Complex power delivered to the load is defined as 
+Average complex power delivered to the load is defined as 
 \begin{equation}
 \begin{aligned}
         \mathcal{S}_{\ell} 
         &= \frac{1}{2} \forall_{\textrm{out}} I_{\textrm{out}}^* \\
         &= \frac{1}{2} Z_\ell I_{\textrm{out}} I_{\textrm{out}}^* \\
         &= \frac{1}{2} Z_\ell | I_{\textrm{out}} |^2 \\
-        &= \frac{1}{2} Z_\ell \left| \frac{F_{\textrm{exc}} Z_{21}}{ ( Z_{22} + Z_\ell ) (Z_i + Z_{11}) - Z_{21} Z_{12}  } \right|^2 
+        &= \frac{1}{2} Z_\ell \left| \frac{F_{\textrm{exc}} Z_{21}}{ (Z_\ell - Z_{22}) (Z_i + Z_{11}) + Z_{21} Z_{12}  } \right|^2 
 \end{aligned}
 \end{equation}
 \noindent{}We may write active, reactive, and apparent power at the load as.
@@ -776,7 +777,7 @@ When the condition \eqref{eq:bi_conj_matching_in} is satisfied, the maximum powe
 Similarly, when condition \eqref{eq:bi_conj_matching_out} is satisfied, the Th\'{e}venin equivalent system gives a clear expression for the maximum power delivered to the load.
 \begin{equation}
         \mathcal{P}_{\ell\textrm{,max}} = \frac{| F_{\textrm{th}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} }
-        = \left| \frac{ Z_{21} }{ Z_i + Z_{11} } \right| ^2 \frac{ | F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} } \label{eq:max_power_delivered_thevenin}
+        = \left| \frac{ Z_{21} }{ Z_i + Z_{11} } \right| ^2 \frac{ | F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{out}} \right\} } \label{eq:max_power_delivered_thevenin}
 \end{equation}
 If the impedances are not matched, power delivered to the power take-off $\mathcal{P}_{\textrm{in}}$ and power delievered to the load $\mathcal{P}_\ell$ are
 \begin{subequations}
@@ -802,7 +803,7 @@ They are
         \begin{align}
                 G_A &= \frac{\mathcal{P}_{\ell\textrm{,max}}}{\mathcal{P}_{\textrm{in,max}}}  \nonumber \\
                 &= \left(\frac{F_{\textrm{th}}}{F_{\textrm{exc}}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \nonumber \\
-                &= \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \label{eq:available_gain}
+                &= \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{out}} \right\}} \label{eq:available_gain}
         \end{align}
         \begin{align}
                 G_O &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in}}}  \nonumber \\
@@ -843,8 +844,8 @@ In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the
 
 \begin{subequations}
         \begin{gather}
-                Z_{\ell m} =Z_{\textrm{in}} = Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_{22} + Z_\ell} \\
-                Z_\ell = \frac{Z_{12} \,Z_{21} }{Z_{11} -Z_{\ell m}}-Z_{22}
+                Z_{\ell m} =Z_{\textrm{in}} = Z_{11} + \frac{Z_{12} \, Z_{21}}{Z_\ell - Z_{22}} \\
+                Z_\ell = \frac{Z_{12} \,Z_{21} }{Z_{\ell m} - Z_{11}}+Z_{22}
         \end{gather}
         \label{eq:Zl_Zlm}
 \end{subequations}
