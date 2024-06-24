@@ -97,37 +97,38 @@ wave energy converter (WEC), control co-design, impedance matching
 % \end{itemize}}
 
 
-Wave energy converters (WECs) must be designed to capture a purely oscillatory power input.
-Amongst other energy generation technologies (e.g., wind turbines, hydro-electric dams, nuclear power plants), this is a unique characteristic.
-However, given the broad application of AC electrical power, there are useful tools at the disposal of a WEC designer for maximizing useful power output.
+Wave energy converters (WECs) must be designed to capture a purely oscillatory power input -- this is a unique characteristic amongst other energy generation technologies (e.g., wind turbines, hydro-electric dams, nuclear power plants).
+However, given the broad applications of radio-frequency engineering, there are useful tools at the disposal of a WEC designer for maximizing useful power output.
 
-The concept of impedance matching to minimize reflections has been applied in wave energy since at least the 1970s \cite{Falnes:1980aa}.
-For reasons that are unclear, the concept was mostly only applied to the conversion stage for transferring power from the waves to the WEC's hull/input of the power take-off (PTO) system.
+The concept of impedance matching to maximize power output has been applied in wave energy since at least the 1970s \cite{Falnes:1980aa}.
+For reasons that are unclear, the concept has mostly only been applied to the power conversion stage between the waves to and the WEC's hull/input of the power take-off (PTO) system.
 As will be discussed in further detail in this paper, disregarding the subsequent power conversion stages between mechanical power on the hull and useful (e.g., electrical) power at the output of the machine has a number of adverse repercussions.
 
-This concept of transferring power between different stages is illustrated in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}.
+This concept of transferring power between the different stages of a WEC is illustrated in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}.
 The ultimate goal of a WEC is to deliver power to a load.
 In a WEC designed to produce electrical power, this would represent the electrical outputs from a motor/generator.
 Because the source power is purely oscillatory, the power flow between the stages in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} is shown to be bi-directional in general.
 In fact, the optimal condition requires that half the power be reflected \rc{XX-cite}.
-The conditions that ensure this optimal power transmission by minimizing reflections are shown at the top of \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}.
-The first impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_{\textrm{in}} = Z_i^*$) is generally well-known and widely applied, although using somewhat different notation as the input/output distinction within the PTO is not widely utilized.
-The second impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_{\textrm{out}} = Z_\ell^*$) is mostly ignored and/or lumped with first condition, thus limiting performance.
+The conditions that ensure this optimal power transmission are shown at the top of \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}.
+The first impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_i^* = Z_{\textrm{in}}$) is generally well-known and widely applied in WEC engineering, although using somewhat different notation as the input/output distinction within the PTO is not widely utilized.
+The second impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_{\textrm{out}} = Z_\ell^*$) is mostly ignored and/or lumped with first condition under the often unstated assumption that the PTO dynamics can be decoupled from the hydrodynamic system, thus limiting performance.
+The details these impedance matching expressions will be addressed later on in this paper.
 
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_power_transfer_stages.pdf}
-        \caption{XX}
+        \caption{WEC power flow stages with impedance matching conditions.}
         \label{fig:wec_as_multiport_power_transfer_stages}
 \end{figure}
 
 Power delivered to the load is affected by both losses and reflections in this system.
-These two effects are distinct and must addressed with an appreciation as such.
+These two effects are distinct and must be addressed with an appreciation as such.
 Losses are due to friction or electrical resistance -- this effect is often more intuitive and will not be discussed here in detail.
 Reflections are due to a mismatch in the system impedances.
 %%% Dom feels this is a bit of an over-simplification maybe better suited for a discussion section later on. While minimizing losses is important, friction and resistance are contributors to the real part of impedance and, especially in absence of other contributors (gear ratio, Kt) being called out explicitly I think this might yield confusion.
+
 This paper will further explore concepts of bi-conjugate impedance matching in wave energy previously raised by \cite{Bacelli:2021aa}, with the goal of generating a more practical understanding for the utility and application of this theory.
-First, an basic review of network modeling and elements is presented (Section~\ref{sec:two_port_networks}).
+First, an basic review of network modeling and elements is presented (Section~\ref{sec:multi_port_networks}).
 Next, this framework is applied to a WEC and used to formulate the bi-conjugate impedance matching condition (Section~\ref{sec:modeling_a_direct_drive_wec}).
 This framework is then applied in a number of illustrative case-studies (Section~\ref{sec:illustrative_examples}).
 
@@ -153,18 +154,22 @@ This framework is then applied in a number of illustrative case-studies (Section
 % Within this approach to maximize mechanical power, there is an implicit assumption that the dynamics of the PTO can be decoupled from the hydrodynamic problem and, consequently, such a design will also maximize \emph{useful power} at the load (refer back to \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}).
 
 % ------------------------------------------------------------------
-\section{Two-port networks}\label{sec:two_port_networks}
-To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the two-port network model popular in electronics and microwave systems \cite{Marrocco:2008aa}.
-We may describe the system with a two-port impedance model, relating the effort ($e_i$) and flow ($q_i$) at each port (see \figurename~\ref{fig:wec_as_multiport_general_two_port_network}).
-The products of the effort and flow variables on each port is power.
-Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_general_two_port_network}, which result in a convention of power flow into the two-port network from both sides equal zero and the two-port network is lossless. 
+\section{Multi-port networks}\label{sec:multi_port_networks}
+To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the multi-port network model popular in electronics and microwave systems~\cite{Marrocco:2008aa}.
+As shown in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}, one-port elements relate a single effort ($e$) to a single flow ($q$).
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=0.75\columnwidth]{wec_as_multiport_general_two_port_network.pdf}
-        \caption{General two-port network definition showing effort ($e_i$) and flow ($q_i$) at each port.}
-        \label{fig:wec_as_multiport_general_two_port_network}
+        \includegraphics[width=0.75\columnwidth]{wec_as_multiport_general_one_two_ports.pdf}
+        \caption{General one- and two-port elements definition showing effort ($e$) and flow ($q$) at each port.}
+        \label{fig:wec_as_multiport_general_one_two_ports}
 \end{figure}
+
+\begin{equation}
+        Z = \frac{e}{q}
+\end{equation}
+
+\noindent{}Similarly, two-port elements relate two pairs effort and flow variables (see \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}).
 
 \begin{equation} \label{eq:Z_mat_def_general}
         \begin{bmatrix} e_1 \\ e_2 \end{bmatrix} = \begin{bmatrix} Z_{11} & Z_{12} \\ Z_{21} & Z_{22} \end{bmatrix} \begin{bmatrix} q_1 \\ q_2 \end{bmatrix},
@@ -172,16 +177,19 @@ Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multip
 
 \noindent{}The elements of any two-port impedance matrix may be defined as follows \cite{Frickey:1994aa}.
 
-\begin{subequations} \label{eq:Z_mat_elements_def}
-        \begin{align}
-                Z_{11}& = \frac{e_1}{q_1} \bigg \vert_{q_2=0} \label{eq:Z_mat_elements_def_Z11} \\[1em]
-                Z_{12}& = \frac{e_1}{q_2} \bigg \vert_{q_1=0} \label{eq:Z_mat_elements_def_Z12} \\[1em]
-                Z_{21}& = \frac{e_2}{q_1} \bigg \vert_{q_2=0} \label{eq:Z_mat_elements_def_Z21} \\[1em]
-                Z_{22}& = \frac{e_2}{q_2} \bigg \vert_{q_1=0} \label{eq:Z_mat_elements_def_Z22}
-        \end{align}
-\end{subequations}
+\begin{equation} \label{eq:Z_mat_elements_def}
+        \begin{aligned}
+                Z_{11}& = \frac{e_1}{q_1} \bigg \vert_{q_2=0} \quad
+                Z_{12} = \frac{e_1}{q_2} \bigg \vert_{q_1=0}  \\[1em]
+                Z_{21}& = \frac{e_2}{q_1} \bigg \vert_{q_2=0} \quad
+                Z_{22} = \frac{e_2}{q_2} \bigg \vert_{q_1=0} 
+        \end{aligned}
+\end{equation}
 
-In addition to the ``impedance form'' shown in \eqref{eq:Z_mat_def_general}, there are many equivalent formulations for modeling two-port networks \cite{Frickey:1994aa}.
+\noindent{}The products of the effort and flow variables on each port is power.
+Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}, which result in power flow into the two-port network from both sides summing to zero for a lossless system.\footnote{As the ``multi-port'' name suggests, elements with more than two ports (three, four, etc.) can be considered.}
+
+In addition to the ``impedance form'' shown in \eqref{eq:Z_mat_def_general}, there are many equivalent formulations for modeling two-port networks~\cite{Frickey:1994aa}.
 Specific formulations can be easier to work with depending on the task at hand.
 In this paper, we will also utilize the ``$ABCD$ form'' (also sometimes referred to as chain, cascade, or transmission form):
 
@@ -197,10 +205,10 @@ In this paper, we will also utilize the ``$ABCD$ form'' (also sometimes referred
 
 \begin{subequations} \label{eq:abcd_mat_elements_def}
         \begin{align}
-                A = \frac{e_1}{e_2} \bigg \vert_{q_2=0} \label{eq:abcd_mat_elements_def_a} \\[1em]
-                B = - \frac{e_1}{q_2} \bigg \vert_{e_2=0} \label{eq:abcd_mat_elements_def_b} \\[1em]
-                C = \frac{q_1}{e_2} \bigg \vert_{q_2=0} \label{eq:abcd_mat_elements_def_c} \\[1em]
-                D = - \frac{q_1}{q_2} \bigg \vert_{e_2=0} \label{eq:abcd_mat_elements_def_d}
+                A = \frac{e_1}{e_2} \bigg \vert_{q_2=0}  \quad
+                B = - \frac{e_1}{q_2} \bigg \vert_{e_2=0}  \\[1em]
+                C = \frac{q_1}{e_2} \bigg \vert_{q_2=0}  \quad
+                D = - \frac{q_1}{q_2} \bigg \vert_{e_2=0} 
         \end{align}
 \end{subequations}
 
@@ -225,21 +233,49 @@ From \eqref{eq:abcd_to_Z}, we can see that some representations may be undefined
 An important property of a two-port element is that it can be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
 Whereas the general two-port element has four variables, two of which are independent, in the scenario where one port of terminated with a load, the system losses a degree of freedom.
 Thus, in this case, we may simplify the system as a one-port element (i.e., a single impedance).
-
-Transformers and gyrators (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}) are two fundamental classes of two-port networks worthy of further discussion.
+With these general properties in hand, let us know consider some fundamental muti-port elements shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}.
 
 \begin{figure}[tb]
         \centering
-        % \includegraphics[width=\columnwidth]{wec_as_multiport_transformer_gyrator.pdf}   
         \includegraphics[width=\columnwidth]{wec_as_multiport_transformer_gyrator_impedance.pdf}
-        \caption{Transformer and gyrator diagrams and mathematics.}
+        \caption{Diagrams and mathematical relationships for transformers, gyrators, and impedances. \rc{XX-add impedance in parallel} \rc{XX-can we draw the variable relationship arrows for impedances}}
         \label{fig:wec_as_multiport_transformer_gyrator}
 \end{figure}
 
 % ------------------------------------------------------------------
+\subsection{Impedances (one-ports)}\label{sec:gyrators}
+To incorporate dynamics and losses into the system description we utilize one-port elements, impedances $Z$, which describe how components impede flow by opposing effort. In general, for an impedance in a close loop we may write,
+
+\begin{subequations}
+        \begin{align}
+                e_1 = Zq_1 + e_2 \\
+                q_1 = -q_2 ,
+        \end{align}
+        \label{eq:impedance_eom}
+\end{subequations}
+
+\noindent{} which can be equivalently represented in $ABCD$ form as,
+
+\begin{equation}
+        \begin{bmatrix}
+                e_1 \\ q_1
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+                1 & Z \\ 0 & 1
+        \end{bmatrix}
+        \begin{bmatrix}
+                e_2 \\ - q_2
+        \end{bmatrix} .
+        \label{eq:impedance_abcd}
+\end{equation}
+
+\noindent{}\rc{XX - add impedance in parallel?}
+
+% ------------------------------------------------------------------
 \subsection{Transformers}\label{sec:trasnformers}
 Electric transformers are widely known and understood to convert between different voltage levels.
-For an ideal transformer, we may define a constant $\gamma_{t}$ that relates the effort and flow variables as follows.
+For an ideal transformer, we may define a constant $\gamma_{t}$ that relates the effort and flow variables (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).
 
 \begin{subequations}
         \begin{align}
@@ -269,9 +305,11 @@ Thus, in $ABCD$ form, we may represent a transformer as
         \label{eq:transformer_abcd}
 \end{equation}
 
+\noindent{}Recalling \eqref{eq:abcd_to_Z}, we may see that the impedance form representation for a transformer is not defined ($1/C \rightarrow \infty$).
+
 % ------------------------------------------------------------------
 \subsection{Gyrators}\label{sec:gyrators}
-Gyrators are effectively the opposites of transformers in that they relate the flow at one port to the effort at the other port.
+Gyrators are effectively the opposites of transformers in that they relate the flow at one port to the effort at the other port (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).
 In general, we may write
 
 \begin{subequations}
@@ -302,43 +340,12 @@ In $ABCD$ form, the two-port system can be represented as
 \noindent{}A electric motor/generator is a very relevant example of a gyrator.
 In that case, the gyration modulus is the motor constant ($\gamma_g=k_\tau$).
 \rc{XX-explain arrow convention for gyrators}.
-
 Note that a cascade of two gyrators has the composite effect of a transformer.
 For example, two lossless electric motor/generators with coupled shafts would be equivalent to an electrical transformer with a winding ratio of $\gamma_t=N_p/N_s=\gamma_{g1}/\gamma_{g2}$.
-Similarly, coupling two lossless electric motor/generators electrically coupled would be equivalent to a mechanical transmission with a gear ratio of \rc{XX\dots{}}.
-
-\subsection{Impedances (one-ports)}\label{sec:gyrators}
-\dg{XX: Should we incorporate an impedance / resistor in Fig3? Also, we need to introduce impedances. I don't know if I'm doing this justice right here... }\\
-To incorporate dynamics and losses into the system description we utilize one-port elements, impedances $Z$, which describe how components impede flow by opposing effort. In general, for an impedance in a close loop we may write,
-
-\begin{subequations}
-	\begin{align}
-		e_1 = Zq_1 + e_2 \\
-		q_1 = -q_2 ,
-	\end{align}
-	\label{eq:impedance_eom}
-\end{subequations}
-
-\noindent{} which can be equivalently represented in $ABCD$ form as,
-
-\begin{equation}
-	\begin{bmatrix}
-		e_1 \\ q_1
-	\end{bmatrix}
-	=
-	\begin{bmatrix}
-		1 & Z \\ 0 & 1
-	\end{bmatrix}
-	\begin{bmatrix}
-		e_2 \\ - q_2
-	\end{bmatrix} .
-	\label{eq:impedance_abcd}
-\end{equation}
-
 
 % ------------------------------------------------------------------
 \section{Modeling a direct drive WEC}\label{sec:modeling_a_direct_drive_wec}
-Using the general definitions for network diagram modeling presented in Section~\ref{sec:two_port_networks}, we now wish to model a WEC.
+Using the general definitions for network diagram modeling presented in Section~\ref{sec:multi_port_networks}, we now wish to model a WEC.
 To this end, let us consider the heaving buoy style ``WaveBot'' device with a direct drive PTO as shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}.
 Table~\ref{tab:wec_phyiscal_params} lists key parameters for the WaveBot.
 We will first present the WEC and its governing equations in further detail (Section~\ref{sec:dynamic_and_kinematic_equations}) and then represent system via network diagrams using one- and two-port network elements (Section~\ref{sec:modeling_with_a_network_diagram}).
@@ -614,7 +621,7 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
 % ------------------------------------------------------------------
 \subsubsection{PTO input and output impedances}\label{sec:pto_input_and_output_impedances}
 
-As noted in Section~\ref{sec:two_port_networks}, two-port networks may be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
+As noted in Section~\ref{sec:multi_port_networks}, two-port networks may be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
 The ``output impedance'' of the PTO ($Z_{\textrm{out}}$) is the impedance as seen by a source connected to the output port of PTO element (see \figurename~\ref{fig:wec_as_multiport_circuits}d).
 As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{exc}} = 0$) and express the impedance as the ratio of effort to flow variables at the output port. Note that the negative sign flips the direction of current $I_{\textrm{out}}$ to follow the convention that impedance/load that absorbs power has current flowing into the positive terminal~\cite{CircuitFundamental}. 
 
@@ -888,7 +895,7 @@ These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_c
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_pi_controllers_real_imag.pdf}
-        \caption{Optimal load impedance and load impedances produced by three PI controllers (upper and middle axes) with corresponding transducer gains.}
+        \caption{Optimal load impedance and load impedances produced by three PI controllers tuned for different design frequencies ($f_d = [0.4, 0.55, 0.65]$\,Hz) with corresponding transducer gains.}
         \label{fig:gfx/wec_as_multiport_pi_controllers_real_imag}
 \end{figure}
 
