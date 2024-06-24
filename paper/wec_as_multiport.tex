@@ -883,12 +883,12 @@ Furthermore, the transducer gain of the two systems are dramatically different, 
 As noted in Section~\ref{sec:pto_input_and_output_impedances}, a controller is needed to realize a desired load impedance.
 While higher-order controllers can \emph{approach} a perfect realization of the optimal load impedance per \eqref{eq:bi_conj_matching_out}, perfect matching at all frequencies cannot be achieved in practice\footnote{\rc{Bode-Fano limit\dots{}XX}}.
 However, as noted in \cite{Coe2020a}, real ocean sea states have relatively narrow bandwidths, meaning that a given controller only need match desired load impedance matters over a narrow frequency range -- the controller can be updated to accommodate changing sea states \cite{Forbush:2022aa}.
-These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_controllers_real_imag}, where controllers are tuned for waves with frequencies XX, XX, and XX\,Hz.
+These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_controllers_real_imag}, where controllers are tuned for waves with frequencies 0.4, 0.55, and 0.65\,Hz.
 
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_pi_controllers_real_imag.pdf}
-        \caption{\rc{XX-double check this}}
+        \caption{Optimal load impedance and load impedances produced by three PI controllers (upper and middle axes) with corresponding transducer gains.}
         \label{fig:gfx/wec_as_multiport_pi_controllers_real_imag}
 \end{figure}
 

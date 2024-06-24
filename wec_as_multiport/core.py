@@ -18,7 +18,7 @@ __all__ = [
     "__Zin__",
     "__Zout__",
     "figsize",
-    "pid_controller",
+    "__pid_controller__",
 ]
 
 
@@ -110,7 +110,7 @@ class WEC:
     @property
     def hydrodynamic_resonance_index(self) -> int:
         """Index of hydrodynamic resonance frequency"""
-        return np.argmin(np.abs(np.imag(self.Zi)))
+        return np.argmin(np.abs(np.angle(self.Zi)))
 
     @property
     def hydrodynamic_resonance(self) -> float:
@@ -210,17 +210,23 @@ class WEC:
         """Maximum active mechanical power"""
         return __max_active_power__(self.Zi, Fexc)
 
-    def pi_opt(self, freq, use_i=True):
-        """Generate optimal PI controller for a given frequency"""
-        # TODO have the controller act on Iout based on v
-        # TODO write separate method/property (?) load impedance a feedback controller
+    def pi_opt(self, freq) -> tuple:
+        """Optimal PI gains for a controller acting on current and shaft speed
+        for a given frequency"""
         indx = np.argmin(np.abs(self.freq - freq))
-        kp = np.real(np.conj(self.Z_Thevenin[indx]))
-        if use_i is True:
-            ki = self.omega[indx]*np.imag(np.conj(self.Z_Thevenin[indx]))
-        else:
-            ki = 0
-        return pid_controller(self.omega, kp=kp, ki=ki)
+        Zc_opt = self.Kt/(np.conj(self.Zout) + self.Zw)
+        kp = np.real(Zc_opt[indx])
+        ki = np.real(Zc_opt[indx]*1j*self.omega[indx])
+        return (kp, ki)
+
+    def pid_controller(self, kp=0, ki=0, kd=0) -> np.ndarray:
+        """Controller impedance"""
+        return __pid_controller__(self.omega, kp, ki, kd)
+
+    def Zl_C(self, C) -> np.ndarray:
+        """Load impedance due to feedback controller acting on current and 
+        shaft speed"""
+        return self.Kt/C - self.Zw
 
     def copy(self):
         return copy.deepcopy(self)
@@ -286,5 +292,5 @@ def figsize(wf=1, hf=1, columnwidth=250):
     return [fig_width, fig_height]
 
 
-def pid_controller(omega, kp=0, ki=0, kd=0) -> np.ndarray:
-    return kp + 1j*ki/omega + kd*1j*omega
+def __pid_controller__(omega, kp=0, ki=0, kd=0) -> np.ndarray:
+    return kp + ki/(1j*omega) + kd*1j*omega
