@@ -272,6 +272,31 @@ To incorporate dynamics and losses into the system description we utilize one-po
 
 \noindent{}\rc{XX - add impedance in parallel?}
 
+If the impedance is connected in parallel,
+\begin{subequations}
+        \begin{align}
+                e_1 =  e_2 \\
+                q_1 = \frac{1}{Z} e_2 - q_2 ,
+        \end{align}
+        \label{eq:parallel_impedance_eom}
+\end{subequations}
+
+\noindent{} which can be equivalently represented in $ABCD$ form as,
+
+\begin{equation}
+        \begin{bmatrix}
+                e_1 \\ q_1
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+                1 & 0 \\ \frac{1}{Z} & 1
+        \end{bmatrix}
+        \begin{bmatrix}
+                e_2 \\ - q_2
+        \end{bmatrix} .
+        \label{eq:parallel_impedance_abcd}
+\end{equation}
+
 % ------------------------------------------------------------------
 \subsection{Transformers}\label{sec:trasnformers}
 Electric transformers are widely known and understood to convert between different voltage levels.
