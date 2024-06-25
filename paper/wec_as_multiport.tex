@@ -108,7 +108,7 @@ This concept of transferring power between the different stages of a WEC is illu
 The ultimate goal of a WEC is to deliver power to a load.
 In a WEC designed to produce electrical power, this would represent the electrical outputs from a motor/generator.
 Because the source power is purely oscillatory, the power flow between the stages in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} is shown to be bi-directional in general.
-In fact, the optimal condition requires that half the power be reflected \rc{XX-cite}\cite{Evans1976}.
+In fact, the optimal condition requires that half the power be reflected \cite{Evans1976}.
 The conditions that ensure this optimal power transmission are shown at the top of \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}.
 The first impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_i^* = Z_{\textrm{in}}$) is generally well-known and widely applied in WEC engineering, although using somewhat different notation as the input/output distinction within the PTO is not widely utilized.
 The second impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_{\textrm{out}} = Z_\ell^*$) is mostly ignored and/or lumped with first condition under the often unstated assumption that the PTO dynamics can be decoupled from the hydrodynamic system, thus limiting performance.
@@ -155,7 +155,7 @@ This framework is then applied in a number of illustrative case-studies (Section
 
 % ------------------------------------------------------------------
 \section{Multi-port networks}\label{sec:multi_port_networks}
-To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the multi-port network model popular in electronics and microwave systems~\cite{Marrocco:2008aa}.
+To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the multi-port network model popular in electronics and microwave systems~\cite{Marrocco:2008aa,CircuitFundamental}.
 As shown in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}, one-port elements relate a single effort ($e$) to a single flow ($q$).
 
 \begin{figure}[tb]
@@ -222,12 +222,12 @@ For example, we may relate the impedance matrix and $ABCD$ as
         =
         \frac{1}{C}
         \begin{bmatrix}
-                A & \Delta\left[ ABCD \right] \\ 1 & D
+                A & \Delta \left[ \mathbf{a} \right] \\ 1 & D
         \end{bmatrix} ,
 \label{eq:abcd_to_Z}
 \end{equation}
 
-\noindent{}where $\Delta\left[ ABCD \right]$ is the determinant of the $ABCD$ matrix.
+\noindent{}where $\Delta \left[ \mathbf{a} \right]$ is the determinant of the $ABCD$ matrix.
 From \eqref{eq:abcd_to_Z}, we can see that some representations may be undefined for certain two-port elements (e.g., if $C=0$ in the $ABCD$ form, the impedance form will be undefined).
 
 An important property of a two-port element is that it can be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
@@ -371,7 +371,7 @@ For example, two lossless electric motor/generators with coupled shafts would be
 % ------------------------------------------------------------------
 \section{Modeling a direct drive WEC}\label{sec:modeling_a_direct_drive_wec}
 Using the general definitions for network diagram modeling presented in Section~\ref{sec:multi_port_networks}, we now wish to model a WEC.
-To this end, let us consider the heaving buoy style ``WaveBot'' device with a direct drive PTO as shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}.
+To this end, let us consider the heaving buoy style ``WaveBot'' device with a direct drive PTO as shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram} \cite{Forbush:2024aa}.
 Table~\ref{tab:wec_phyiscal_params} lists key parameters for the WaveBot.
 We will first present the WEC and its governing equations in further detail (Section~\ref{sec:dynamic_and_kinematic_equations}) and then represent system via network diagrams using one- and two-port network elements (Section~\ref{sec:modeling_with_a_network_diagram}).
 
@@ -423,8 +423,7 @@ Vertical motion of the buoy can be expressed as a dynamic equation dependent on 
 \noindent{}\noindent{}Here, $A(\omega)$ is the added mass, $B(\omega)$ is the radiation damping, $k_h$ is the hydrostatic stiffness, $b_f$ accounts for linear friction effects, and $m$ is the rigid body inertia.
 The imaginary unit is $j$ and $\omega$ is the angular frequency.
 A block diagram\footnote{\label{fn:block_diagrams}Note that block diagrams are related by distinct from the network diagrams used elsewhere in this paper. To emphasize this distinction, a grey fill is used for blocks in \figurename~\ref{fig:wec_as_multiport_block_diagram}.} in \figurename~\ref{fig:wec_as_multiport_block_diagram} shows the system described by \eqref{eq:eom_rectilinear_motion}.
-In \figurename~\ref{fig:wec_as_multiport_block_diagram}, the PTO force is determined based on some mechanical load impedance ($Z_{\ell m}$) -- the details of this will be discussed in more detail later on.
-The excitation force ($F_{\textrm{exc}}$) is determined from the excitation transfer function ($H_{\textrm{exc}}$) based on the wave elevation~($\eta$).
+In \figurename~\ref{fig:wec_as_multiport_block_diagram}, the PTO force is determined based on some mechanical load impedance ($Z_{\ell m}$) -- the details of this will be discussed in more detail in Section~\ref{sec:illustrative_examples} -- and the excitation force ($F_{\textrm{exc}}$) is determined from the excitation transfer function ($H_{\textrm{exc}}$) based on the wave elevation~($\eta$).
 
 \begin{figure}[tb]
         \centering
@@ -446,9 +445,9 @@ The rectilinear vertical velocity ($v$) and force ($F_{\textrm{pto}}$) in \eqref
 
 \noindent{}Comparing \eqref{eq:rack_and_pinion_transmission} and \eqref{eq:transformer_eom}, we may note that the rack and pinion is an example of a transformer.
 
-The rotating drive train shaft has a characteristic linear friction ($b_d$), inertia ($J_d$), and a may include some non-zero spring stiffness effect against ground ($k_d$).
-The opposite end of the drive train shaft interfaces with an electric motor/generator that produces an electromagnetic torque ($\tau_e$).
-Thus, we may describe the drive train dynamics as follows.
+The rotating drive-train shaft has a characteristic linear friction ($b_d$), inertia ($J_d$), and a may include some non-zero spring stiffness effect against ground ($k_d$).
+The opposite end of the drive-train shaft interfaces with an electric motor/generator that produces an electromagnetic torque ($\tau_e$).
+Thus, we may describe the drive-train dynamics as follows.
 
 \begin{subequations}
         \begin{gather}
@@ -459,7 +458,7 @@ Thus, we may describe the drive train dynamics as follows.
 \end{subequations}
 
 The electric motor/generator can be considered to have the composite characteristics of a pure gyrator and an impedance.
-For the gyrator element, the machine has characteristic torque constant (gyration modulus) $k_\tau$ that relates back EMF voltage ($\forall_{\textrm{emf}}$) to shaft speed and electromagnetic torque to the quadrature current ($I_{\textrm{out}}$) when using a Park power invariant transformation.
+For the gyrator element, the machine has a characteristic torque constant (gyration modulus) $k_\tau$ that relates back EMF voltage ($\forall_{\textrm{emf}}$) to shaft speed and electromagnetic torque to the quadrature current ($I_{\textrm{out}}$) when using a Park power invariant transformation.
 
 \begin{subequations}
         \begin{gather}
@@ -468,7 +467,8 @@ For the gyrator element, the machine has characteristic torque constant (gyratio
         \end{gather}
 \end{subequations}
 
-\noindent{}In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).  \rc{-XX reference figure 6b?}
+\noindent{}In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).
+% \rc{-XX reference figure 6b?}
 
 \begin{subequations}
         \begin{gather}
@@ -484,13 +484,8 @@ Finally, we may define a load impedance ($Z_\ell$) that represents how current i
         \label{eq:load_impedance}
 \end{equation}
 
-\ak{In \figurename~\ref{fig:wec_as_multiport_circuits}(a), we defined $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port, rather than entering. 
-This convention is followed for consistency when cascading two-ports (output to input). 
-Additionally, in the power industry, it is customary to consider the flow variable as leaving the two-port, so that the positive power is being delivered to or absorbed by $Z_\ell$. 
-This is known as the \textit{passive sign convention}: current entering through the positive polarity of the voltage implies that the element is absorbing power~\cite{CircuitFundamental}.}
-
 \noindent{}In practice, the load impedance will be defined by a controller ($C$).
-It is generally convenient to implement a feedback controller that commands motor current based on the angular velocity ($v_s$ in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}).
+It is generally convenient to implement a feedback controller that commands motor current based on the angular velocity ($I_{\textrm{out}}$ and $v_s$, respectively, in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}).
 
 \begin{subequations}
 \begin{gather}
@@ -506,7 +501,7 @@ It is generally convenient to implement a feedback controller that commands moto
         \label{eq:pi_controller_structure}
 \end{equation}
 
-\noindent{}The current command in \eqref{eq:pi_controller_structure} is thus defined as the sum of products proportional to velocity ($v_s k_p$) and the integral of velocity ($\frac{v_s}{j \omega} k_i$, i.e., position).
+\noindent{}The current command in \eqref{eq:pi_controller_structure} is thus defined as the sum of products \emph{proportional} to velocity ($v_s k_p$) and the \emph{integral} of velocity ($\frac{v_s}{j \omega} k_i$, i.e., position).
 
 % ------------------------------------------------------------------
 \subsection{Modeling with a network diagram}\label{sec:modeling_with_a_network_diagram}
@@ -522,6 +517,13 @@ We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later d
         \caption{Circuit diagrams representing a wave energy converter. Points 1, 2, 3, and 4 are consistent throughout the different diagrams.}
         \label{fig:wec_as_multiport_circuits}
 \end{figure}
+
+Throughout literature, there are many different sign conventions utilized for multi-port systems.
+In \figurename~\ref{fig:wec_as_multiport_circuits}(a), we defined $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port elements, rather than entering. 
+This convention is followed for consistency when cascading two-ports (output to input). 
+Additionally, in the power industry, it is customary to consider the flow variable as leaving the two-port, so that the positive power is being delivered to or absorbed by $Z_\ell$. 
+This is known as the \textit{passive sign convention}: current entering through the positive polarity of the voltage implies that the element is absorbing power~\cite{CircuitFundamental}.
+\rc{XX\dots}
 
 % ------------------------------------------------------------------
 \subsubsection{PTO impedance matrix}\label{sec:pto_impedance_matrix}
@@ -568,7 +570,7 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
 \noindent{}Taken together, this gives 
 
  \begin{equation}
-        Z_{\textrm{pto}} 
+        \left[ \mathbf{z} \right]_{\textrm{pto}} 
         = 
         \begin{bmatrix} 
                 Z_{11} & Z_{12} \\ 
@@ -584,71 +586,89 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
 
 % ------------------------------------------------------------------
 \subsubsection{PTO transmission matrix}\label{sec:pto_transmission_matrix}
- The PTO impedance matrix \eqref{eq:pto_impedance} may also be arrived to by cascading the one- and two-port elements, shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b, by interrelating the PTO-$ABCD$ matrix
- \begin{equation}
- 	\label{eq:pto_ABCD_mat_def}
- 	\begin{bmatrix} 
- 		F_{\textrm{pto}} \\
- 		v 
- 	\end{bmatrix} 
- 	= 
+Alternatively, we may also represent the PTO by cascading the one- and two-port elements, as shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b to obtaine a PTO-$ABCD$ matrix.
+
+\begin{equation}
+	\label{eq:pto_ABCD_mat_def}
 	\begin{bmatrix} 
-		A_{\textrm{pto}} & B_{\textrm{pto}} \\ 
-		C_{\textrm{pto}} & D_{\textrm{pto}} 
-	\end{bmatrix}
- 	\begin{bmatrix} 
- 		\forall_{\textrm{out}} \\
- 		I_{\textrm{out}} 
- 	\end{bmatrix},
- \end{equation}
- \noindent{}with \eqref{eq:abcd_to_Z}.
- This is convenient because the cascading matrices are multiplied in the same order that a network diagram would be drawn, from wave-to-wire.
- Opening the circuit diagrams across 1-2 and 3-4 keeps the individual elements in this order: linear to rotary gear transformer, drive-train impedance, electric machine gyrator, and winding impedance. Using the general expressions for the individual elements \eqref{eq:transformer_abcd}, \eqref{eq:gyrator_abcd}, and \eqref{eq:impedance_abcd} yields, 
- \begin{equation}
+		F_{\textrm{pto}} \\
+		v 
+	\end{bmatrix} 
+	= 
+        \begin{bmatrix} 
+	A_{\textrm{pto}} & B_{\textrm{pto}} \\ 
+	C_{\textrm{pto}} & D_{\textrm{pto}} 
+        \end{bmatrix}
+	\begin{bmatrix} 
+		\forall_{\textrm{out}} \\
+		I_{\textrm{out}} 
+	\end{bmatrix},
+\end{equation}
+
+\noindent{}This is convenient because the cascading matrices are multiplied in the same order that a network diagram would be drawn, from wave-to-wire.
+Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b and using the $ABCD$ matrices for transformers, gyrators, and impedances in \eqref{eq:transformer_abcd}, \eqref{eq:gyrator_abcd}, and \eqref{eq:impedance_abcd}, respectively, we can write 
+
+\begin{equation}
  	\label{eq:Z_cascade_to_ABCD}
  	\begin{bmatrix} 
  		F_{\textrm{pto}} \\
  		v 
  	\end{bmatrix} 
  	\! = \!
- 	\begin{bmatrix} 
- 		N & 0 \\ 
- 		0 & 1/N 
- 	\end{bmatrix} \!\!\!
+        \overbrace{
+ 	\underbrace{
+        \begin{bmatrix} 
+                N & 0 \\ 
+                0 & 1/N 
+        \end{bmatrix}
+        }_{\substack{\text{linear to rotary} \\ \text{gear transformer}}}
+        \underbrace{
   	\begin{bmatrix} 
 	 	1 & Z_d \\ 
  		0 & 1 
-	 \end{bmatrix}  \!\!\!
+	\end{bmatrix}
+        }_{\substack{\text{drive-train} \\ \text{impedance}}}
+        \underbrace{
    	\begin{bmatrix} 
 	 	0 & k_{\tau} \\ 
 	 	1/k_{\tau} & 0 
-	 \end{bmatrix} \!\!\!
+        \end{bmatrix}
+        }_{\substack{\text{electric machine} \\ \text{gyrator}}}
+        \underbrace{
    	\begin{bmatrix} 
 	 	1 & Z_w \\ 
 	 	0 & 1 
-	 \end{bmatrix} \!
+	\end{bmatrix}
+        }_{\substack{\text{winding} \\ \text{impedance}}}
+        }^{\left[ \mathbf{a} \right]_{\textrm{pto}}}
  	\begin{bmatrix} 
  		\forall_{\textrm{out}} \\
  		I_{\textrm{out}} 
  	\end{bmatrix} \!, 
- \end{equation}
- which gives
-  \begin{equation}
- 	Z_{\textrm{pto}}^{ABCD} 
- 	= 
- 	\begin{bmatrix} 
- 		A_{\textrm{pto}} & B_{\textrm{pto}} \\ 
- 		C_{\textrm{pto}} & D_{\textrm{pto}} 
- 	\end{bmatrix}
- 	=
- 	\begin{bmatrix} 
- 		\frac{N}{k_{\tau}}  Z_d			& k_\tau N +\frac{N}{k_{\tau}}  Z_dZ_w  \\
- 		\frac{1}{k_{\tau}N}           	& \frac{Z_w}{k_{\tau}N} 
- 	\end{bmatrix}.
- 	\label{eq:pto_abcd}
- \end{equation}
+\end{equation}
 
-\noindent{}The PTO-$ABCD$ transmission matrix enables direct conversion from electrical power variables to mechanical, and reciprocally, if the mechanical power variables are known the inverse of \eqref{eq:pto_abcd} allows quick computation of the electrical counter parts.
+\noindent{}which gives
+
+\begin{equation}
+        \left[ \mathbf{a} \right]_{\textrm{pto}}
+	= 
+	\begin{bmatrix} 
+		A_{\textrm{pto}} & B_{\textrm{pto}} \\ 
+		C_{\textrm{pto}} & D_{\textrm{pto}} 
+	\end{bmatrix}
+	=
+	\begin{bmatrix} 
+		\frac{N}{k_{\tau}}  Z_d			& k_\tau N +\frac{N}{k_{\tau}}  Z_dZ_w  \\
+		\frac{1}{k_{\tau}N}           	& \frac{Z_w}{k_{\tau}N} 
+	\end{bmatrix}.
+	\label{eq:pto_abcd}
+\end{equation}
+
+\clearpage
+
+\noindent{}The PTO transmission matrix ($\left[ \mathbf{a} \right]_{\textrm{pto}}$) enables direct conversion from electrical power variables to mechanical, and reciprocally, if the mechanical power variables are known the inverse of \eqref{eq:pto_abcd} allows quick computation of the electrical counter parts.
+As previously noted, we may readily convert between the impedance transmission representations for the PTO network via \eqref{eq:abcd_to_Z}.
+
 % ------------------------------------------------------------------
 \subsubsection{PTO input and output impedances}\label{sec:pto_input_and_output_impedances}
 
@@ -673,8 +693,6 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 \end{subequations}
 
 \noindent{}Similarly, the expression for the second output of \eqref{eq:Z_mat_def} may be rearranged as
-
-\clearpage
 
 \begin{subequations}
         \begin{align}
@@ -728,36 +746,37 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
 
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
-Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$) as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
+Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$), as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
 The Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
-Using \eqref{eq:eom_rectilinear_motion} and the equation of the two-port network \eqref{fig:wec_as_multiport_circuits}, the following follows:
+Using \eqref{eq:eom_rectilinear_motion} and \eqref{eq:Z_mat_def}, we may write
+
 \begin{equation}
         \nonumber
         \begin{split}
                 F_{\textrm{exc}} &= Z_i v + Z_{11} v - Z_{12}I_{\textrm{out}} \\
-                v &= \frac{F_{\textrm{exc}} + Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} \\
+                v &= \frac{F_{\textrm{exc}} + Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} \\[0.5em]
                 \forall_{\textrm{out}}  &= Z_{21}\left(\frac{F_{\textrm{exc}} + Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}}\right) - Z_{22}I_{\textrm{out}} \\
-                &= \frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc} + \left( - Z_{22} + \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right) I_{\textrm{out}} \\
-                &= F_{\textrm{th}} - Z_{\textrm{th}}I_{\textrm{out}}
+                &= \underbrace{\frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc}}_{F_{\textrm{th}}} + \underbrace{\left( - Z_{22} + \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right)}_{Z_\textrm{th}} I_{\textrm{out}} , \\
         \end{split}
 \end{equation}
-Reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
-Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{\textrm{out}}=0$).
+
+\noindent{}which gives
+
 \begin{subequations}
-\begin{gather}
-        Z_{\textrm{th}} = Z_{\textrm{out}} = Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\[0.5em]
-        F_{\textrm{th}} = \frac{Z_{21}}{Z_i + Z_{11}}F_{\textrm{exc}}  \label{eq:Thevenin_force}
-\end{gather}
+        \begin{gather}
+                Z_{\textrm{th}} = Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\
+                F_{\textrm{th}} = \frac{Z_{21}}{Z_i + Z_{11}}F_{\textrm{exc}} . \label{eq:Thevenin_force}
+        \end{gather}
 \end{subequations}
 
+\noindent{}Comparing \eqref{eq:Thevenin_impedance} and \eqref{eq:pto_output_port_impedance} and reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
+
 We may consider the well-known impedance matching condition for the Th\'{e}venin equivalent system to design an optimal load in order to maximize the power flow from the source to the load.
-\begin{subequations}
-\begin{align}
-        Z_\ell &= Z_{\textrm{th}}^* \\
-        &= Z_{\textrm{out}}^* \label{eq:impedance_matching_thevenin_2}
-\end{align} \label{eq:impedance_matching_thevenin}
-\end{subequations}
-\noindent{}Here, in \eqref{eq:impedance_matching_thevenin_2}, we have restated \eqref{eq:bi_conj_matching_out}.
+\begin{equation}
+        Z_\ell = Z_{\textrm{th}}^* = Z_{\textrm{out}}^*
+        \label{eq:impedance_matching_thevenin}
+\end{equation}
+\noindent{}Here, we have restated \eqref{eq:bi_conj_matching_out}.
 Thus, these two modes of representing the system are indeed equivalent and give the same condition for maximum power transfer.
 
 As illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}, we may represent the WEC system in many different ways (\figurename~\ref{fig:wec_as_multiport_circuits}a, b, c, and f are all equivalent).
@@ -926,14 +945,14 @@ These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_c
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_pi_controllers_real_imag.pdf}
-        \caption{Optimal load impedance and load impedances produced by three PI controllers tuned for different design frequencies ($f_d = [0.4, 0.55, 0.65]$\,Hz) with corresponding transducer gains.}
+        \caption{Optimal load impedance and load impedances produced by three PI controllers tuned for different design frequencies (dashed vertical lines; $f_d = [0.4, 0.55, 0.65]$\,Hz) with corresponding transducer gains.}
         \label{fig:gfx/wec_as_multiport_pi_controllers_real_imag}
 \end{figure}
 
 % ------------------------------------------------------------------
 \subsection{PTO co-design}\label{sec:pto_codesign}
 From \eqref{eq:bi_conj_matching}, we can see clear guidance for how the machine and controller can be designed to maximize power delivered to the load (i.e., maximize electrical power output).
-Consider, for example, \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, where we separately investigate the effects of adding a negative stiffness element\footnote{The addition of a negative stiffness element has been applied in WEC design by CorPower in the form a hydraulic assembly \cite{Todalshaug:2016aa} and also by Sandia Labs via a tunable magnetic spring \cite{Forbush:2024aa}.} to the drive train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) and adding inertia to the drive train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}).
+Consider, for example, \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, where we separately investigate the effects of adding a negative stiffness element\footnote{The addition of a negative stiffness element has been applied in WEC design by CorPower in the form a hydraulic assembly \cite{Todalshaug:2016aa} and also by Sandia Labs via a tunable magnetic spring \cite{Forbush:2024aa}.} to the drive-train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) and adding inertia to the drive-train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}).
 The left-hand axes in each figure show $Z_{\textrm{in}}$ (colored curves) along with $Z_i^*$ (black dashed curve), which we are essentially attempting to match by altering the machine design.
 The right-hand axes in each figure show $Z_{\textrm{out}}$.
 In each case, we enforce \eqref{eq:bi_conj_matching_out} such that a controller produces the optimal load impedance ($Z_\ell$) to maximize electrical power.
@@ -1034,7 +1053,7 @@ However, it is actually the opposite: the bi-conjugate impedance matching condit
 
 % \noindent{}Here, $v_s$ is the shaft speed, which is related to the hull velocity $v$ by the gear ratio $N$.
 % Similarly, the gear ratio relates the force on the hull from the PTO ($F_{\textrm{pto}}$) to the output torque from the PTO shaft ($\tau_{\textrm{pto}}$).
-% This output torque $\tau_{\textrm{pto}}$ is due to the electrical torque produced by the motor/generator ($\tau_e$) and a passive effect described by the drive train impedance ($Z_d$).
+% This output torque $\tau_{\textrm{pto}}$ is due to the electrical torque produced by the motor/generator ($\tau_e$) and a passive effect described by the drive-train impedance ($Z_d$).
 
 % \begin{equation}
 %         Z_d = i \omega I_d  + B_d  + \frac{K_d}{i \omega}
