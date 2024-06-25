@@ -459,7 +459,11 @@ Finally, we may define a load impedance ($Z_\ell$) that represents how current i
         \label{eq:load_impedance}
 \end{equation}
 
-\ak{I edited below to use $v_s$ instead of $v$, since the velocity should be the motor's angular velocity.}
+\ak{In \figurename~\ref{fig:wec_as_multiport_circuits}(a), we defined $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port, rather than entering. 
+This convention is followed for consistency when cascading two-ports (output to input). 
+Additionally, in the power industry, it is customary to consider the flow variable as leaving the two-port, so that the positive power is being delivered to or absorbed by $Z_\ell$. 
+This is known as the \textit{passive sign convention}: current entering through the positive polarity of the voltage implies that the element is absorbing power~\cite{CircuitFundamental}.}
+
 \noindent{}In practice, the load impedance will be defined by a controller ($C$).
 It is generally convenient to implement a feedback controller that commands motor current based on the angular velocity ($v_s$ in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}).
 
@@ -512,9 +516,11 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
         \end{bmatrix} 
         \begin{bmatrix} 
                 v \\
-                I_{\textrm{out}} 
+                I_{\textrm{in}} 
         \end{bmatrix} .
 \end{equation}
+
+\ak{Here, we followed the standard two-port convention in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports} and \eqref{eq:Z_mat_def_general} by defining the flow variables $q$ as vectors entering both sides of the two-port such that $I_{\textrm{in}} = -I_{\textrm{out}}$.}
 
 \noindent{} Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of interest presented in Section~\ref{sec:dynamic_and_kinematic_equations}, the elements of the impedance matrix in \eqref{eq:Z_mat_def} may be written out as follows.
 
