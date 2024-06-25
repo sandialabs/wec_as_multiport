@@ -933,63 +933,47 @@ These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_c
 % ------------------------------------------------------------------
 \subsection{PTO co-design}\label{sec:pto_codesign}
 From \eqref{eq:bi_conj_matching}, we can see clear guidance for how the machine and controller can be designed to maximize power delivered to the load (i.e., maximize electrical power output).
-Consider, for example, \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, where we separately investigate the effects of adding a negative stiffness element\footnote{The addition of a negative stiffness has been applied by CorPower in the form a hydraulic assembly \cite{Todalshaug:2016aa} and also by Sandia Labs via a tunable magnetic spring \cite{Forbush:2024aa}.} to the drive train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) and adding inertia to the drive train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}).
+Consider, for example, \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, where we separately investigate the effects of adding a negative stiffness element\footnote{The addition of a negative stiffness element has been applied in WEC design by CorPower in the form a hydraulic assembly \cite{Todalshaug:2016aa} and also by Sandia Labs via a tunable magnetic spring \cite{Forbush:2024aa}.} to the drive train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) and adding inertia to the drive train (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}).
 The left-hand axes in each figure show $Z_{\textrm{in}}$ (colored curves) along with $Z_i^*$ (black dashed curve), which we are essentially attempting to match by altering the machine design.
 The right-hand axes in each figure show $Z_{\textrm{out}}$.
-In each case, we enforce \eqref{eq:bi_conj_matching_out} such the controller ($Z_\ell$) is set to maximize electrical power.
+In each case, we enforce \eqref{eq:bi_conj_matching_out} such that a controller produces the optimal load impedance ($Z_\ell$) to maximize electrical power.
 
 \begin{figure}
      \centering
      \begin{subfigure}[b]{1\columnwidth}
          \centering
          \includegraphics[width=\textwidth]{wec_as_multiport_in_and_out_impedances_spring.pdf}
-         \caption{Varying levels of negative stiffness on shaft ($K_d$)}
+         \caption{Varying levels of stiffness on shaft ($K_d=[0, -50, -100]$\,Nm/rad)}
          \label{fig:wec_as_multiport_in_and_out_impedances_spring}
      \end{subfigure}
      \\
      \begin{subfigure}[b]{1\columnwidth}
          \centering
          \includegraphics[width=\textwidth]{wec_as_multiport_in_and_out_impedances_inertia.pdf}
-         \caption{Varying levels of shaft inertia ($I_d$)}
+         \caption{Varying levels of shaft inertia ($I_d=[2, 11, 20]$\,kg m$^2$)}
          \label{fig:wec_as_multiport_in_and_out_impedances_inertia}
      \end{subfigure}
      \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve.}
      \label{fig:wec_as_multiport_in_and_out_impedances}
 \end{figure}
 
-
 Both of the considered design alterations (negative stiffness and increased shaft inertia) have the effect of improving impedance matching on the input port at lower frequencies.
 Recall also that the power transported by an ocean wave is inversely proportional to the wave frequency ($J \propto f^{-1}$) such that this improved impedance matching at lower frequencies may be particularly advantageous.
 It should be noted that the range of values for $K_d$ and $I_d$ shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances} is somewhat arbitrary and intended only to illustrate trends -- one cannot directly compare the effects of doubling the shaft inertia with doubling the negative spring stiffness in terms of an engineering decision.
-With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts) by narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to have the opposite affect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
-
-
-While based on \eqref{eq:drive_train_impedance} we might expect changes to $K_d$ and $I_d$ to only affect the imaginary part of the impedances, we may see by expanding \eqref{eq:pto_output_port_impedance} and \eqref{eq:pto_input_port_impedance} that these terms do indeed effect the real part of the impedances as shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}.
-\rc{XX-reference expanded versions of these equations}
-
-\noindent{}Note that in \eqref{eq:expanded_zout}, we have left $Z_{\textrm{out}}^*$ unexpanded, but one can see rather clearly see by referencing \eqref{eq:expanded_zin} how the drive train stiffness ($K_d$) and inertia ($I_d$) enter in.
-
-\rc{
-\begin{itemize}
-        \item XX-as $| \Im \{ Z_\ell \} |$ increases within the frequency range of interest\dots{}
-        \begin{itemize}
-                \item More reactive power
-        \end{itemize}
-        \item XX-as $| \Re \{ Z_\ell \} |$ increases within the frequency range of interest\dots{}
-        \begin{itemize}
-                \item Higher feedback gains, more challenges with stability/sensitivity
-        \end{itemize}
-\end{itemize}}
+With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts) by narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) appears to have the opposite affect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
+While we might intuitively expect that changes to $K_d$ and $I_d$ would only affect the imaginary part of the impedances, we may see from \eqref{eq:expanded_z} that these terms do indeed affect the real part of the impedances as well.
 
 The resulting performance of these different designs can be characterized using the transducer gain defined in \eqref{eq:transducer_gain}, as shown in \figurename~\ref{fig:wec_as_multiport_spring_inertia_transducer_gains}.
-As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the negative spring creates a broader impedance matching, and thus we observe that the ``wave-to-wire'' efficiency for the spring designs than the shaft inertia designs.
-Of course that we do not need to apply these design strategies exclusively, and that in practice we would consider altering the shaft inertia and negative spring effect.
-Different WEC archetypes will have different design parameters; for example, an oscillating water column design could consider the shaft inertia, air chamber volume (related to stiffness), and many other factors.
+As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the negative spring creates a broader impedance matching, and thus we observe that the ``wave-to-wire'' efficiency for the spring designs is somewhat broader than the shaft inertia designs.
+Of course, we do not need to apply these design strategies exclusively, and that in practice we would consider altering the shaft inertia and negative spring together.
+Different WEC archetypes will have different design parameters
+For example, an oscillating water column design could consider the shaft inertia, air chamber volume (related to stiffness), and many other factors.
+The inertia of a flap device, along with other properties, will be strongly tied the height of the flap.
 
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_spring_inertia_transducer_gains.pdf}
-        \caption{\rc{XX-improve colors} \rc{XX-add legend or arrows?} \rc{XX-how do PI controllers look for each of these?} \rc{XX-if you have no losses, does this hit unity?}}
+        \caption{Transducer gains for different levels of spring stiffness (top axes with red curves; $K_d=[0, -50, -100]$\,Nm/rad) and shaft inertia (bottom axes with blue curves; $I_d=[2, 11, 20]$\,kg m$^2$) \rc{XX-how do PI controllers look for each of these?} \rc{XX-if you have no losses, does this hit unity?}}
         \label{fig:wec_as_multiport_spring_inertia_transducer_gains}
 \end{figure}
 
