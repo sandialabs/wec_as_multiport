@@ -530,13 +530,13 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
                 = \frac{F_{\textrm{pto}}}{v} \bigg \vert_{I_{\textrm{out}}=0} = Z_d \, N^2 \\[0.5em]
                 %
                 &Z_{12} = \frac{e_1}{q_2} \bigg \vert_{q_1=0} 
-                = \frac{F_{\textrm{pto}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = k_\tau \, N \\[0.5em]
+                = \frac{F_{\textrm{pto}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = -k_\tau \, N \\[0.5em]
                 %
                 &Z_{21} = \frac{e_2}{q_1} \bigg \vert_{q_2=0} 
                 = \frac{\forall_{\textrm{out}}}{v} \bigg \vert_{I_{\textrm{out}}=0} = k_\tau \, N \\[0.5em]
                 %
                 &Z_{22} = \frac{e_2}{q_2} \bigg \vert_{q_1=0} 
-                = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = -Z_w 
+                = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = Z_w 
         \end{align}
 \end{subequations}
 
@@ -551,8 +551,8 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
         \end{bmatrix}
         =
         \begin{bmatrix} 
-        Z_d \, N^2			& k_\tau \, N  \\
-        k_\tau \, N          	& -Z_w
+        Z_d \, N^2      & -k_\tau \, N  \\
+        k_\tau \, N     & Z_w
         \end{bmatrix}.
         \label{eq:pto_impedance}
  \end{equation}
@@ -629,10 +629,10 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
 
 As noted in Section~\ref{sec:multi_port_networks}, two-port networks may be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
 The ``output impedance'' of the PTO ($Z_{\textrm{out}}$) is the impedance as seen by a source connected to the output port of PTO element (see \figurename~\ref{fig:wec_as_multiport_circuits}d).
-As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{exc}} = 0$) and express the impedance as the ratio of effort to flow variables at the output port. Note that the negative sign flips the direction of current $I_{\textrm{out}}$ to follow the convention that impedance/load that absorbs power has current flowing into the positive terminal~\cite{CircuitFundamental}. 
+As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{exc}} = 0$) and express the impedance as the ratio of effort to flow variables at the output port. 
 
 \begin{equation}
-        Z_{\textrm{out}} = -\frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg\vert_{F_{\textrm{exc}}=0}
+        Z_{\textrm{out}} = \frac{\forall_{\textrm{out}}}{I_{\textrm{in}}} \bigg\vert_{F_{\textrm{exc}}=0}
         \label{eq:Zout_1}
 \end{equation}
 
@@ -640,9 +640,9 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 
 \begin{subequations}
         \begin{align}
-                F_{\textrm{pto}} = Z_{11} v + Z_{12} I_{\textrm{out}} \label{eq:Zout_Fpto_1} \\[0.5em]
-                -v (Z_i + Z_{11}) = Z_{12} I_{\textrm{out}} \label{eq:Zout_Fpto_2} \\[0.5em]
-                \frac{v}{I_{\textrm{out}}} = -\frac{Z_{12}}{Z_i + Z_{11}} \label{eq:Zout_Fpto_3}
+                F_{\textrm{pto}} = Z_{11} v + Z_{12} I_{\textrm{in}} \label{eq:Zout_Fpto_1} \\[0.5em]
+                -v (Z_i + Z_{11}) = Z_{12} I_{\textrm{in}} \label{eq:Zout_Fpto_2} \\[0.5em]
+                \frac{v}{I_{\textrm{in}}} = -\frac{Z_{12}}{Z_i + Z_{11}} \label{eq:Zout_Fpto_3}
         \end{align}
         \label{eq:Zout_Fpto}
 \end{subequations}
@@ -653,8 +653,8 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 
 \begin{subequations}
         \begin{align}
-                \forall_{\textrm{out}} = Z_{21} v + Z_{22} I_{\textrm{out}} \label{eq:Zout_Vout_1} \\[0.5em]
-                \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} = Z_{21} \frac{v}{I_{\textrm{out}}} + Z_{22} . \label{eq:Zout_Vout_2}
+                \forall_{\textrm{out}} = Z_{21} v + Z_{22} I_{\textrm{in}} \label{eq:Zout_Vout_1} \\[0.5em]
+                \frac{\forall_{\textrm{out}}}{I_{\textrm{in}}} = Z_{21} \frac{v}{I_{\textrm{in}}} + Z_{22} . \label{eq:Zout_Vout_2}
         \end{align} 
         \label{eq:Zout_Vout}
 \end{subequations}
@@ -662,7 +662,7 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 \noindent{}Finally, substituting \eqref{eq:Zout_Fpto_3} into \eqref{eq:Zout_Vout_2} gives an expression for the PTO output port impedance.
 
 \begin{equation}
-        Z_{\textrm{out}} = - \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg\vert_{F_{\textrm{exc}}=0} = - Z_{22} + \frac{Z_{12} Z_{21}}{Z_{i} + Z_{11}}
+        Z_{\textrm{out}} = \frac{\forall_{\textrm{out}}}{I_{\textrm{in}}} \bigg\vert_{F_{\textrm{exc}}=0} = Z_{22} - \frac{Z_{12} Z_{21}}{Z_{i} + Z_{11}}
         \label{eq:pto_output_port_impedance}
 \end{equation}
 
@@ -671,7 +671,7 @@ We evaluate this scenario with input port open and with the output port fully co
 Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner similar as was done for the output port impedance, we find
 
 \begin{equation}
-        Z_{\textrm{in}} = \frac{F_{\textrm{pto}}}{v}=  Z_{11} + \frac{Z_{12} \, Z_{21}}{Z_\ell - Z_{22}} .
+        Z_{\textrm{in}} = \frac{F_{\textrm{pto}}}{v}=  Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_\ell + Z_{22}} .
         \label{eq:pto_input_port_impedance}
 \end{equation}
 
@@ -691,11 +691,11 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
 \begin{subequations}
 \begin{align}
         \begin{split}
-                Z_{\textrm{out}} &= - Z_{22} + \frac{Z_{12} Z_{12}}{Z_{i} + Z_{11}} \\[0.5em]
+                Z_{\textrm{out}} &=  Z_{22} - \frac{Z_{12} Z_{21}}{Z_{i} + Z_{11}} \\[0.5em]
                 &=  Z_w + \frac{k_\tau^2 N^2}{Z_i + Z_d N^2}
         \end{split}\label{eq:expanded_zin} \\[1em]
         \begin{split}
-                Z_{\textrm{in}} &= Z_{11} + \frac{Z_{12} \, Z_{21}}{Z_\ell - Z_{22}} \\[0.5em]
+                Z_{\textrm{in}} &= Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_\ell + Z_{22}} \\[0.5em]
                 &= Z_d N^2 + \frac{k_\tau^2 N^2}{Z_\ell + Z_w}
         \end{split}\label{eq:expanded_zout}
 \end{align}\label{eq:expanded_z}
@@ -709,10 +709,10 @@ Using \eqref{eq:eom_rectilinear_motion} and the equation of the two-port network
 \begin{equation}
         \nonumber
         \begin{split}
-                F_{\textrm{exc}} &= Z_i v + Z_{11} v + Z_{12}I_{\textrm{out}} \\
-                v &= \frac{F_{\textrm{exc}} - Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} \\
-                \forall_{\textrm{out}}  &= Z_{21}\left(\frac{F_{\textrm{exc}} - Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}}\right) + Z_{22}I_{\textrm{out}} \\
-                &= \frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc} + \left(Z_{22} - \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right) I_{\textrm{out}} \\
+                F_{\textrm{exc}} &= Z_i v + Z_{11} v - Z_{12}I_{\textrm{out}} \\
+                v &= \frac{F_{\textrm{exc}} + Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} \\
+                \forall_{\textrm{out}}  &= Z_{21}\left(\frac{F_{\textrm{exc}} + Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}}\right) - Z_{22}I_{\textrm{out}} \\
+                &= \frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc} + \left( - Z_{22} + \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right) I_{\textrm{out}} \\
                 &= F_{\textrm{th}} - Z_{\textrm{th}}I_{\textrm{out}}
         \end{split}
 \end{equation}
@@ -720,7 +720,7 @@ Reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous disc
 Similarly, the equivalent source can be determined by considering an effort between points 3 and 4 in \figurename~\ref{fig:wec_as_multiport_circuits} when that part of the circuit is open (i.e., no connection between points C and D) such that flow through those points is zero ($I_{\textrm{out}}=0$).
 \begin{subequations}
 \begin{gather}
-        Z_{\textrm{th}} = Z_{\textrm{out}} = - Z_{22} + \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\[0.5em]
+        Z_{\textrm{th}} = Z_{\textrm{out}} = Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\[0.5em]
         F_{\textrm{th}} = \frac{Z_{21}}{Z_i + Z_{11}}F_{\textrm{exc}}  \label{eq:Thevenin_force}
 \end{gather}
 \end{subequations}
@@ -753,7 +753,7 @@ Average complex power delivered to the load is defined as
         &= \frac{1}{2} \forall_{\textrm{out}} I_{\textrm{out}}^* \\
         &= \frac{1}{2} Z_\ell I_{\textrm{out}} I_{\textrm{out}}^* \\
         &= \frac{1}{2} Z_\ell | I_{\textrm{out}} |^2 \\
-        &= \frac{1}{2} Z_\ell \left| \frac{F_{\textrm{exc}} Z_{21}}{ (Z_\ell - Z_{22}) (Z_i + Z_{11}) + Z_{21} Z_{12}  } \right|^2 
+        &= \frac{1}{2} Z_\ell \left| \frac{F_{\textrm{exc}} Z_{21}}{ (Z_\ell + Z_{22}) (Z_i + Z_{11}) - Z_{21} Z_{12}  } \right|^2 
 \end{aligned}
 \end{equation}
 \noindent{}We may write active, reactive, and apparent power at the load as.
@@ -811,7 +811,7 @@ They are
         \begin{align}
                 G_T &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in,max}}} \nonumber \\
                 &= 4\left(\frac{I_{\textrm{out}}}{F_{\textrm{exc}}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}  \nonumber \\
-                &= \frac{4 Z_{21}^2 \Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}}{((Z_{\ell} - Z_{22})(Z_i + Z_{11}) + Z_{12}Z_{21})^2} \label{eq:transducer_gain}
+                &= \frac{4 Z_{21}^2 \Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}}{((Z_{\ell} + Z_{22})(Z_i + Z_{11}) - Z_{12}Z_{21})^2} \label{eq:transducer_gain}
         \end{align}
         \begin{align}
                 G_A &= \frac{\mathcal{P}_{\ell\textrm{,max}}}{\mathcal{P}_{\textrm{in,max}}}  \nonumber \\
@@ -821,7 +821,7 @@ They are
         \begin{align}
                 G_O &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in}}}  \nonumber \\
                 &= \left(\frac{I_{\textrm{out}}}{v}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \nonumber \\
-                &=  \left(\frac{Z_{21}}{Z_{\ell} - Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \label{eq:operating_gain}
+                &=  \left(\frac{Z_{21}}{Z_{\ell} + Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \label{eq:operating_gain}
         \end{align}
 \end{subequations}
 
@@ -857,8 +857,8 @@ In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the
 
 \begin{subequations}
         \begin{gather}
-                Z_{\ell m} =Z_{\textrm{in}} = Z_{11} + \frac{Z_{12} \, Z_{21}}{Z_\ell - Z_{22}} \\
-                Z_\ell = \frac{Z_{12} \,Z_{21} }{Z_{\ell m} - Z_{11}}+Z_{22}
+                Z_{\ell m} = Z_{\textrm{in}} = Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_\ell + Z_{22}} \\
+                Z_\ell = - \frac{Z_{12} \,Z_{21} }{Z_{\ell m} - Z_{11}} - Z_{22}
         \end{gather}
         \label{eq:Zl_Zlm}
 \end{subequations}
