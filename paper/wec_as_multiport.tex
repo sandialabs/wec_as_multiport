@@ -845,30 +845,36 @@ If the impedances are not matched, power delivered to the power take-off $\mathc
 \end{subequations}
 
 Next, we provide three power gains (ratio of output power to input power) that are useful for system analysis. 
-They are 
-\begin{itemize}
-        \item transducer power gain $G_T$: the ratio of power delivered to the load to the maximum power available at the source (i.e., the ``wave-to-wire efficiency'')
-        \item available power gain $G_A$: the ratio of maximum power delivered to the load to the maximum power available at the source, and \ak{XX- Ideal efficiency?}
-        \item operating power gain $G_O$: the ratio of power delivered to the load to the power delievered to the power take-off \ak{XX- PTO efficiency?}
-\end{itemize}
-\begin{subequations}
-        \begin{align}
-                G_T &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in,max}}} \nonumber \\
-                &= 4\left(\frac{I_{\textrm{out}}}{F_{\textrm{exc}}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}  \nonumber \\
-                &= \frac{4 Z_{21}^2 \Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}}{((Z_{\ell} + Z_{22})(Z_i + Z_{11}) - Z_{12}Z_{21})^2} \label{eq:transducer_gain}
-        \end{align}
-        \begin{align}
-                G_A &= \frac{\mathcal{P}_{\ell\textrm{,max}}}{\mathcal{P}_{\textrm{in,max}}}  \nonumber \\
-                &= \left(\frac{F_{\textrm{th}}}{F_{\textrm{exc}}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \nonumber \\
-                &= \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{out}} \right\}} \label{eq:available_gain}
-        \end{align}
-        \begin{align}
-                G_O &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in}}}  \nonumber \\
-                &= \left(\frac{I_{\textrm{out}}}{v}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \nonumber \\
-                &=  \left(\frac{Z_{21}}{Z_{\ell} + Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \label{eq:operating_gain}
-        \end{align}
-\end{subequations}
 
+\begin{itemize}
+        \item Transducer power gain, $G_T$: the ratio of power delivered to the load to the maximum power available at the source (i.e., the ``wave-to-wire efficiency'')
+        \item Available power gain, $G_A$: the ratio of maximum power delivered to the load to the maximum power available at the source (i.e., the ``ideal wave-to-wire efficiency'')
+        \item Operating power gain, $G_O$: the ratio of power delivered to the load to the power delievered to the power take-off (i.e., the ``PTO efficiency'')
+\end{itemize}
+
+\begin{subequations}
+\begin{align}
+        \begin{split}
+                G_T &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in,max}}} \\
+                &= 4\left(\frac{I_{\textrm{out}}}{F_{\textrm{exc}}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}  \\
+                &= \frac{4 Z_{21}^2 \Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}}{((Z_{\ell} + Z_{22})(Z_i + Z_{11}) - Z_{12}Z_{21})^2} 
+        \end{split}
+        \label{eq:transducer_gain}
+        \\[1em]
+        \begin{split}
+                G_A &= \frac{\mathcal{P}_{\ell\textrm{,max}}}{\mathcal{P}_{\textrm{in,max}}}  \\
+                &= \left(\frac{F_{\textrm{th}}}{F_{\textrm{exc}}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \\
+                &= \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{out}} \right\}}
+        \end{split}
+        \label{eq:available_gain}
+        \\[1em]
+        \begin{split}
+                G_O &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in}}}  \\
+                &= \left(\frac{I_{\textrm{out}}}{v}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \\
+                &=  \left(\frac{Z_{21}}{Z_{\ell} + Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} 
+        \end{split} \label{eq:operating_gain}
+\end{align} \label{eq:gains}
+\end{subequations}
 
 % ------------------------------------------------------------------
 \section{Illustrative examples}\label{sec:illustrative_examples}
