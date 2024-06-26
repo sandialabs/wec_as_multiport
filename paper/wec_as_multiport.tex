@@ -164,19 +164,19 @@ As shown in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}, one-po
         \caption{General one- and two-port elements definition showing effort ($e$) and flow ($q$) at each port.}
         \label{fig:wec_as_multiport_general_one_two_ports}
 \end{figure}
-
+%
 \begin{equation}
         Z = \frac{e}{q}
 \end{equation}
-
-\noindent{}Similarly, two-port elements relate two pairs effort and flow variables (see \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}).
-
+%
+Similarly, two-port elements relate two pairs effort and flow variables (see \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}).
+%
 \begin{equation} \label{eq:Z_mat_def_general}
         \begin{bmatrix} e_1 \\ e_2 \end{bmatrix} = \begin{bmatrix} Z_{11} & Z_{12} \\ Z_{21} & Z_{22} \end{bmatrix} \begin{bmatrix} q_1 \\ q_2 \end{bmatrix},
 \end{equation}
-
-\noindent{}The elements of any two-port impedance matrix may be defined as follows \cite{Frickey:1994aa}.
-
+%
+The elements of any two-port impedance matrix may be defined as follows \cite{Frickey:1994aa}.
+%
 \begin{equation} \label{eq:Z_mat_elements_def}
         \begin{aligned}
                 Z_{11}& = \frac{e_1}{q_1} \bigg \vert_{q_2=0} \quad
@@ -185,14 +185,14 @@ As shown in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}, one-po
                 Z_{22} = \frac{e_2}{q_2} \bigg \vert_{q_1=0} 
         \end{aligned}
 \end{equation}
-
-\noindent{}The products of the effort and flow variables on each port is power.
+%
+The products of the effort and flow variables on each port is power.
 Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}, which result in power flow into the two-port network from both sides summing to zero for a lossless system.\footnote{As the ``multi-port'' name suggests, elements with more than two ports (three, four, etc.) can be considered.}
 
 In addition to the ``impedance form'' shown in \eqref{eq:Z_mat_def_general}, there are many equivalent formulations for modeling two-port networks~\cite{Frickey:1994aa}.
 Specific formulations can be easier to work with depending on the task at hand.
 In this paper, we will also utilize the ``$ABCD$ form'' (also sometimes referred to as chain, cascade, or transmission form):
-
+%
 \begin{equation}
         \label{eq:abcd_mat_def_general}
         \begin{bmatrix} e_1 \\ q_1 \end{bmatrix}
@@ -200,9 +200,9 @@ In this paper, we will also utilize the ``$ABCD$ form'' (also sometimes referred
         \begin{bmatrix} A & B \\ C & D \end{bmatrix}
         \begin{bmatrix} e_2 \\ - q_2 \end{bmatrix}
 \end{equation}
-
-\noindent{}Similarly to \eqref{eq:Z_mat_elements_def}, the elements of the $ABCD$ matrix are defined as follows.
-
+%
+Similarly to \eqref{eq:Z_mat_elements_def}, the elements of the $ABCD$ matrix are defined as follows.
+%
 \begin{subequations} \label{eq:abcd_mat_elements_def}
         \begin{align}
                 A = \frac{e_1}{e_2} \bigg \vert_{q_2=0}  \quad
@@ -211,10 +211,10 @@ In this paper, we will also utilize the ``$ABCD$ form'' (also sometimes referred
                 D = - \frac{q_1}{q_2} \bigg \vert_{e_2=0} 
         \end{align}
 \end{subequations}
-
-\noindent{}Note that the impedance form and $ABCD$ form matrix elements are explicitly interrelated (see, e.g., \cite{Frickey:1994aa}).
+%
+Note that the impedance form and $ABCD$ form matrix elements are explicitly interrelated (see, e.g., \cite{Frickey:1994aa}).
 For example, we may relate the impedance matrix and $ABCD$ as
-
+%
 \begin{equation}
         \begin{bmatrix}
                 Z_{11} & Z_{12} \\ Z_{21} & Z_{22}
@@ -226,8 +226,8 @@ For example, we may relate the impedance matrix and $ABCD$ as
         \end{bmatrix} ,
 \label{eq:abcd_to_Z}
 \end{equation}
-
-\noindent{}where $\Delta \left[ \mathbf{a} \right]$ is the determinant of the $ABCD$ matrix.
+%
+where $\Delta \left[ \mathbf{a} \right]$ is the determinant of the $ABCD$ matrix.
 From \eqref{eq:abcd_to_Z}, we can see that some representations may be undefined for certain two-port elements (e.g., if $C=0$ in the $ABCD$ form, the impedance form will be undefined).
 
 An important property of a two-port element is that it can be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
@@ -245,17 +245,17 @@ With these general properties in hand, let us know consider some fundamental mut
 % ------------------------------------------------------------------
 \subsection{Impedances (one-ports)}\label{sec:gyrators}
 To incorporate dynamics and losses into the system description we utilize one-port elements, impedances $Z$, which describe how components impede flow by opposing effort. In general, for an impedance in a close loop we may write,
-
+%
 \begin{subequations}
         \begin{align}
                 e_1 = Zq_1 + e_2 \\
                 q_1 = -q_2 ,
         \end{align}
-        \label{eq:impedance_eom}
+        \label{eq:impedance_eom}%
 \end{subequations}
-
-\noindent{} which can be equivalently represented in $ABCD$ form as,
-
+%
+ which can be equivalently represented in $ABCD$ form as,
+%
 \begin{equation}
         \begin{bmatrix}
                 e_1 \\ q_1
@@ -267,10 +267,10 @@ To incorporate dynamics and losses into the system description we utilize one-po
         \begin{bmatrix}
                 e_2 \\ - q_2
         \end{bmatrix} .
-        \label{eq:impedance_abcd}
+        \label{eq:impedance_abcd}%
 \end{equation}
-
-\noindent{}\rc{XX - add impedance in parallel?}
+%
+\rc{XX - add impedance in parallel?}
 
 If the impedance is connected in parallel,
 \begin{subequations}
@@ -278,11 +278,11 @@ If the impedance is connected in parallel,
                 e_1 =  e_2 \\
                 q_1 = \frac{1}{Z} e_2 - q_2 ,
         \end{align}
-        \label{eq:parallel_impedance_eom}
+        \label{eq:parallel_impedance_eom}%
 \end{subequations}
-
-\noindent{} which can be equivalently represented in $ABCD$ form as,
-
+%
+which can be equivalently represented in $ABCD$ form as,
+%
 \begin{equation}
         \begin{bmatrix}
                 e_1 \\ q_1
@@ -301,21 +301,21 @@ If the impedance is connected in parallel,
 \subsection{Transformers}\label{sec:trasnformers}
 Electric transformers are widely known and understood to convert between different voltage levels.
 For an ideal transformer, we may define a constant $\gamma_{t}$ that relates the effort and flow variables (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).
-
+%
 \begin{subequations}
         \begin{align}
                e_1 = \gamma_{t} e_2 \\
                q_1 = -\frac{1}{\gamma_t} q_2
         \end{align}
-        \label{eq:transformer_eom}
+        \label{eq:transformer_eom}%
 \end{subequations}
-
-\noindent{}Note that, as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}, \eqref{eq:transformer_eom} relates the flow at port 1 to the flow at port 2 and effort at port 1 to the effort at port 2 (i.e., the flows are directly related to each other and efforts are directly related to each other).
+%
+Note that, as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}, \eqref{eq:transformer_eom} relates the flow at port 1 to the flow at port 2 and effort at port 1 to the effort at port 2 (i.e., the flows are directly related to each other and efforts are directly related to each other).
 
 In an electric transformer, the constant $\gamma_t$ is the ratio of windings on its primary and secondary sides ($\gamma_t=N_p/N_s$).
 A geared transmission is a mechanical example of a transformer (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}); in this case $\gamma_{t}$ is the gear ratio.
 Thus, in $ABCD$ form, we may represent a transformer as
-
+%
 \begin{equation}
         \begin{bmatrix}
                 e_1 \\ q_1
@@ -329,25 +329,25 @@ Thus, in $ABCD$ form, we may represent a transformer as
         \end{bmatrix} .
         \label{eq:transformer_abcd}
 \end{equation}
-
-\noindent{}Recalling \eqref{eq:abcd_to_Z}, we may see that the impedance form representation for a transformer is not defined ($1/C \rightarrow \infty$).
+%
+Recalling \eqref{eq:abcd_to_Z}, we may see that the impedance form representation for a transformer is not defined ($1/C \rightarrow \infty$).
 
 % ------------------------------------------------------------------
 \subsection{Gyrators}\label{sec:gyrators}
 Gyrators are effectively the opposites of transformers in that they relate the flow at one port to the effort at the other port (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).
 In general, we may write
-
+%
 \begin{subequations}
         \begin{align}
                e_1 = - \gamma_g q_2 \\
                q_1 = \frac{1}{\gamma_g} e_2 ,
         \end{align}
-        \label{eq:gyrator_eom}
+        \label{eq:gyrator_eom}%
 \end{subequations}
-
-\noindent{}where $\gamma_g$ is gyration modulus.
+%
+where $\gamma_g$ is gyration modulus.
 In $ABCD$ form, the two-port system can be represented as
-
+%
 \begin{equation}
         \begin{bmatrix}
                 e_1 \\ q_1
@@ -361,8 +361,8 @@ In $ABCD$ form, the two-port system can be represented as
         \end{bmatrix} .
         \label{eq:gyrator_abcd}
 \end{equation}
-
-\noindent{}A electric motor/generator is a very relevant example of a gyrator.
+%
+A electric motor/generator is a very relevant example of a gyrator.
 In that case, the gyration modulus is the motor constant ($\gamma_g=k_\tau$).
 The direction of the arrow in a gyrator schematic as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} indicates the directionality of the element: the \emph{positive} product of the current at the arrow's tail with the gyration modulus gives the effort at the arrow's head ($e_2 = \gamma_g q_1$ as drawn in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} with the arrow pointing from port 1 to port 2) and the effort at the arrow's tail is the \emph{negative} product of the gyration modulus and effort at the head ($e_1= - \gamma_g q_2$ as drawn in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).
 Note that a cascade of two gyrators has the composite effect of a transformer.
@@ -412,15 +412,15 @@ We will first present the WEC and its governing equations in further detail (Sec
 % ------------------------------------------------------------------
 \subsection{Dynamic and kinematic equations}\label{sec:dynamic_and_kinematic_equations}
 Vertical motion of the buoy can be expressed as a dynamic equation dependent on the PTO force ($F_{\textrm{pto}}$)\footnote{Note that we define the ``PTO'' force in the opposite direction of the excitation force and velocity as shown in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}. This sign convention, where, as in \eqref{eq:eom_rectilinear_motion}, we have an expression of the form $Z q = F_1 - F_2$, is most common in network diagrams and control engineering and therefore used herein.}, the excitation force ($F_{\textrm{exc}}$), and the intrinsic impedance ($Z_i$) \cite{Falnes:2002aa}.
-
+%
 \begin{subequations}
 \begin{gather}
         F_{\textrm{exc}} - F_{\textrm{pto}} = Z_i v \label{eq:eom_rectilinear_motion} \\
         Z_i(\omega) = B(\omega) + b_f + j \left( \omega \left( m + A(\omega) \right) - \frac{k_{h}}{\omega}\right)
 \end{gather}
 \end{subequations}
-
-\noindent{}\noindent{}Here, $A(\omega)$ is the added mass, $B(\omega)$ is the radiation damping, $k_h$ is the hydrostatic stiffness, $b_f$ accounts for linear friction effects, and $m$ is the rigid body inertia.
+%
+\noindent{}Here, $A(\omega)$ is the added mass, $B(\omega)$ is the radiation damping, $k_h$ is the hydrostatic stiffness, $b_f$ accounts for linear friction effects, and $m$ is the rigid body inertia.
 The imaginary unit is $j$ and $\omega$ is the angular frequency.
 A block diagram\footnote{\label{fn:block_diagrams}Note that block diagrams are related by distinct from the network diagrams used elsewhere in this paper. To emphasize this distinction, a grey fill is used for blocks in \figurename~\ref{fig:wec_as_multiport_block_diagram}.} in \figurename~\ref{fig:wec_as_multiport_block_diagram} shows the system described by \eqref{eq:eom_rectilinear_motion}.
 In \figurename~\ref{fig:wec_as_multiport_block_diagram}, the PTO force is determined based on some mechanical load impedance ($Z_{\ell m}$) -- the details of this will be discussed in more detail in Section~\ref{sec:illustrative_examples} -- and the excitation force ($F_{\textrm{exc}}$) is determined from the excitation transfer function ($H_{\textrm{exc}}$) based on the wave elevation~($\eta$).
@@ -433,22 +433,22 @@ In \figurename~\ref{fig:wec_as_multiport_block_diagram}, the PTO force is determ
 \end{figure}
 
 The rectilinear vertical velocity ($v$) and force ($F_{\textrm{pto}}$) in \eqref{eq:eom_rectilinear_motion} are transformed into rotational velocity ($v_s$) and torque ($\tau_{\textrm{pto}}$) on a rotating shaft by a ``rack and pinion'' style mechanism with radius $r$.
-
+%
 \begin{subequations}
         \begin{gather}
                 N = r \\
                 v_s = N v \\
                 \tau_{\textrm{pto}} = \frac{1}{N} F_{\textrm{pto}}
         \end{gather}
-        \label{eq:rack_and_pinion_transmission}
+        \label{eq:rack_and_pinion_transmission}%
 \end{subequations}
-
-\noindent{}Comparing \eqref{eq:rack_and_pinion_transmission} and \eqref{eq:transformer_eom}, we may note that the rack and pinion is an example of a transformer.
+%
+Comparing \eqref{eq:rack_and_pinion_transmission} and \eqref{eq:transformer_eom}, we may note that the rack and pinion is an example of a transformer.
 
 The rotating drive-train shaft has a characteristic linear friction ($b_d$), inertia ($J_d$), and a may include some non-zero spring stiffness effect against ground ($k_d$).
 The opposite end of the drive-train shaft interfaces with an electric motor/generator that produces an electromagnetic torque ($\tau_e$).
 Thus, we may describe the drive-train dynamics as follows.
-
+%
 \begin{subequations}
         \begin{gather}
                 \tau_{\textrm{pto}} - \tau_e = Z_d v_s \\
@@ -459,17 +459,17 @@ Thus, we may describe the drive-train dynamics as follows.
 
 The electric motor/generator can be considered to have the composite characteristics of a pure gyrator and an impedance.
 For the gyrator element, the machine has a characteristic torque constant (gyration modulus) $k_\tau$ that relates back EMF voltage ($\forall_{\textrm{emf}}$) to shaft speed and electromagnetic torque to the quadrature current ($I_{\textrm{out}}$) when using a Park power invariant transformation.
-
+%
 \begin{subequations}
         \begin{gather}
                 v_s = \frac{1}{k_\tau}\forall_{\textrm{emf}} \\
                 \tau_e = k_\tau I_{\textrm{out}}
         \end{gather}
 \end{subequations}
-
-\noindent{}In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).
+%
+In addition to its gyration effect, the motor has a characteristic impedance ($Z_w$) that captures the effects of winding resistance ($R_w$) and inductance ($L_w$), and relates the output current to the back EMF voltage ($\forall_{\textrm{emf}}$) and output voltage ($\forall_{\textrm{out}}$).
 % \rc{-XX reference figure 6b?}
-
+%
 \begin{subequations}
         \begin{gather}
                 \forall_{\textrm{emf}} - \forall_{\textrm{out}} = Z_w I_{\textrm{out}}\\
@@ -478,30 +478,30 @@ For the gyrator element, the machine has a characteristic torque constant (gyrat
 \end{subequations}
 
 Finally, we may define a load impedance ($Z_\ell$) that represents how current is modulated by the motor controller relative to voltage.
-
+%
 \begin{equation}
         Z_\ell = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}}
         \label{eq:load_impedance}
 \end{equation}
-
-\noindent{}In practice, the load impedance will be defined by a controller ($C$).
+%
+In practice, the load impedance will be defined by a controller ($C$).
 It is generally convenient to implement a feedback controller that commands motor current based on the angular velocity ($I_{\textrm{out}}$ and $v_s$, respectively, in \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}).
-
+%
 \begin{subequations}
 \begin{gather}
         I_{\textrm{out}} = C v_s \\  
         Z_\ell = \frac{1}{C} k_\tau - Z_w     
 \end{gather}
 \end{subequations}
-
-\noindent{}While many forms may be used for $C$, a simple proportional-integral (PI) structure, can be quite effective \cite{Coe2020a}.
-
+%
+While many forms may be used for $C$, a simple proportional-integral (PI) structure, can be quite effective \cite{Coe2020a}.
+%
 \begin{equation}
         C_{PI} = k_p + \frac{1}{j \omega} k_i 
         \label{eq:pi_controller_structure}
 \end{equation}
-
-\noindent{}The current command in \eqref{eq:pi_controller_structure} is thus defined as the sum of products \emph{proportional} to velocity ($v_s k_p$) and the \emph{integral} of velocity ($\frac{v_s}{j \omega} k_i$, i.e., position).
+%
+The current command in \eqref{eq:pi_controller_structure} is thus defined as the sum of products \emph{proportional} to velocity ($v_s k_p$) and the \emph{integral} of velocity ($\frac{v_s}{j \omega} k_i$, i.e., position).
 
 % ------------------------------------------------------------------
 \subsection{Modeling with a network diagram}\label{sec:modeling_with_a_network_diagram}
@@ -541,7 +541,7 @@ This allows us to directly adopt well-known input and output impedance formulas,
 \subsubsection{PTO impedance matrix}\label{sec:pto_impedance_matrix}
 
 For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we may write an impedance matrix to describe the two-port element representing the PTO.
-
+%
 \begin{equation}
         \label{eq:Z_mat_def}
         \begin{bmatrix} 
@@ -558,9 +558,9 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
                 I_{\textrm{in}} 
         \end{bmatrix} .
 \end{equation}
-
-\noindent{} Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of interest presented in Section~\ref{sec:dynamic_and_kinematic_equations}, the elements of the impedance matrix in \eqref{eq:Z_mat_def} may be written out as follows.
-
+%
+ Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of interest presented in Section~\ref{sec:dynamic_and_kinematic_equations}, the elements of the impedance matrix in \eqref{eq:Z_mat_def} may be written out as follows.
+%
 \begin{subequations}
         \begin{align}
                 &Z_{11} = \frac{e_1}{q_1} \bigg \vert_{q_2=0} 
@@ -576,8 +576,8 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
                 = \frac{\forall_{\textrm{out}}}{I_{\textrm{out}}} \bigg \vert_{v=0} = Z_w 
         \end{align}
 \end{subequations}
-
-\noindent{}Taken together, this gives 
+%
+Taken together, this gives 
 
  \begin{equation}
         \left[ \mathbf{z} \right]_{\textrm{pto}} 
@@ -597,7 +597,7 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
 % ------------------------------------------------------------------
 \subsubsection{PTO transmission matrix}\label{sec:pto_transmission_matrix}
 Alternatively, we may also represent the PTO by cascading the one- and two-port elements, as shown in the more detailed diagram in \figurename~\ref{fig:wec_as_multiport_circuits}a and \figurename~\ref{fig:wec_as_multiport_circuits}b to obtaine a PTO-$ABCD$ matrix.
-
+%
 \begin{equation}
 	\label{eq:pto_ABCD_mat_def}
 	\begin{bmatrix} 
@@ -615,9 +615,11 @@ Alternatively, we may also represent the PTO by cascading the one- and two-port 
 	\end{bmatrix},
 \end{equation}
 
-\noindent{}This is convenient because the cascading matrices are multiplied in the same order that a network diagram would be drawn, from wave-to-wire.
+\clearpage
+%
+This is convenient because the cascading matrices are multiplied in the same order that a network diagram would be drawn, from wave-to-wire.
 Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b and using the $ABCD$ matrices for transformers, gyrators, and impedances in \eqref{eq:transformer_abcd}, \eqref{eq:gyrator_abcd}, and \eqref{eq:impedance_abcd}, respectively, we can write 
-
+%
 \begin{equation}
  	\label{eq:Z_cascade_to_ABCD}
  	\begin{bmatrix} 
@@ -656,9 +658,9 @@ Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b a
  		I_{\textrm{out}} 
  	\end{bmatrix} \!, 
 \end{equation}
-
-\noindent{}which gives
-
+%
+which gives
+%
 \begin{equation}
         \left[ \mathbf{a} \right]_{\textrm{pto}}
 	= 
@@ -674,9 +676,9 @@ Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b a
 	\label{eq:pto_abcd}
 \end{equation}
 
-\clearpage
 
-\noindent{}The PTO transmission matrix ($\left[ \mathbf{a} \right]_{\textrm{pto}}$) enables direct conversion from electrical power variables to mechanical, and reciprocally, if the mechanical power variables are known the inverse of \eqref{eq:pto_abcd} allows quick computation of the electrical counter parts.
+%
+The PTO transmission matrix ($\left[ \mathbf{a} \right]_{\textrm{pto}}$) enables direct conversion from electrical power variables to mechanical, and reciprocally, if the mechanical power variables are known the inverse of \eqref{eq:pto_abcd} allows quick computation of the electrical counter parts.
 As previously noted, we may readily convert between the impedance transmission representations for the PTO network via \eqref{eq:abcd_to_Z}.
 
 % ------------------------------------------------------------------
@@ -685,35 +687,35 @@ As previously noted, we may readily convert between the impedance transmission r
 As noted in Section~\ref{sec:multi_port_networks}, two-port networks may be collapsed to a one-port element if one of the ports is terminated with a load and has no independent sources.
 The ``output impedance'' of the PTO ($Z_{\textrm{out}}$) is the impedance as seen by a source connected to the output port of PTO element (see \figurename~\ref{fig:wec_as_multiport_circuits}d).
 As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{exc}} = 0$) and express the impedance as the ratio of effort to flow variables at the output port. 
-
+%
 \begin{equation}
         Z_{\textrm{out}} = \frac{\forall_{\textrm{out}}}{I_{\textrm{in}}} \bigg\vert_{F_{\textrm{exc}}=0}
         \label{eq:Zout_1}
 \end{equation}
-
-\noindent{}Recalling \eqref{eq:eom_rectilinear_motion}, we may rewrite the expression for the first output in \eqref{eq:Z_mat_def} as follows.
-
+%
+Recalling \eqref{eq:eom_rectilinear_motion}, we may rewrite the expression for the first output in \eqref{eq:Z_mat_def} as follows.
+%
 \begin{subequations}
         \begin{align}
                 F_{\textrm{pto}} = Z_{11} v + Z_{12} I_{\textrm{in}} \label{eq:Zout_Fpto_1} \\[0.5em]
                 -v (Z_i + Z_{11}) = Z_{12} I_{\textrm{in}} \label{eq:Zout_Fpto_2} \\[0.5em]
                 \frac{v}{I_{\textrm{in}}} = -\frac{Z_{12}}{Z_i + Z_{11}} \label{eq:Zout_Fpto_3}
         \end{align}
-        \label{eq:Zout_Fpto}
+        \label{eq:Zout_Fpto}%
 \end{subequations}
-
-\noindent{}Similarly, the expression for the second output of \eqref{eq:Z_mat_def} may be rearranged as
-
+%
+Similarly, the expression for the second output of \eqref{eq:Z_mat_def} may be rearranged as
+%
 \begin{subequations}
         \begin{align}
                 \forall_{\textrm{out}} = Z_{21} v + Z_{22} I_{\textrm{in}} \label{eq:Zout_Vout_1} \\[0.5em]
                 \frac{\forall_{\textrm{out}}}{I_{\textrm{in}}} = Z_{21} \frac{v}{I_{\textrm{in}}} + Z_{22} . \label{eq:Zout_Vout_2}
         \end{align} 
-        \label{eq:Zout_Vout}
+        \label{eq:Zout_Vout}%
 \end{subequations}
-
-\noindent{}Finally, substituting \eqref{eq:Zout_Fpto_3} into \eqref{eq:Zout_Vout_2} gives an expression for the PTO output port impedance.
-
+%
+Finally, substituting \eqref{eq:Zout_Fpto_3} into \eqref{eq:Zout_Vout_2} gives an expression for the PTO output port impedance.
+%
 \begin{equation}
         Z_{\textrm{out}} = \frac{\forall_{\textrm{out}}}{I_{\textrm{in}}} \bigg\vert_{F_{\textrm{exc}}=0} = Z_{22} - \frac{Z_{12} Z_{21}}{Z_{i} + Z_{11}}
         \label{eq:pto_output_port_impedance}
@@ -722,25 +724,25 @@ As noted, we consider a scenario with no independent sources (i.e., $F_{\textrm{
 The PTO input port's impedance (illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}e) can be expressed as the ratio of effort ($F_{\textrm{pto}}$) and flow ($v$) on the input port.
 We evaluate this scenario with input port open and with the output port fully connected such that the load impedance relates the output voltage and current.
 Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner similar as was done for the output port impedance, we find
-
+%
 \begin{equation}
         Z_{\textrm{in}} = \frac{F_{\textrm{pto}}}{v}=  Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_\ell + Z_{22}} .
         \label{eq:pto_input_port_impedance}
 \end{equation}
 
 As shown in  \cite{Bacelli:2021aa}, to maximize power transferred to the load, we can apply impedance matching at the input and output ports of the PTO.
-
+%
 \begin{subequations}
     \begin{align}
         Z_{\textrm{in}} = Z_i^*  \label{eq:bi_conj_matching_in} \\ 
         Z_{\textrm{out}} = Z_\ell^* \label{eq:bi_conj_matching_out}
     \end{align}
-\label{eq:bi_conj_matching}
+\label{eq:bi_conj_matching}%
 \end{subequations}
-
-\noindent{}From \eqref{eq:bi_conj_matching}, we can explicitly see how different factors of the device design affect impedance matching and therefore power delivered to the load.
+%
+From \eqref{eq:bi_conj_matching}, we can explicitly see how different factors of the device design affect impedance matching and therefore power delivered to the load.
 Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z_{\textrm{out}}$ may be expanded, giving us some insight into the design implications of the bi-conjugate impedance matching condition specified by \eqref{eq:bi_conj_matching}.
-
+%
 \begin{subequations}
 \begin{align}
         \begin{split}
@@ -751,7 +753,7 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
                 Z_{\textrm{in}} &= Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_\ell + Z_{22}} \\[0.5em]
                 &= Z_d N^2 + \frac{k_\tau^2 N^2}{Z_\ell + Z_w}
         \end{split}\label{eq:expanded_zout}
-\end{align}\label{eq:expanded_z}
+\end{align}\label{eq:expanded_z}%
 \end{subequations}
 
 % ------------------------------------------------------------------
@@ -759,7 +761,7 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
 Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any one-port network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$), as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
 The Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 Using \eqref{eq:eom_rectilinear_motion} and \eqref{eq:Z_mat_def}, we may write
-
+%
 \begin{equation}
         \nonumber
         \begin{split}
@@ -769,24 +771,26 @@ Using \eqref{eq:eom_rectilinear_motion} and \eqref{eq:Z_mat_def}, we may write
                 &= \underbrace{\frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc}}_{F_{\textrm{th}}} + \underbrace{\left( - Z_{22} + \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right)}_{-Z_\textrm{th}} I_{\textrm{out}} , \\
         \end{split}
 \end{equation}
-
-\noindent{}which gives
-
+%
+which gives
+%
 \begin{subequations}
         \begin{gather}
                 Z_{\textrm{th}} = Z_{22} - \frac{Z_{21} Z_{12}}{Z_{i} + Z_{11}} \label{eq:Thevenin_impedance} \\
                 F_{\textrm{th}} = \frac{Z_{21}}{Z_i + Z_{11}}F_{\textrm{exc}} . \label{eq:Thevenin_force}
         \end{gather}
 \end{subequations}
-
-\noindent{}Comparing \eqref{eq:Thevenin_impedance} and \eqref{eq:pto_output_port_impedance} and reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
+%
+Comparing \eqref{eq:Thevenin_impedance} and \eqref{eq:pto_output_port_impedance} and reviewing \figurename~\ref{fig:wec_as_multiport_circuits}e and our previous discussion about collapsing two-port elements to impedances, it becomes clear that the Th\'{e}venin equivalent impedance is equal to the PTO output impedance ($Z_{\textrm{th}} = Z_{\textrm{out}}$).
 
 We may consider the well-known impedance matching condition for the Th\'{e}venin equivalent system to design an optimal load in order to maximize the power flow from the source to the load.
+%
 \begin{equation}
         Z_\ell = Z_{\textrm{th}}^* = Z_{\textrm{out}}^*
         \label{eq:impedance_matching_thevenin}
 \end{equation}
-\noindent{}Here, we have restated \eqref{eq:bi_conj_matching_out}.
+%
+Here, we have restated \eqref{eq:bi_conj_matching_out}.
 Thus, these two modes of representing the system are indeed equivalent and give the same condition for maximum power transfer.
 
 As illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}, we may represent the WEC system in many different ways (\figurename~\ref{fig:wec_as_multiport_circuits}a, b, c, and f are all equivalent).
@@ -810,17 +814,18 @@ Average complex power delivered to the load is defined as
         &= \frac{1}{2} Z_\ell \left| \frac{F_{\textrm{exc}} Z_{21}}{ (Z_\ell + Z_{22}) (Z_i + Z_{11}) - Z_{21} Z_{12}  } \right|^2 
 \end{aligned}
 \end{equation}
-\noindent{}We may write active, reactive, and apparent power at the load as.
-
+%
+We may write active, reactive, and apparent power at the load.
+%
 \begin{subequations}
 \begin{align}
-&\textrm{Active: } \mathcal{P}_{\ell} = \Re \left\{ \mathcal{S}_{\ell} \right\} \\[0.5em]
-&\textrm{Reactive: } \mathcal{Q}_{\ell} = \Im \left\{ \mathcal{S}_{\ell} \right\} \\[0.5em]
-&\textrm{Apparent: } | \mathcal{S}_{\ell} |
-\end{align}
-\label{eq:load_power_types}
+        &\textrm{Active: } \mathcal{P}_{\ell} = \Re \left\{ \mathcal{S}_{\ell} \right\} \\[0.5em]
+        &\textrm{Reactive: } \mathcal{Q}_{\ell} = \Im \left\{ \mathcal{S}_{\ell} \right\} \\[0.5em]
+        &\textrm{Apparent: } | \mathcal{S}_{\ell} |
+\end{align}\label{eq:load_power_types}
 \end{subequations}
-\noindent{}The active power is power dissipated at the load.
+%
+The active power is power dissipated at the load.
 Returning to \figurename~\ref{fig:wec_as_multiport_phyiscal_diagram}, note that we have defined this load as the leads between the motor/generator and the motor controller.
 Thus, as defined, the activate power represents power into \rc{(XX-into implies positive:good)} the motor controller.
 Note that there are additional losses and dynamics in the motor controller before power is delivered to the DC bus.
@@ -837,15 +842,19 @@ For this reason, we may consider those losses separately and treat the motor con
 
 \rc{-XX no equation $\mathcal{P}_i$ yet: probably better to present this first before obfuscating in the ratio}
 
-When the condition \eqref{eq:bi_conj_matching_in} is satisfied, the maximum power that can be delivered to the power take-off (the input port of the two-port network) by a wave exerting an excitation force of $F_{\textrm{exc}}$ \cite{Falnes:2002aa} is \rc{XX-explain limitations of this}
+When the condition \eqref{eq:bi_conj_matching_in} is satisfied, the maximum power that can be delivered to the power take-off (the input port of the two-port network) by a wave exerting an excitation force of $F_{\textrm{exc}}$ \cite{Falnes:2002aa}.
+%
 \begin{equation}
         \mathcal{P}_{\textrm{in,max}} = \frac{| F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{i}} \right\} }
 \end{equation}
+%
 Similarly, when condition \eqref{eq:bi_conj_matching_out} is satisfied, the Th\'{e}venin equivalent system gives a clear expression for the maximum power delivered to the load.
+%
 \begin{equation}
         \mathcal{P}_{\ell\textrm{,max}} = \frac{| F_{\textrm{th}} |^2 }{ 8 \Re \left\{ Z_{\textrm{th}} \right\} }
         = \left| \frac{ Z_{21} }{ Z_i + Z_{11} } \right| ^2 \frac{ | F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{out}} \right\} } \label{eq:max_power_delivered_thevenin}
 \end{equation}
+%
 If the impedances are not matched, power delivered to the power take-off $\mathcal{P}_{\textrm{in}}$ and power delievered to the load $\mathcal{P}_\ell$ are
 \begin{subequations}
         \begin{align}
@@ -861,7 +870,7 @@ Next, we provide three power gains (ratio of output power to input power) that a
         \item Available power gain, $G_A$: the ratio of maximum power delivered to the load to the maximum power available at the source (i.e., the ``ideal wave-to-wire efficiency'')
         \item Operating power gain, $G_O$: the ratio of power delivered to the load to the power delievered to the power take-off (i.e., the ``PTO efficiency'')
 \end{itemize}
-
+%
 \begin{subequations}
 \begin{align}
         \begin{split}
@@ -896,7 +905,7 @@ We will consider a subset of these applications in the subsequent sections.
 One very relevant and illustrative case is a scenario in which the machine design is considered fixed and we must maximize performance by setting the load impedance (i.e., by designing a controller).
 Many papers in the area of WEC control have focused on this very problem.
 In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the overall problem objective.
-
+%
 \begin{equation}
 \begin{aligned}
         \mathcal{S}_{m} 
@@ -906,15 +915,15 @@ In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the
         &= \frac{1}{2} Z_{\ell m} \left| \frac{F_{\textrm{exc}}}{Z_i + Z_{\ell m}} \right|^2
 \end{aligned}
 \end{equation}
-
-\noindent{}Here, we define the \emph{mechanical} load impedance as
-
+%
+Here, we define the \emph{mechanical} load impedance as
+%
 \begin{equation}
         Z_{\ell m} = \frac{F_{\textrm{pto}}}{v} .
 \end{equation}
-
-\noindent{}Returning to \eqref{eq:pto_input_port_impedance}, we see that $Z_{\ell m}=Z_{\textrm{in}}$, thus allowing us to relate $Z_{\ell m}$ and $Z_{\ell}$.
-
+%
+Returning to \eqref{eq:pto_input_port_impedance}, we see that $Z_{\ell m}=Z_{\textrm{in}}$, thus allowing us to relate $Z_{\ell m}$ and $Z_{\ell}$.
+%
 \begin{subequations}
         \begin{gather}
                 Z_{\ell m} = Z_{\textrm{in}} = Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_\ell + Z_{22}} \\
@@ -924,13 +933,13 @@ In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the
 \end{subequations}
 
 Reflections up to the input of the PTO may be minimized by satisfy a single conjugate impedance matching condition.
-
+%
 \begin{equation}
         Z_i^* = Z_{\ell m}
         \label{eq:mech_power_impedance_matching}
 \end{equation}
-
-\noindent{}Not surprisingly, we see that \eqref{eq:mech_power_impedance_matching} is not dependent on the PTO impedance (i.e., this definition decouples the PTO from the control design problem).
+%
+Not surprisingly, we see that \eqref{eq:mech_power_impedance_matching} is not dependent on the PTO impedance (i.e., this definition decouples the PTO from the control design problem).
 
 With this in mind, it is instructive to examine the difference between controllers designed to maximize mechanical and electrical power.
 \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} shows the resulting load impedances for two cases:
@@ -946,8 +955,8 @@ With this in mind, it is instructive to examine the difference between controlle
         \caption{Load impedances (top and middle axes) created by a controller designed to maximize mechanical power ($Z_\ell \vert_{Z_{\ell m} = Z_i^*}$) and a controller designed to maximize electrical power ($Z_\ell = Z_{\mathrm{out}}^*$) along with the transducer gains (bottom axes) for each controller.}
         \label{fig:wec_as_multiport_load_impedance_for_mech_power}
 \end{figure}
-
-\noindent{}From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller looks notably different from the controller that maximizes electrical power.
+%
+From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller looks notably different from the controller that maximizes electrical power.
 At the hydrodynamic resonance ($\sim 0.65$\,Hz), both controllers have zero phase, but the magnitudes do not match.
 \rc{XX-shouldn't the electrical maximizing controller have zero phase at another frequency?}
 Away from resonance, the phase of the two controllers differ dramatically.
@@ -1164,16 +1173,15 @@ Consider this tidal cycle taken over 24 hours from a deployed acoustic doppler v
 \end{figure}
 
 However, a wind/tidal turbine can be similarly decomposed into a transfer function representation as per \figurename~\ref{fig:wec_as_multiport_block_diagram}, where the wind/water speed $U$ exerts a torque on the rotor $\tau_h$ which is summed with a controller torque $\tau_{pto}$, and the intrinsic impedance of the rotor and drivetrain are
-
-\begin{subequations}
-                
+%
+\begin{subequations}               
         \begin{gather}
                 Z_{turb,i}(\omega)=b_f + j\omega J_{turb} \\
                 Z_{turb,d}(\omega)=b_d + j\omega J_d
         \end{gather}
 \end{subequations}
-
-\noindent{respectively, and the motor/generator impedance is described as \eqref{eq:winding_impedance}.
+%
+respectively, and the motor/generator impedance is described as \eqref{eq:winding_impedance}.
 Note that the excitation force exerted from fluid velocity $U$, is a non-linear function, but may be approximated as linear over small perturbations.
 While representing a non-linear rotor system as a first-order transfer function is an abstraction, it is a useful model when one considers that a family of first-order models linearized about different rotor operating points could reasonably approximate overall system dynamics, and each of those first-order models will be characteristically similar to those presented here: these conclusions are at least qualitatively valid over stable rotor operating states.
         
