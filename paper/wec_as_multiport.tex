@@ -518,12 +518,24 @@ We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later d
         \label{fig:wec_as_multiport_circuits}
 \end{figure}
 
-Throughout literature, there are many different sign conventions utilized for multi-port systems.
-In \figurename~\ref{fig:wec_as_multiport_circuits}(a), we defined $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port elements, rather than entering. 
-This convention is followed for consistency when cascading two-ports (output to input). 
-Additionally, in the power industry, it is customary to consider the flow variable as leaving the two-port, so that the positive power is being delivered to or absorbed by $Z_\ell$. 
-This is known as the \textit{passive sign convention}: current entering through the positive polarity of the voltage implies that the element is absorbing power~\cite{CircuitFundamental}.
-\rc{XX\dots}
+Throughout literature, there are many different sign conventions utilized for multi-port systems. 
+In \figurename~\ref{fig:wec_as_multiport_circuits}a, we defined $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port elements, rather than entering. 
+This convention is beneficial in two ways:
+\begin{itemize}
+         \item It allows for consistency when cascading two-ports. 
+         By keeping track of the power flow, with $q_{\textrm{out}} = -q_2$ in \eqref{eq:Z_mat_def_general} being positive out, it becomes easier to ensure that the direction of the flow variable coming out of one cascaded stage (as it appears in the transmission matrix) is equal to the input flow variable of the next stage. 
+         This is shown in \eqref{eq:abcd_mat_def_general}, where the flow variables $q_1$ and $q_{\textrm{out}} = -q_2$ have the same power flow direction.
+
+         \item In the power industry, it is customary to consider the flow variable $q_2$ as leaving the two-port. 
+         Current entering through the positive polarity of an element implies that the element is absorbing power~\cite{CircuitFundamental}.
+         This is known as the \textit{passive sign convention}.
+         With the current $I_{\textrm{out}}$ flowing into the positive terminal of $\forall_{\textrm{out}}$, the load $Z_\ell$ absorb power when power is positive.
+\end{itemize}
+Yet, to follow the convention for standard two-port networks, we define the flow variables $q$ as vectors entering both sides of the two-port, as shown in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports} and \eqref{eq:Z_mat_def_general}. 
+This means that $I_{\textrm{in}} = -I_{\textrm{out}}$, with the minus sign accounting for the opposite senses of the two currents. 
+As a result, the impedance matrix and the transmission matrix follow the formulas found in most textbooks. 
+This allows us to directly adopt well-known input and output impedance formulas, methods to convert between impedance and transmission form, and other techniques for performing design analysis.
+
 
 % ------------------------------------------------------------------
 \subsubsection{PTO impedance matrix}\label{sec:pto_impedance_matrix}
@@ -546,8 +558,6 @@ For the network shown in \figurename~\ref{fig:wec_as_multiport_circuits}c, we ma
                 I_{\textrm{in}} 
         \end{bmatrix} .
 \end{equation}
-
-\ak{Here, we followed the standard two-port convention in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports} and \eqref{eq:Z_mat_def_general} by defining the flow variables $q$ as vectors entering both sides of the two-port such that $I_{\textrm{in}} = -I_{\textrm{out}}$.}
 
 \noindent{} Utilizing \eqref{eq:Z_mat_elements_def} and the equations for our system of interest presented in Section~\ref{sec:dynamic_and_kinematic_equations}, the elements of the impedance matrix in \eqref{eq:Z_mat_def} may be written out as follows.
 
@@ -658,8 +668,8 @@ Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b a
 	\end{bmatrix}
 	=
 	\begin{bmatrix} 
-		\frac{N}{k_{\tau}}  Z_d			& k_\tau N +\frac{N}{k_{\tau}}  Z_dZ_w  \\
-		\frac{1}{k_{\tau}N}           	& \frac{Z_w}{k_{\tau}N} 
+		\frac{N}{k_{\tau}}  Z_d & k_\tau N +\frac{N}{k_{\tau}}  Z_dZ_w  \\
+		\frac{1}{k_{\tau}N}     & \frac{Z_w}{k_{\tau}N} 
 	\end{bmatrix}.
 	\label{eq:pto_abcd}
 \end{equation}
@@ -756,7 +766,7 @@ Using \eqref{eq:eom_rectilinear_motion} and \eqref{eq:Z_mat_def}, we may write
                 F_{\textrm{exc}} &= Z_i v + Z_{11} v - Z_{12}I_{\textrm{out}} \\
                 v &= \frac{F_{\textrm{exc}} + Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}} \\[0.5em]
                 \forall_{\textrm{out}}  &= Z_{21}\left(\frac{F_{\textrm{exc}} + Z_{12}I_{\textrm{out}} }{Z_i + Z_{11}}\right) - Z_{22}I_{\textrm{out}} \\
-                &= \underbrace{\frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc}}_{F_{\textrm{th}}} + \underbrace{\left( - Z_{22} + \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right)}_{Z_\textrm{th}} I_{\textrm{out}} , \\
+                &= \underbrace{\frac{Z_{21}}{Z_i + Z_{11}} F_\textrm{exc}}_{F_{\textrm{th}}} + \underbrace{\left( - Z_{22} + \frac{Z_{12}Z_{21}}{Z_i + Z_{11}}\right)}_{-Z_\textrm{th}} I_{\textrm{out}} , \\
         \end{split}
 \end{equation}
 
