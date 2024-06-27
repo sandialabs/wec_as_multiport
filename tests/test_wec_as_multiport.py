@@ -8,7 +8,7 @@ import wec_as_multiport as wam
 import wecopttool as wot
 
 bem_data_fname = os.path.join(os.path.dirname(__file__),
-                              '..','data','wec_as_multiport.nc')
+                              '..', 'data', 'wec_as_multiport.nc')
 
 
 @pytest.fixture(scope="function")
@@ -77,3 +77,13 @@ def test_max_active_power(wec, wave_freq):
     pow = wec.active_power(Fexc)
 
     assert pow == pytest.approx(max_pow)
+
+
+def test_transducer_vs_available_power_gain(wec):
+    """Transducer gain should match available power gain if optimal load is 
+    used"""
+
+    apg = wec.available_power_gain()
+    tpg = wec.transducer_power_gain(Zl=wec.Zl_opt)
+
+    np.testing.assert_allclose(apg, tpg)

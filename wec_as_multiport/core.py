@@ -160,6 +160,20 @@ class WEC:
             / np.abs((self.Zpto[0, 0] + self.Zi)*(self.Zpto[1, 1] + Zl)
                      - self.Zpto[0, 1]*self.Zpto[1, 0])**2
 
+    def available_power_gain(self) -> np.ndarray:
+        """Ratio of maximum power delivered to the load to the maximum power 
+        available at the source (i.e., the “ideal wave-to-wire efficiency”)"""
+        return np.abs(self.Zpto[1, 0]/(self.Zi + self.Zpto[0, 0]))**2 * \
+            np.real(self.Zi) / np.real(self.Zout)
+
+    def operating_power_gain(self, Zl=None) -> np.ndarray:
+        """Ratio of power delivered to the load to the power delivered to the 
+        power take-off (i.e., the “PTO efficiency”)"""
+        if Zl is None:
+            Zl = self.Zl_opt
+        return np.abs(self.Zpto[1, 0]/(Zl + self.Zpto[1, 1]))**2 * \
+            np.real(Zl) / np.real(self.Zin(Zl=Zl))
+
     def Zlm(self, Zl) -> np.ndarray:
         """Mechanical load impedance"""
         return self.Zin(Zl=Zl)
