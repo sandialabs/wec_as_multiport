@@ -156,20 +156,23 @@ This framework is then applied in a number of illustrative case-studies (Section
 % ------------------------------------------------------------------
 \section{Multi-port networks}\label{sec:multi_port_networks}
 To consider the complete problem, without the faulty assumption that PTO dynamics may be decoupled from the hydrodynamic system, it is expedient to utilize the multi-port network model popular in electronics and microwave systems~\cite{Marrocco:2008aa,CircuitFundamental}.
-First, let us consider one-port elements, which, as shown in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}, relate a single effort ($e$) to a single flow ($q$) through an impedance $Z$.
+First, let us consider one-port elements, which, as shown in the first cell of \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}, relate a single effort ($e$) to a single flow ($q$) through an impedance $Z$.
 
-\begin{figure}[tb]
-        \centering
-        \includegraphics[width=0.75\columnwidth]{wec_as_multiport_general_one_two_ports.pdf}
-        \caption{General one- and two-port elements definition showing effort ($e$) and flow ($q$) at each port.}
-        \label{fig:wec_as_multiport_general_one_two_ports}
-\end{figure}
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=\textwidth]{wec_as_multiport_transformer_gyrator_impedance_Z_A.pdf}
+	\caption{General one- and two-port elements definition showing effort ($e$) and flow ($q$) at each port with diagrams and mathematical relationships for impedances, transformers, and gyrators}
+	% \rc{XX-add impedance in parallel} \rc{XX-can we draw the variable relationship arrows for impedances}
+	\label{fig:wec_as_multiport_transformer_gyrator}
+\end{figure*}
+
 %
 \begin{equation}
         Z = \frac{e}{q}
 \end{equation}
 %
-Similarly, two-port elements relate two pairs effort and flow variables (see \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}).\footnote{As the ``multi-port'' name suggests, elements with more than two ports (three, four, etc.) can be considered.}
+Similarly, two-port elements relate two pairs effort and flow variables (see second cell \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).\footnote{As the ``multi-port'' name suggests, elements with more than two ports (three, four, etc.) can be considered.}
 %
 \begin{equation} \label{eq:Z_mat_def_general}
         \begin{bmatrix} e_1 \\ e_2 \end{bmatrix} = \begin{bmatrix} Z_{11} & Z_{12} \\ Z_{21} & Z_{22} \end{bmatrix} \begin{bmatrix} q_1 \\ q_2 \end{bmatrix},
@@ -187,7 +190,7 @@ The elements of any two-port impedance matrix may be defined as follows \cite{Ci
 \end{equation}
 %
 The product of the effort and flow variables on each port is power.
-Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_general_one_two_ports}, which result in power flow into the two-port network from both sides summing to zero for a lossless system.
+Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}, which result in power flow into the two-port network from both sides summing to zero for a lossless system.
 
 In addition to the ``impedance form'' shown in \eqref{eq:Z_mat_def_general}, there are many equivalent formulations for modeling two-port networks~\cite{CircuitFundamental}.
 Specific formulations can be easier to work with depending on the task at hand.
@@ -235,13 +238,9 @@ Whereas the general two-port element has four variables, two of which are indepe
 Thus, in this case, we may simplify the system as a one-port element (i.e., a single impedance).
 With these general properties in hand, let us now consider some fundamental muti-port elements shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}.
 
-\begin{figure}[tb]
-        \centering
-        \includegraphics[width=\columnwidth]{wec_as_multiport_transformer_gyrator_impedance.pdf}
-        \caption{Diagrams and mathematical relationships for transformers, gyrators, and impedances.}
-        % \rc{XX-add impedance in parallel} \rc{XX-can we draw the variable relationship arrows for impedances}
-        \label{fig:wec_as_multiport_transformer_gyrator}
-\end{figure}
+
+
+
 
 % ------------------------------------------------------------------
 \subsection{Impedances (one-ports)}\label{sec:impedances}
