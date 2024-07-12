@@ -11,13 +11,15 @@ bem_data_fname = os.path.join(os.path.dirname(__file__),
                               '..', 'data', 'wec_as_multiport.nc')
 
 
-@pytest.fixture(scope="function")
-def wec():
+@pytest.fixture(scope="module")
+def wec(Rw=None):
+    if Rw is None:
+        Rw = 0.5
     bem_data = wot.read_netcdf(bem_data_fname)
     wec = wam.WEC(omega=bem_data['omega'].values,
                   N=12.4666,
                   Kt=6.1745,
-                  Rw=0.5,
+                  Rw=Rw,
                   Lw=0,
                   Jd=2,
                   Bd=1,
@@ -49,7 +51,7 @@ def test_Zlm_matching(wec):
     Z1 = wec.Zlm(Zl=wec.Zl_opt_mech)
     Z2 = np.conj(wec.Zi)
 
-    assert (Z1 == Z2).all
+    np.testing.assert_allclose(Z1, Z2)
 
 
 def test_Zl_opt(wec):
@@ -60,30 +62,94 @@ def test_Zl_opt(wec):
     Zl_opt_biconj = wec.Zl_opt
     Zl_opt_Thevenin = np.conj(wec.Z_Thevenin)
 
-    assert Zl_opt_biconj == pytest.approx(Zl_opt_Thevenin)
+    np.testing.assert_allclose(Zl_opt_biconj, Zl_opt_Thevenin)
 
 
-@pytest.mark.parametrize("wave_freq", [0.2, 0.3, 0.4, 0.5, 0.6, 0.65])
-def test_max_active_power(wec, wave_freq):
-    """Active power when using a load defined by the bi-conjugate matching 
-    condition should match the maximum power per the Thevenin equivalent 
-    system"""
+@pytest.mark.parametrize("wec", np.logspace(-5, -1, 5), indirect=True)
+class TestPowerGains:
 
-    wave = wot.waves.regular_wave(f1=wec.f1, nfreq=wec.nfreq,
-                                  freq=wave_freq, amplitude=1)
+    def test_transducer_equal_available_power_gain(self, wec):
+        """Transducer gain should match available power gain if optimal load is 
+        used"""
 
-    Fexc = wec.Fexc(wave.squeeze().values)
-    max_pow = wec.max_active_power(Fexc)
-    pow = wec.active_power(Fexc)
+        apg = wec.available_power_gain()
+        tpg = wec.transducer_power_gain(Zl=wec.Zl_opt)
 
-    assert pow == pytest.approx(max_pow)
+        np.testing.assert_allclose(apg, tpg)
+
+    def test_available_power_gain_less_than_unity(self, wec):
+        """Available power gain should always be less than 1 if you have losses"""
+
+        apg = wec.available_power_gain()
+
+        assert np.all(apg < 1)
+
+    def test_transducer_equal_available_power_gain(self, wec):
+        """Transducer gain should match available power gain if optimal load is 
+        used"""
+
+        apg = wec.available_power_gain()
+        tpg = wec.transducer_power_gain(Zl=wec.Zl_opt)
+
+        np.testing.assert_allclose(apg, tpg)
+
+    def test_operating_power_gain_less_than_unity(self, wec):
+        """Operating power gain should always be less than unity if you have 
+        losses"""
+
+        opg = wec.operating_power_gain()
+
+        assert np.all(opg < 1)
 
 
-def test_transducer_vs_available_power_gain(wec):
-    """Transducer gain should match available power gain if optimal load is 
-    used"""
+def test_operating_power_gain_is_unity(wec):
+    """Operating power gain should be unity if there are no losses"""
+    wec.Rw = 0
+    wec.Bd = 0
 
-    apg = wec.available_power_gain()
-    tpg = wec.transducer_power_gain(Zl=wec.Zl_opt)
+    opg = wec.operating_power_gain()
 
-    np.testing.assert_allclose(apg, tpg)
+    np.testing.assert_allclose(np.ones_like(opg), opg, rtol=1e-14)
+
+
+@pytest.mark.parametrize("wave_freq", np.linspace(0.2, 0.65, 10))
+class TestPerfomanceAtFreqs:
+    def test_max_active_power(self, wec, wave_freq):
+        """Active power when using a load defined by the bi-conjugate matching 
+        condition should match the maximum power per the Thevenin equivalent 
+        system"""
+
+        wave = wot.waves.regular_wave(f1=wec.f1, nfreq=wec.nfreq,
+                                      freq=wave_freq, amplitude=1)
+
+        Fexc = wec.Fexc(wave.squeeze().values)
+        max_pow = wec.max_active_power(Fexc)
+        pow = wec.active_power(Fexc)
+
+        assert pow == pytest.approx(max_pow)
+
+    @pytest.fixture()
+    def freq_ind(self, wec, wave_freq):
+        return np.argmin(np.abs(wec.freq - wave_freq))
+
+    @pytest.fixture()
+    def pi_load_impedance(self, wec, wave_freq):
+        kp, ki = wec.pi_opt(freq=wave_freq)
+        C = wec.pid_controller(kp=kp, ki=ki)
+        return wec.Zl_C(C)
+
+    def test_pi_load_matches_optimal_load_at_design_freq(self, wec,
+                                                         freq_ind,
+                                                         pi_load_impedance):
+
+        assert pi_load_impedance[freq_ind] == pytest.approx(
+            wec.Zl_opt[freq_ind])
+
+    def test_pi_transducer_power_gain_matches_optimal_at_design_freq(sef,
+                                                                     wec,
+                                                                     freq_ind,
+                                                                     pi_load_impedance):
+
+        tpg = wec.transducer_power_gain(Zl=pi_load_impedance)
+        apg = wec.available_power_gain()
+        assert tpg[freq_ind] == pytest.approx(apg[freq_ind])
