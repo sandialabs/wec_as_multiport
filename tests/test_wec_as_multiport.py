@@ -38,7 +38,6 @@ def wec(Rw=None):
         bem_data['excitation_force'] = bem_data['diffraction_force'] + \
             bem_data['Froude_Krylov_force']
         bem_data = wot.add_linear_friction(bem_data)
-        wot.write_netcdf(bem_data_fname, bem_data)
 
     wec = wam.WEC(omega=bem_data['omega'].values,
                   N=12.4666,
