@@ -23,7 +23,7 @@
  	1. Install package (assuming you have [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) or [mamba](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html))
  		1. Create an environment: `conda create -n wam pip "python=3.11"`
  		2. Activate environment: `conda activate wam`
- 		3. Install package in editable mode (from within the root directory of this repository): `pip install -e .`
+ 		3. Install package in editable mode (from within the root directory of this repository): `pip install -e . \[matlab]`
  	2. Run/edit 
  		- plotting script: [`wec_as_multiport.ipynb`](wec_as_multiport.ipynb)
  		- source: [`core.py`](wec_as_multiport/core.py)

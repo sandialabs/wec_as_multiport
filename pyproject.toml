@@ -33,7 +33,11 @@ dependencies = [
     "ipython",
     "nbconvert",
     "wecopttool[geometry]",
-    "pytest",
-    "matlabengine",
+    "pytest",    
     "ipywidgets",
+]
+
+[project.optional-dependencies]
+matlab = [
+    "matlabengine",
 ]

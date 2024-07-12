@@ -6,6 +6,7 @@ import numpy as np
 
 import wec_as_multiport as wam
 import wecopttool as wot
+import capytaine as cpy
 
 bem_data_fname = os.path.join(os.path.dirname(__file__),
                               '..', 'data', 'wec_as_multiport.nc')
@@ -15,7 +16,30 @@ bem_data_fname = os.path.join(os.path.dirname(__file__),
 def wec(Rw=None):
     if Rw is None:
         Rw = 0.5
-    bem_data = wot.read_netcdf(bem_data_fname)
+
+    if os.path.isfile(bem_data_fname):
+        print("Found existing BEM file, loading")
+        bem_data = wot.read_netcdf(bem_data_fname)
+    else:
+        f1 = 0.025
+        nfreq = 60
+        freq = wot.frequency(f1, nfreq, False)  # False -> no zero frequency
+
+        wb = wot.geom.WaveBot()  # use standard dimensions
+        mesh_size_factor = 0.5  # 1.0 for default, smaller to refine mesh
+        mesh = wb.mesh(mesh_size_factor)
+        fb = cpy.FloatingBody.from_meshio(mesh, name="WaveBot")
+        fb.add_translation_dof(name="Heave")
+        bem_data = wot.run_bem(fb, freq)
+        bem_data = bem_data.assign_coords(
+            freq=("omega", bem_data['omega'].values/2/np.pi))
+        bem_data['freq'].attrs['long_name'] = 'Frequency'
+        bem_data['freq'].attrs['units'] = 'Hz'
+        bem_data['excitation_force'] = bem_data['diffraction_force'] + \
+            bem_data['Froude_Krylov_force']
+        bem_data = wot.add_linear_friction(bem_data)
+        wot.write_netcdf(bem_data_fname, bem_data)
+
     wec = wam.WEC(omega=bem_data['omega'].values,
                   N=12.4666,
                   Kt=6.1745,
