@@ -25,7 +25,7 @@ dependencies = [
     "scipy",
     "xarray",
     "autograd",
-    "capytaine",
+    "capytaine>=2.2",
     "joblib",
     "wavespectra>=3.13",
     "netcdf4",
@@ -35,9 +35,4 @@ dependencies = [
     "wecopttool[geometry]",
     "pytest",    
     "ipywidgets",
-]
-
-[project.optional-dependencies]
-matlab = [
-    "matlabengine",
 ]
