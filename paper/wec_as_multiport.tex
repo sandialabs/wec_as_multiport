@@ -500,7 +500,7 @@ The current command in \eqref{eq:pi_controller_structure} is thus defined as the
 \subsection{Modeling with a network diagram}\label{sec:modeling_with_a_network_diagram}
 
 The WaveBot device shown in \figurename~\ref{fig:wec_as_multiport_physical_diagram} and described in Section~\ref{sec:dynamic_and_kinematic_equations} can be represented with network diagrams as shown in \figurename~\ref{fig:wec_as_multiport_circuits}.
-Various levels of abstraction and detail can be achieved in this style of diagram.
+Various levels of abstraction/detail can be achieved in this style of diagram.
 \figurename~\ref{fig:wec_as_multiport_circuits}a shows the highest level of detail, whereas \figurename~\ref{fig:wec_as_multiport_circuits}b and \figurename~\ref{fig:wec_as_multiport_circuits}c increasingly combine elements to achieve a single two-port network to represent the PTO.
 We will return to \figurename~\ref{fig:wec_as_multiport_circuits}d-f for later discussion.
 
@@ -522,12 +522,17 @@ This convention is beneficial in two ways:
          \item In the power industry, it is customary to consider the flow variable $q_2$ as leaving the two-port. 
          Flow entering through the positive polarity of an element implies that the element is absorbing power~\cite{CircuitFundamental}.
          This is known as the \textit{passive sign convention}.
-         With the current $I_{\textrm{out}}$ flowing into the positive terminal of $\forall_{\textrm{out}}$, the load $Z_\ell$ absorbs power when power is positive.
+         With the current $I_{\textrm{out}}$ flowing into the positive terminal of $\forall_{\textrm{out}}$, the load $Z_\ell$ absorbs power when power is positive (this is the scenario of net power generation that we must design for on average).
 \end{itemize}
 Yet, to follow the convention for standard two-port networks, we define the flow variables $q$ as vectors entering both sides of the two-port, as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} and \eqref{eq:Z_mat_def_general}. 
 This means that $I_{\textrm{in}} = -I_{\textrm{out}}$, with the minus sign accounting for the opposite senses of the two currents. 
 As a result, the impedance matrix and the transmission matrix follow the formulas found in most textbooks. 
 This allows us to directly adopt well-known input and output impedance formulas, methods to convert between impedance and transmission form, and other techniques for performing design analysis.
+
+We now consider two equivalent approaches for producing multi-port models to represent our WEC.
+First, we directly obtain a single two-port model for the PTO as shown in \figurename~\ref{fig:wec_as_multiport_circuits}c.
+Next, we show an alternative approach of combining the cascading networks shown in \figurename~\ref{fig:wec_as_multiport_circuits}b to arrive at an equivalent result.
+These multi-port models for the WEC are then used to formulate a number of expressions useful in the WEC design problem.
 
 % ------------------------------------------------------------------
 \subsubsection{PTO impedance matrix}\label{sec:pto_impedance_matrix}
@@ -608,7 +613,7 @@ Alternatively, we may also represent the PTO by cascading the one- and two-port 
 \end{equation}
 %
 This is convenient because the cascading matrices are multiplied in the same order that a network diagram would be drawn, from wave-to-wire.
-Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b and using the $ABCD$ matrices for transformers, gyrators, and impedances in \eqref{eq:transformer_abcd}, \eqref{eq:gyrator_abcd}, and \eqref{eq:impedance_abcd}, respectively, we can write 
+Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b and using the $ABCD$ matrices for transformers, gyrators, and impedances in \eqref{eq:transformer_abcd}, \eqref{eq:gyrator_abcd}, and \eqref{eq:impedance_abcd}, respectively, we may write 
 %
 \begin{equation}
  	\label{eq:Z_cascade_to_ABCD}
@@ -669,7 +674,7 @@ which gives
 %\clearpage
 
 %
-The PTO transmission matrix ($\left[ \mathbf{a} \right]_{\textrm{pto}}$) enables direct conversion from electrical power variables to mechanical, and reciprocally, if the mechanical power variables are known, the inverse of \eqref{eq:pto_abcd} allows quick computation of the electrical counterparts.
+The PTO transmission matrix ($\left[ \mathbf{a} \right]_{\textrm{pto}}$) enables direct conversion from electrical to mechanical power variables, and reciprocally, if the mechanical power variables are known, the inverse of \eqref{eq:pto_abcd} allows quick computation of the electrical counterparts.
 As previously noted, we may readily convert between the impedance and transmission representations for the PTO network via \eqref{eq:abcd_to_Z}.
 
 
@@ -713,7 +718,7 @@ Finally, substituting \eqref{eq:Zout_Fpto_3} into \eqref{eq:Zout_Vout_2} gives a
         \label{eq:pto_output_port_impedance}
 \end{equation}
 
-The PTO input port's impedance (illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}e) can be expressed as the ratio of effort ($F_{\textrm{pto}}$) and flow ($v$) on the input port.
+Similarly, the PTO input port's impedance (illustrated in \figurename~\ref{fig:wec_as_multiport_circuits}e) can be expressed as the ratio of effort ($F_{\textrm{pto}}$) and flow ($v$) on the input port.
 We evaluate this scenario with the input port open and with the output port fully connected such that the load impedance relates the output voltage and current.
 Substituting \eqref{eq:load_impedance} into \eqref{eq:Z_mat_def} in a manner similar as was done for the output port impedance, we find
 %
@@ -732,7 +737,7 @@ As shown in  \cite{Bacelli:2021aa}, to maximize power transferred to the load, w
 \label{eq:bi_conj_matching}%
 \end{subequations}
 %
-From \eqref{eq:bi_conj_matching}, we can explicitly see how different factors of the device design affect impedance matching and therefore power delivered to the load.
+From \eqref{eq:bi_conj_matching}, we can explicitly see how different factors of the device design affect impedance matching, which will have a direct effect on power delivered to the load.
 Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z_{\textrm{out}}$ may be expanded, giving us some insight into the design implications of the bi-conjugate impedance matching condition specified by \eqref{eq:bi_conj_matching}.
 %
 \begin{subequations}
@@ -800,7 +805,7 @@ Average complex power delivered to the load is defined as
 \end{aligned}
 \end{equation}
 %
-We may express the active (a.k.a., real), reactive, and apparent power at the load.
+There are three canonical interpretations of this complex power at the load:
 %
 \begin{subequations}
 \begin{align}
@@ -817,7 +822,10 @@ Note that there are additional losses and dynamics in the motor controller befor
 However, the motor controller dynamics occur at much higher frequencies than those in the rest of the system.
 For this reason, we may consider those losses separately and treat the motor controller as a static system (e.g., representing losses in the motor controller as a static function of motor torque and speed).
 
-When the condition \eqref{eq:bi_conj_matching_in} is satisfied, maximum power is delivered to the power take-off (the input port of the two-port network) by a wave exerting an excitation force of $F_{\textrm{exc}}$ \cite{Falnes:2002aa}.
+% ------------------------------------------------------------------
+\subsubsection{Performance metrics}\label{sec:performance_metrics}
+A number of performance metrics related to power transfer can now be formulated to inform the design problem.
+When \eqref{eq:bi_conj_matching_in} is satisfied, maximum power is delivered to the power take-off (the input port of the two-port network) by a wave exerting an excitation force of $F_{\textrm{exc}}$ \cite{Falnes:2002aa}.
 %
 \begin{equation}
         \mathcal{P}_{\textrm{in,max}} = \frac{| F_{\textrm{exc}} |^2 }{ 8 \Re \left\{ Z_{\textrm{i}} \right\} }
@@ -860,29 +868,33 @@ Using these quantities, we may express three power gains (ratios of output power
 \label{eq:gains}
 \end{subequations}
 
+These power gains are efficiencies of the system/subsystems (i.e., they are ratios of power taken at two points in the system).
+They capture the effect of both \emph{losses} and \emph{reflections}.
+Reflection/transmission coefficients consider a single interface, and quantify only reflection/transmission at that interface.
+A typical illustration of a reflection coefficient ($\Gamma$) in show in \figurename~\ref{fig:wec_as_multiport_reflection_coefficient}, where $\Gamma$ is defined as the ratio of the reflected wave effort ($e^-$) to the incident wave effort ($e^+$) or, equivalently, in terms of flow.
 
-% \begin{subequations}
-% \begin{align}
-%         \begin{split}
-%                 G_T = \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in,max}}} &= 4\left(\frac{I_{\textrm{out}}}{F_{\textrm{exc}}}\right)^2\Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}  \\
-%                 &= \frac{4 Z_{21}^2 \Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}}{((Z_{\ell} + Z_{22})(Z_i + Z_{11}) - Z_{12}Z_{21})^2} 
-%         \end{split}
-%         \label{eq:transducer_gain}
-%         \\[1em]
-%         \begin{split}
-%                 G_A = \frac{\mathcal{P}_{\ell\textrm{,max}}}{\mathcal{P}_{\textrm{in,max}}}  &= \left(\frac{F_{\textrm{th}}}{F_{\textrm{exc}}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{th}} \right\}} \\
-%                 &= \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{out}} \right\}}
-%         \end{split}
-%         \label{eq:available_gain}
-%         \\[1em]
-%         \begin{split}
-%                 G_O = \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in}}}  &= \left(\frac{I_{\textrm{out}}}{v}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} \\
-%                 &=  \left(\frac{Z_{21}}{Z_{\ell} + Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} 
-%         \end{split} \label{eq:operating_gain}
-% \end{align}
-% \label{eq:gains}
-% \end{subequations}
+\begin{figure}[tb]
+        \centering
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_reflection_coefficient.pdf}
+        \caption{Reflection coefficient ($\Gamma$) shown for a simple system.}
+        \label{fig:wec_as_multiport_reflection_coefficient}
+\end{figure}
 
+\begin{equation}
+        \Gamma
+        = \frac{e^-}{e^+}
+        = - \frac{q^-}{q^+}
+\end{equation}
+
+Note that the fraction of power reflected is $|\Gamma|^2$ and the fraction of power transmitted is $1-|\Gamma|^2$.
+For our purposes, it is most convenient to define the reflection coefficient in terms of the a source and load impedance, as shown in \figurename~\ref{fig:wec_as_multiport_reflection_coefficient} \cite{Kurokawa:1965aa}.
+
+\begin{equation}
+        \Gamma = \frac{Z_\ell - Z_s^*}{Z_\ell + Z_s}
+        \label{eq:reflection_coeff_impedances}
+\end{equation}
+
+We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_\ell = Z_s^*$ is satisfied, $\Gamma$ will be zero and all power will be transmitted.
 
 % ------------------------------------------------------------------
 \section{Illustrative examples}\label{sec:illustrative_examples}
