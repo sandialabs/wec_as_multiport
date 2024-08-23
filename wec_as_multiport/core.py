@@ -19,6 +19,7 @@ __all__ = [
     "__Zout__",
     "figsize",
     "__pid_controller__",
+    "reflection_coefficient",
 ]
 
 
@@ -308,3 +309,7 @@ def figsize(wf=1, hf=1, columnwidth=250):
 
 def __pid_controller__(omega, kp=0, ki=0, kd=0) -> np.ndarray:
     return kp + ki/(1j*omega) + kd*1j*omega
+
+
+def reflection_coefficient(Zs, Zl) -> np.ndarray:
+    return (Zl - np.conj(Zs))/(Zl + Zs)

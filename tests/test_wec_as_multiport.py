@@ -88,6 +88,23 @@ def test_Zl_opt(wec):
     np.testing.assert_allclose(Zl_opt_biconj, Zl_opt_Thevenin)
 
 
+def test_no_reflection(wec):
+    """Expect no reflection with perfect matching"""
+
+    Gamma = wam.reflection_coefficient(Zs=wec.Z_Thevenin,
+                                       Zl=wec.Zl_opt)
+
+    np.testing.assert_allclose(np.zeros_like(Gamma), Gamma)
+
+
+def test_reflection(wec):
+    """Should see reflection with imperfect matching"""
+
+    Gamma = wam.reflection_coefficient(Zs=wec.Z_Thevenin,
+                                       Zl=wec.Zl_opt_mech)
+
+    np.testing.assert_array_less(np.zeros_like(Gamma), np.abs(Gamma)**2)
+
 @pytest.mark.parametrize("wec", np.logspace(-5, -1, 5), indirect=True)
 class TestPowerGains:
 
