@@ -1,9 +1,9 @@
-\documentclass[lettersize,journal]{IEEEtran}
+\documentclass[twocolumn]{autart}
+
 \usepackage{amsmath,amsfonts}
 \usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{array}
-% \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{textcomp}
@@ -15,7 +15,6 @@
 \usepackage{xcolor}
 \graphicspath{{../gfx/}}
 \usepackage{cite}
-% \hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
 
 % \usepackage{draftwatermark}
 % \SetWatermarkScale{.85}
@@ -25,33 +24,24 @@
 \newcommand{\dg}[1]{\textcolor{purple}{#1}}
 \newcommand{\ak}[1]{\textcolor{teal}{#1}}
 
-% \renewcommand{\floatpagefraction}{1}
-% \renewcommand{\topfraction}{1}
-% \renewcommand{\bottomfraction}{1}
-% \renewcommand{\dbltopfraction}{1}
-% \renewcommand{\textfraction}{0} % allow minimal text w. figs
-% %   Parameters for FLOAT pages (not text pages):
-% \renewcommand{\floatpagefraction}{0.999}    % require fuller float pages % N.B.: floatpagefraction MUST be less than topfraction !!
-% \renewcommand{\dblfloatpagefraction}{0.999} % require fuller float pages
-
 \begin{document}
+\begin{frontmatter}
 
-\title{Co-design of a wave energy converter through bi-conjugate impedance matching }
-{}
-\author{Sandia National Labs (some order of Alicia, Daniel, Dom, Giorgio, Ryan)
-        % <-this % stops a space
-% \thanks{This paper was produced by the IEEE Publication Technology Group. They are in Piscataway, NJ.}% <-this % stops a space
-\thanks{Manuscript received XX; revised XX}}
+\title{Co-design of a wave energy converter through bi-conjugate impedance matching\thanksref{footnoteinfo}}
 
-% The paper headers
-\markboth{IEEE Transactions on Sustainable Energy}%
-{Author1 \MakeLowercase{\textit{et al.}}: Title}
+\thanks[footnoteinfo]{Corresponding author R.~G.~Coe}
 
-% \IEEEpubid{0000--0000/00\$00.00~\copyright~2021 IEEE}
-% Remember, if you use this you must call \IEEEpubidadjcol in the second
-% column for its text to clear the IEEEpubid mark.
+\author[Sandia]{Ryan G. Coe}\ead{rcoe@sandia.gov},
+\author[Sandia]{Giorgio Bacelli}\ead{gbacell@sandia.gov},
+\author[Sandia]{Daniel Gaebele}\ead{dtgaebe@sandia.gov},
+\author[Sandia]{Alicia Keow}\ead{akeow@sandia.gov},
+\author[Sandia]{Dominic Forbush}\ead{dforbus@sandia.gov}
 
-\maketitle
+\address[Sandia]{Sandia National Laboratories, Albuquerque, NM, USA}
+
+\begin{keyword}
+wave energy converter (WEC), control co-design, impedance matching
+\end{keyword}
 
 \begin{abstract}
 As with other oscillatory power conversion systems, the design of wave energy converters can be understood as an impedance matching problem. 
@@ -61,41 +51,10 @@ In practice, these impedance matching conditions may be used to influence the de
 To this end, this paper considers some example applications of wave energy converter design with the help of the impedance matching conditions.
 \end{abstract}
 
-\begin{IEEEkeywords}
-wave energy converter (WEC), control co-design, impedance matching
-\end{IEEEkeywords}
+\end{frontmatter}
 
 % ------------------------------------------------------------------
 \section{Introduction}
-
-% \rc{
-% \begin{itemize}
-%         \item XX-Simplification for non-oscillatory inputs (e.g., wind turbine)
-%         \item XX-Adding inertia vs. spring
-%         \item XX-Why do we show $I_{\textrm{out}}$ into the PTO by convention? \url{https://en.wikipedia.org/wiki/Two-port_network#ABCD-parameters}
-%         \item XX-Shouldn't we have $Z_{12} = Z_{21}$ if the PTO is passive (see, e.g., \url{https://ocw.mit.edu/courses/6-061-introduction-to-electric-power-systems-spring-2011/d79822ef5fbdb21b1c44e1b3b8282453_MIT6_061S11_ch1.pdf})?
-%         \item XX-losses vs. reflections
-%         \item XX Th\'{e}venin vs. two-port
-%         \item XX one- vs. two-port
-%         \item Kirchhoff's laws
-%         \item XX Kirtley: ``If the networks are linear and passive (i.e. there are no dependent sources inside), they also exhibit the property of reciprocity. In a reciprocal network, the transfer impedance or transfer admittance is the same in both directions''
-%         \item A two-port network has four variables with two of them being independent. If one of the ports is terminated by a load with no independent sources, then the load enforces a relationship between the voltage and current of that port. A degree of freedom is lost. The circuit now has only one independent parameter. The two-port becomes a one-port impedance to the remaining independent variable. (\url{https://en.wikipedia.org/wiki/Two-port_network#Collapsing_a_two-port_to_a_one_port})
-%         \item Maximum power transfer theorem (\url{https://en.wikipedia.org/wiki/Maximum_power_transfer_theorem})
-%         \item \url{https://stuff.mit.edu/afs/athena/course/2/2.151/www/index.html}
-%         \begin{itemize}
-%                 \item ``The process of energy conversion between domains is known as transduction and elements that convert the energy are defined to be transducers''
-%                 \item The two-port transducer is a lossless element; for many physical systems it is necessary to formulate a model for a transducer that consists of an ideal two-port coupled with one or more one-port elements to account for any energy storage and dissipation that occurs in the real transducer.
-%         \end{itemize}
-%         \item through and across variables (wikipedia)
-%         \begin{itemize}
-%                 \item across: A variable whose value is determined by measuring a difference of the values at two extreme points of an element; thus voltage is a difference in two levels of potential.
-%                 \item through: A variable transmitted through an element. For example, the torque applied at one side of a stem is transmitted through this one to the other side.
-%         \end{itemize}
-%         \begin{itemize}
-%                 \item Maximum power transfer to load (not maximum efficiency)
-%         \end{itemize}
-% \end{itemize}}
-
 Wave energy converters (WECs) must be designed to capture a purely oscillatory power input—this is a unique characteristic amongst other energy generation technologies (e.g., wind turbines, hydroelectric dams, nuclear power plants).
 However, given the broad applications of radio-frequency engineering, there are useful tools at the disposal of a WEC designer for maximizing the useful power delivered to a load in an oscillatory system.
 
@@ -129,27 +88,6 @@ This paper will further explore concepts of bi-conjugate impedance matching in w
 First, a basic review of network modeling and elements is presented (Section~\ref{sec:multi_port_networks}).
 Next, this framework is applied to a WEC and used to formulate the bi-conjugate impedance matching condition (Section~\ref{sec:modeling_a_direct_drive_wec}).
 This framework is then applied in a number of illustrative case studies (Section~\ref{sec:illustrative_examples}).
-
-% % ------------------------------------------------------------------
-% \section{Bi-conjugate impedance matching}\label{sec:bi_conjugate_impedance_matching}
-% We may express the dynamics of a WEC using an intrinsic impedance ($Z_i$) that relates the velocity ($v$) to the external forces: an ``excitation'' force from incoming waves ($F_{\textrm{exc}}$) and a force from the PTO ($F_{\textrm{pto}}$) \cite{Falnes:2002aa}.
-
-% \begin{equation}
-%         Z_i v = F_{\textrm{exc}} - F_{\textrm{pto}}
-%         \label{eq:intrinsic_impedance_eom}
-% \end{equation}
-
-% \noindent{}The intrinsic impedance can be defined by elements of the linear potential flow free surface hydrodynamics (see, e.g., \cite{Newman:1978aa}).
-
-% \begin{equation}
-%         Z_i(\omega) = B(\omega) + b_f + j \left( \omega{}(m + A(\omega)) - \frac{K_{h}}{\omega}\right)
-% \end{equation}
-
-% \noindent{}Here, $A(\omega)$ is the added mass, $B(\omega)$ is the radiation damping, $K_h$ is the hydrostatic stiffness, $b_f$ accounts for linear friction effects, and $m$ is the rigid body inertia.
-% The imaginary unit is $j$ and $\omega$ is the angular frequency.
-
-% Much has been written about \eqref{eq:intrinsic_impedance_eom} and how to design a controller for $F_{\textrm{pto}}$ such that \emph{mechanical power} is maximized (see, e.g., \cite{Coe2020a} \rc{XX-cite others}).
-% Within this approach to maximize mechanical power, there is an implicit assumption that the dynamics of the PTO can be decoupled from the hydrodynamic problem and, consequently, such a design will also maximize \emph{useful power} at the load (refer back to \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}).
 
 % ------------------------------------------------------------------
 \section{Multi-port networks}\label{sec:multi_port_networks}
@@ -888,12 +826,13 @@ A typical illustration of a reflection coefficient ($\Gamma$) in show in \figure
 
 Note that the fraction of power reflected is $|\Gamma|^2$ and the fraction of power transmitted is $1-|\Gamma|^2$.
 For our purposes, it is most convenient to define the reflection coefficient in terms of the a source and load impedance, as shown in \figurename~\ref{fig:wec_as_multiport_reflection_coefficient} \cite{Kurokawa:1965aa}.
-
+%
 \begin{equation}
-        \Gamma = \frac{Z_\ell - Z_s^*}{Z_\ell + Z_s}
+        \Gamma = |s|^2 = \frac{Z_\ell - Z_s^*}{Z_\ell + Z_s}
         \label{eq:reflection_coeff_impedances}
 \end{equation}
-
+%
+The variables $s$ is called the power wave reflection coefficient.
 We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_\ell = Z_s^*$ is satisfied, $\Gamma$ will be zero and all power will be transmitted.
 
 % ------------------------------------------------------------------
@@ -1038,52 +977,7 @@ This paper describes objective technical results and analysis.
 Any subjective views or opinions that might be expressed in the paper do not necessarily represent the views of the U.S. Department of Energy or the United States Government.
 
 % ------------------------------------------------------------------
-\bibliographystyle{IEEEtran}
+\bibliographystyle{plain}
 \bibliography{wec_as_multiport.bib}
 
-\vskip 0pt plus -1fil
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{author_photos/RyanCoe.jpg}}]{Ryan G. Coe}
-received a B.S. degree in Ocean Engineering (2009) and a Ph.D. in Aerospace Engineering (2013), both from Virginia Tech; he subsequently joined Sandia National Laboratories in 2013.
-Ryan's research focuses primarily on wave energy converter (WEC) modeling, control, testing, and design.
-Ryan is an Associate Editor for the \emph{Journal of Waterway, Port, Coastal, and Ocean Engineering} and the \emph{Journal of Ocean Engineering and Marine Energy} and an Editorial Board member for \emph{Energies}.
-\end{IEEEbiography}
-
-\vskip 0pt plus -1fil
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{author_photos/GiorgioBacelli.jpg}}]{Giorgio Bacelli} 
-received his Master's degree from the Università Politecnica delle Marche and his Ph.D. from the National University of Ireland, Maynooth. 
-He is a Research and Development Engineer in the Water Power Technologies Department at Sandia National Laboratories, where his research focuses on the dynamics and control of wave energy converters, power take-off design, and experimental testing.
-He serves as a Subject Matter Expert (SME) for the International Electrotechnical Commission (IEC) on the subject of "Guidelines for the early-stage development of wave energy converters."
-\end{IEEEbiography}
-
-\vskip 0pt plus -1fil
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{author_photos/DominicForbush_cropped.jpg}}]{Dominic Forbush}
-received his Bachelor's, Master's, and Doctorate degrees, all in Mechanical Engineering from the University of Washington, where his graduate work focused on the control of cross-flow hydrokinetic turbines.
-He is a Research and Development Engineer in the Water Power Technologies Program at Sandia National Laboratories.
-His research focuses on the control, modeling, and development of innovative solutions for wave energy converters (WECs).
-In particular, he is involved in developing and supporting open-source WEC modeling tools, wave tank testing of WEC devices and control approaches, and the application of structured innovation techniques to the wave energy sector.
-\end{IEEEbiography}
-
-\vskip 0pt plus -1fil
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{author_photos/DanielGaebele.jpg}}]{Daniel T. Gaebele}
-received his Bachelor’s and Master’s degrees in Engineering Cybernetics from the University of Stuttgart, Germany, and a Ph.D. in Electrical and Computer Engineering from Oregon State University before joining Sandia as a Postdoctoral Appointee in 2021.
-He is a Research and Development Electrical Engineer at Sandia National Laboratories’ Water Power Technologies Program.
-His research focuses on wave energy converter (WEC) control co-design and control co-optimization, sociotechnical assessments of WECs for blue economy applications, and WEC seasonal deployments.
-\end{IEEEbiography}
-
-\vskip 0pt plus -1fil
-
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{author_photos/AliciaKeow.jpg}}]{Alicia Keow}
-received her Bachelor's degree in Electrical Engineering from Wichita State University in 2016 and her Ph.D. in Mechanical Engineering from the University of Houston in 2021.
-She is a Postdoctoral Appointee in the Water Power Technologies Program at Sandia National Laboratories. 
-Her research focuses on the application of control co-design methodologies for the development of next-generation Marine Hydrokinetic (MHK) systems. 
-\end{IEEEbiography}
-
-
-
 \end{document}
-
-
