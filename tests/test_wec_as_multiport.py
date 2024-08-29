@@ -89,21 +89,35 @@ def test_Zl_opt(wec):
 
 
 def test_no_reflection(wec):
-    """Expect no reflection with perfect matching"""
+    """Expect no power reflection with perfect matching"""
 
-    Gamma = wam.reflection_coefficient(Zs=wec.Z_Thevenin,
-                                       Zl=wec.Zl_opt)
+    Gamma = wam.power_reflection_coefficient(Zs=wec.Z_Thevenin,
+                                             Zl=wec.Zl_opt)
 
     np.testing.assert_allclose(np.zeros_like(Gamma), Gamma)
 
 
 def test_reflection(wec):
-    """Should see reflection with imperfect matching"""
+    """Should see power reflection with imperfect matching"""
+    
+    Gamma = wam.power_reflection_coefficient(Zs=wec.Z_Thevenin,
+                                             Zl=wec.Zl_opt_mech)
 
-    Gamma = wam.reflection_coefficient(Zs=wec.Z_Thevenin,
-                                       Zl=wec.Zl_opt_mech)
+    np.testing.assert_array_less(np.zeros_like(Gamma), Gamma)
 
-    np.testing.assert_array_less(np.zeros_like(Gamma), np.abs(Gamma)**2)
+
+@pytest.mark.parametrize("design_freq", [0.4, 0.55, 0.65])
+def test_reflection_in_bounds(wec,design_freq):
+    """Power reflection coefficient must be between 0 and 1"""
+
+    kp, ki = wec.pi_opt(design_freq)
+    C = wec.pid_controller(kp=kp, ki=ki)
+    Zl_C = wec.Zl_C(C)
+    gamma_pi = wam.power_reflection_coefficient(Zs=wec.Z_Thevenin,
+                                                Zl=Zl_C)
+
+    np.testing.assert_array_less(np.zeros_like(gamma_pi), gamma_pi)
+    np.testing.assert_array_less(gamma_pi, np.ones_like(gamma_pi))
 
 @pytest.mark.parametrize("wec", np.logspace(-5, -1, 5), indirect=True)
 class TestPowerGains:

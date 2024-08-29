@@ -19,7 +19,7 @@ __all__ = [
     "__Zout__",
     "figsize",
     "__pid_controller__",
-    "reflection_coefficient",
+    "power_reflection_coefficient",
 ]
 
 
@@ -311,5 +311,11 @@ def __pid_controller__(omega, kp=0, ki=0, kd=0) -> np.ndarray:
     return kp + ki/(1j*omega) + kd*1j*omega
 
 
-def reflection_coefficient(Zs, Zl) -> np.ndarray:
-    return (Zl - np.conj(Zs))/(Zl + Zs)
+def power_reflection_coefficient(Zs, Zl) -> np.ndarray:
+    """Power reflection coefficient per Kurokawa 1965 eq. 14
+    
+    K. Kurokawa, "Power Waves and the Scattering Matrix," in IEEE Transactions 
+    on Microwave Theory and Techniques, vol. 13, no. 2, pp. 194-202, March 
+    1965, doi: 10.1109/TMTT.1965.1125964.
+    """
+    return np.abs((Zl - np.conj(Zs))/(Zl + Zs))**2
