@@ -54,7 +54,7 @@ To this end, this paper considers some example applications of wave energy conve
 \end{frontmatter}
 
 % ------------------------------------------------------------------
-\section{Introduction}
+\section{Introduction}\label{sec:introduction}
 Wave energy converters (WECs) must be designed to capture a purely oscillatory power input—this is a unique characteristic amongst other energy generation technologies (e.g., wind turbines, hydroelectric dams, nuclear power plants).
 However, given the broad applications of radio-frequency engineering, there are useful tools at the disposal of a WEC designer for maximizing the useful power delivered to a load in an oscillatory system.
 
@@ -355,7 +355,7 @@ Vertical motion of the buoy can be expressed as a dynamic equation dependent on 
 \noindent{}Here, $A(\omega)$ is the added mass, $B(\omega)$ is the radiation damping, $k_h$ is the hydrostatic stiffness, $b_f$ accounts for linear friction effects, and $m$ is the rigid body inertia.
 The imaginary unit is $j$ and $\omega$ is the angular frequency.
 A block diagram\footnote{\label{fn:block_diagrams}Note that block diagrams are related to but distinct from the network diagrams used elsewhere in this paper. To emphasize this distinction, a grey fill is used for blocks in \figurename~\ref{fig:wec_as_multiport_block_diagram}.} in \figurename~\ref{fig:wec_as_multiport_block_diagram} shows the system described by \eqref{eq:eom_rectilinear_motion}.
-In \figurename~\ref{fig:wec_as_multiport_block_diagram}, the PTO force is determined based on some mechanical load impedance ($Z_{\ell m}$) -- the details of this will be discussed in more detail in Section~\ref{sec:illustrative_examples}; the excitation force ($F_{\textrm{exc}}$) is determined from the excitation transfer function ($H_{\textrm{exc}}$) based on the wave elevation~($\eta$).
+In \figurename~\ref{fig:wec_as_multiport_block_diagram}, the PTO force is determined based on the PTO input impedance ($Z_{\textrm{in}}$) -- the details of this will be discussed in more detail in Section~\ref{sec:pto_input_and_output_impedances}; the excitation force ($F_{\textrm{exc}}$) is determined from the excitation transfer function ($H_{\textrm{exc}}$) based on the wave elevation~($\eta$).
 
 \begin{figure}[tb]
         \centering
@@ -453,14 +453,13 @@ Throughout literature, there are many different sign conventions utilized for mu
 In \figurename~\ref{fig:wec_as_multiport_circuits}a, we defined $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port elements, rather than entering. 
 This convention is beneficial in two ways:
 \begin{itemize}
-         \item It allows for consistency when cascading two-ports. 
-         By keeping track of the power flow, with $q_{\textrm{out}} = -q_2$ in \eqref{eq:Z_mat_def_general} being positive out, it becomes easier to ensure that the direction of the flow variable coming out of one cascaded stage (as it appears in the transmission matrix) is equal to the input flow variable of the next stage. 
+         \item This convention allows for consistency when cascading two-ports. 
+         With $q_{\textrm{out}} = -q_2$ in \eqref{eq:Z_mat_def_general} being positive out, we may ensure that the direction of the flow variable out of one cascaded stage (as it appears in the transmission matrix) is equal to the flow into the next stage. 
          This is shown in \eqref{eq:abcd_mat_def_general}, where the flow variables $q_1$ and $q_{\textrm{out}} = -q_2$ have the same power flow direction.
-
-         \item In the power industry, it is customary to consider the flow variable $q_2$ as leaving the two-port. 
-         Flow entering through the positive polarity of an element implies that the element is absorbing power~\cite{CircuitFundamental}.
-         This is known as the \textit{passive sign convention}.
-         With the current $I_{\textrm{out}}$ flowing into the positive terminal of $\forall_{\textrm{out}}$, the load $Z_\ell$ absorbs power when power is positive (this is the scenario of net power generation that we must design for on average).
+         %
+         \item The power industry customarily to considers the flow variable $q_2$ as leaving the two-port. 
+         Flow entering through the positive polarity of an element implies that the element is absorbing power~\cite{CircuitFundamental} -- this is known as the \textit{passive sign convention}.
+         With the current $I_{\textrm{out}}$ flowing into the positive terminal of $\forall_{\textrm{out}}$, the load $Z_\ell$ absorbs power when power is positive.
 \end{itemize}
 Yet, to follow the convention for standard two-port networks, we define the flow variables $q$ as vectors entering both sides of the two-port, as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} and \eqref{eq:Z_mat_def_general}. 
 This means that $I_{\textrm{in}} = -I_{\textrm{out}}$, with the minus sign accounting for the opposite senses of the two currents. 
@@ -566,7 +565,7 @@ Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b a
                 N & 0 \\ 
                 0 & 1/N 
         \end{bmatrix}
-        }_{\substack{\text{linear to rotary} \\ \text{gear transformer}}}
+        }_{\substack{\text{linear to} \\ \text{rotary gear} \\ \text{transformer}}}
         \underbrace{
   	\begin{bmatrix} 
 	 	1 & Z_d \\ 
@@ -578,7 +577,7 @@ Working from left to right in \figurename~\ref{fig:wec_as_multiport_circuits}b a
 	 	0 & k_{\tau} \\ 
 	 	1/k_{\tau} & 0 
         \end{bmatrix}
-        }_{\substack{\text{electric machine} \\ \text{gyrator}}}
+        }_{\substack{\text{electric} \\ \text{machine} \\ \text{gyrator}}}
         \underbrace{
    	\begin{bmatrix} 
 	 	1 & Z_w \\ 
@@ -809,31 +808,23 @@ Using these quantities, we may express three power gains (ratios of output power
 These power gains are efficiencies of the system/subsystems (i.e., they are ratios of power taken at two points in the system).
 They capture the effect of both \emph{losses} and \emph{reflections}.
 Reflection/transmission coefficients consider a single interface, and quantify only reflection/transmission at that interface.
-A typical illustration of a reflection coefficient ($\Gamma$) in show in \figurename~\ref{fig:wec_as_multiport_reflection_coefficient}, where $\Gamma$ is defined as the ratio of the reflected wave effort ($e^-$) to the incident wave effort ($e^+$) or, equivalently, in terms of flow.
-
+A typical illustration of a reflection coefficient ($\Gamma$) in show in \figurename~\ref{fig:wec_as_multiport_reflection_coefficient}, where $\Gamma$ is defined as the ratio of the reflected power to the incident power \cite{Kurokawa:1965aa}.
+%
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_reflection_coefficient.pdf}
         \caption{Reflection coefficient ($\Gamma$) shown for a simple system.}
         \label{fig:wec_as_multiport_reflection_coefficient}
 \end{figure}
-
-\begin{equation}
-        \Gamma
-        = \frac{e^-}{e^+}
-        = - \frac{q^-}{q^+}
-\end{equation}
-
-Note that the fraction of power reflected is $|\Gamma|^2$ and the fraction of power transmitted is $1-|\Gamma|^2$.
-For our purposes, it is most convenient to define the reflection coefficient in terms of the a source and load impedance, as shown in \figurename~\ref{fig:wec_as_multiport_reflection_coefficient} \cite{Kurokawa:1965aa}.
 %
 \begin{equation}
-        \Gamma = |s|^2 = \frac{Z_\ell - Z_s^*}{Z_\ell + Z_s}
+        \Gamma =\left| \frac{Z_\ell - Z_s^*}{Z_\ell + Z_s} \right|^2
         \label{eq:reflection_coeff_impedances}
 \end{equation}
 %
-The variables $s$ is called the power wave reflection coefficient.
+Note that the fraction of power transmitted is $1 - \Gamma$.
 We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_\ell = Z_s^*$ is satisfied, $\Gamma$ will be zero and all power will be transmitted.
+Note that we may calculate reflection/transmission coefficients at different points within the system (consider, e.g., \figurename~\ref{fig:wec_as_multiport_circuits}e, where we may examine power reflection/transmission at the input of the PTO by comparing $Z_{\textrm{in}}$ and $Z_i$).
 
 % ------------------------------------------------------------------
 \section{Illustrative examples}\label{sec:illustrative_examples}
@@ -849,66 +840,41 @@ In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the
 %
 \begin{equation}
 \begin{aligned}
-        \mathcal{S}_{m}  &= \frac{1}{2} F_{\textrm{pto}} v^*  = \frac{1}{2}Z_{\ell m} v v^* = \frac{1}{2}Z_{\ell m} | v |^2 \\
-        &= \frac{1}{2} Z_{\ell m} \left| \frac{F_{\textrm{exc}}}{Z_i + Z_{\ell m}} \right|^2
+        \mathcal{S}_{m}  &= \frac{1}{2} F_{\textrm{pto}} v^*  = \frac{1}{2}Z_{\textrm{in}} v v^* = \frac{1}{2}Z_{\textrm{in}} | v |^2 \\
+        &= \frac{1}{2} Z_{\textrm{in}} \left| \frac{F_{\textrm{exc}}}{Z_i + Z_{\textrm{in}}} \right|^2
 \end{aligned}
 \end{equation}
 %
-Here, we define the \emph{mechanical} load impedance as
-%
-\begin{equation}
-        Z_{\ell m} = \frac{F_{\textrm{pto}}}{v} .
-\end{equation}
-%
-Returning to \eqref{eq:pto_input_port_impedance}, we see that $Z_{\ell m}=Z_{\textrm{in}}$, thus allowing us to relate $Z_{\ell m}$ and $Z_{\ell}$.
-%
-\begin{subequations}
-        \begin{gather}
-                Z_{\ell m} = Z_{\textrm{in}} = Z_{11} - \frac{Z_{12} \, Z_{21}}{Z_\ell + Z_{22}} \\
-                Z_\ell = - \frac{Z_{12} \,Z_{21} }{Z_{\ell m} - Z_{11}} - Z_{22}
-        \end{gather}
-        \label{eq:Zl_Zlm}
-\end{subequations}
-
-Reflections up to the input of the PTO may be minimized by satisfying a single conjugate impedance matching condition.
-%
-\begin{equation}
-        Z_{\ell m} = Z_i^*
-        \label{eq:mech_power_impedance_matching}
-\end{equation}
-%
-Not surprisingly, we see that \eqref{eq:mech_power_impedance_matching} is not dependent on the PTO impedance (i.e., this condition decouples the PTO from the control design problem).
-
-With this in mind, it is instructive to examine the difference between controllers designed to maximize mechanical and electrical power.
-\figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} shows the resulting load impedances for two cases:
+As discussed in Section~\ref{sec:introduction}, the WEC control design problem is often defined to maximize mechanical power by satisfying impedance matching at the input of the PTO per \eqref{eq:bi_conj_matching_in}.
+This disregards the rest of the system and invites possibly deleterious effects, as illustrated in \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, which shows the resulting load impedances for two cases:
 
 \begin{itemize}
-        \item Controller to maximize mechanical power: $C \vert_{Z_{\ell m} = Z_i^*}$
-        \item Controller to maximize electrical power: $C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$
+        \item Controller to maximize \emph{mechanical} power: $C \vert_{Z_{\textrm{in}} = Z_i^*}$
+        \item Controller to maximize \emph{electrical} power: $C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$
 \end{itemize}%
 %
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power_Bode.pdf}
-        \caption{Load impedances (top and middle axes) created by a controller designed to maximize mechanical power ($C \vert_{Z_{\ell m} = Z_i^*}$) and a controller designed to maximize electrical power ($C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$) along with the transducer gains (bottom axes) for each controller.}
+        \caption{Load impedances (top and middle axes) created by a controller designed to maximize mechanical power ($C \vert_{Z_{\textrm{in}} = Z_i^*}$) and a controller designed to maximize electrical power ($C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$) along with the transducer gains (bottom axes) for each controller.}
         \label{fig:wec_as_multiport_load_impedance_for_mech_power}
 \end{figure}
 %
-From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller looks notably different from the controller that maximizes electrical power.
+From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller load impedance is notably different from that of the controller that maximizes electrical power.
 At $\sim 0.575$\,Hz, both controllers have zero phase, but the magnitudes do not match.
 Away from resonance, the phases of the two controllers differ dramatically.
 Furthermore, the transducer gain of the two systems is strikingly different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} electrical power.
 
-As noted in Section~\ref{sec:pto_input_and_output_impedances}, a controller is needed to realize a desired load impedance.
+The results in \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} use theoretical optimal controllers.
 While higher-order controllers can \emph{approach} a perfect realization of the optimal load impedance per \eqref{eq:bi_conj_matching_out}, perfect matching at all frequencies cannot be achieved in practice.\footnote{Per the Bode-Fano limit, impedance matching can be achieved over only a finite bandwidth -- the limit for the matching bandwidth is proportional to the ratio of resistance to reactance in the impedance.}
-However, as noted in \cite{Coe2020a}, real ocean sea states have relatively narrow bandwidths, meaning that a given controller only needs to match load impedance over a narrow frequency range -- the controller can be updated to accommodate changing sea states \cite{Forbush:2022aa}.
+However, as noted in \cite{Coe2020a}, real ocean sea states have relatively narrow bandwidths, meaning that a given controller only needs to match the load impedance over a narrow frequency range -- the controller can be updated to accommodate changing sea states \cite{Forbush:2022aa}.
 These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_controllers_real_imag}, where PI controllers are tuned for waves with frequencies 0.4, 0.55, and 0.65\,Hz.
 While the three controllers each achieve perfect impedance matching at only a single frequency, we can see from the transducer gain that they perform quite well relative to the theoretical optimal over a limited frequency range.
 
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_pi_controllers_real_imag.pdf}
-        \caption{Optimal load impedance and load impedances produced by three PI controllers tuned for different design frequencies (dashed vertical lines; $f_d = [0.4, 0.55, 0.65]$\,Hz) with corresponding transducer gains.}
+        \caption{Optimal load impedance (black curve) and load impedances produced by three PI controllers (colored curves) tuned for different design frequencies (dashed vertical lines; $f_d = [0.4, 0.55, 0.65]$\,Hz) with corresponding transducer gains.}
         \label{fig:gfx/wec_as_multiport_pi_controllers_real_imag}
 \end{figure}
 
@@ -945,7 +911,7 @@ It should be noted that the range of values for $K_d$ and $J_d$ shown in \figure
 With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts) by narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) appears to have the opposite effect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
 While we might intuitively expect that changes to $K_d$ and $J_d$ would only affect the imaginary part of the impedances, we can see from \eqref{eq:expanded_z} that these terms do indeed affect the real part of the impedances as well.
 
-The resulting performance of these different designs can be characterized using the transducer gain defined in \eqref{eq:transducer_gain}, as shown in \figurename~\ref{fig:wec_as_multiport_spring_inertia_transducer_gains}.
+The resulting performance of these different designs can be characterized using the transducer gain defined in \eqref{eq:transducer_gain} as shown in \figurename~\ref{fig:wec_as_multiport_spring_inertia_transducer_gains}.
 As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the negative spring creates a broader impedance matching, and thus we observe that the ``wave-to-wire'' efficiency for the spring designs is somewhat broader than the shaft inertia designs.
 
 \begin{figure}[tb]
@@ -955,14 +921,14 @@ As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the 
         \label{fig:wec_as_multiport_spring_inertia_transducer_gains}
 \end{figure}
 
-Of course, we do not need to apply these design strategies exclusively, and in practice, we would consider altering the shaft inertia and negative spring together, along with many other design parameters.
-Different WEC archetypes will have different design parameters.
+Of course, we do not need to apply these design strategies exclusively, and in practice we would consider altering the shaft inertia and negative spring together, along with many other design parameters.
+Different WEC archetypes will have different design parameters that can be considered through this same lens.
 For example, an oscillating water column design could consider the shaft inertia, air chamber volume (related to stiffness), and many other factors.
-The inertia of a flap device, along with other properties, will be strongly tied to the height of the flap.
+The inertia and restoring stiffness of a flap device, along with other properties, will be strongly tied to the height of the flap and its ballasting.
 
 % ------------------------------------------------------------------
 \section{Discussion and conclusions}
-This paper casts the WEC design problem as an impedance shaping problem.
+Expanding on \cite{Bacelli:2021aa}, this paper casts the WEC design problem as an impedance shaping problem.
 Sizing the hull, altering the drive-train, motor/generator selection, control design, and many more factors all have interrelated effects on the impedance matching and therefore on the power delivered to the load.
 In practice, the bi-conjugate impedance matching requirement expressed by \eqref{eq:bi_conj_matching} cannot be perfectly satisfied at all frequencies, and the cost of improving the matching condition must be balanced with the resulting benefits.
 Furthermore, this formulation does not capture constraints (e.g., maximum torque from a generator or maximum travel of a linear piston) and nonlinear dynamics, which eventually must be considered.
