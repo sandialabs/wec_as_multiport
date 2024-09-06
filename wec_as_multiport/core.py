@@ -20,6 +20,7 @@ __all__ = [
     "figsize",
     "__pid_controller__",
     "power_reflection_coefficient",
+    "power_transmission_coefficient",
 ]
 
 
@@ -318,4 +319,16 @@ def power_reflection_coefficient(Zs, Zl) -> np.ndarray:
     on Microwave Theory and Techniques, vol. 13, no. 2, pp. 194-202, March 
     1965, doi: 10.1109/TMTT.1965.1125964.
     """
-    return np.abs((Zl - np.conj(Zs))/(Zl + Zs))**2
+    s = (Zl - np.conj(Zs))/(Zl + Zs)
+    return np.abs(s)**2
+
+
+def power_transmission_coefficient(Zs, Zl) -> np.ndarray:
+    """Power transmission coefficient per Kurokawa 1965
+    
+    K. Kurokawa, "Power Waves and the Scattering Matrix," in IEEE Transactions 
+    on Microwave Theory and Techniques, vol. 13, no. 2, pp. 194-202, March 
+    1965, doi: 10.1109/TMTT.1965.1125964.
+    """
+    
+    return 1 - power_reflection_coefficient(Zs=Zs, Zl=Zl)

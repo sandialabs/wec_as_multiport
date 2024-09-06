@@ -108,13 +108,13 @@ def test_reflection(wec):
 
 @pytest.mark.parametrize("design_freq", [0.4, 0.55, 0.65])
 def test_reflection_in_bounds(wec,design_freq):
-    """Power reflection coefficient must be between 0 and 1"""
+    """This power reflection coefficient must be between 0 and 1"""
 
     kp, ki = wec.pi_opt(design_freq)
     C = wec.pid_controller(kp=kp, ki=ki)
     Zl_C = wec.Zl_C(C)
-    gamma_pi = wam.power_reflection_coefficient(Zs=wec.Z_Thevenin,
-                                                Zl=Zl_C)
+    gamma_pi = wam.power_reflection_coefficient(Zs=wec.Zi,
+                                                Zl=wec.Zin(Zl=Zl_C))
 
     np.testing.assert_array_less(np.zeros_like(gamma_pi), gamma_pi)
     np.testing.assert_array_less(gamma_pi, np.ones_like(gamma_pi))
