@@ -48,7 +48,7 @@ As with other oscillatory power conversion systems, the design of wave energy co
 By representing the wave energy converter as a multi-port network, two separate but related impedance matching conditions can be established. 
 Satisfying these conditions maximizes power transfer to the load. 
 In practice, these impedance matching conditions may be used to influence the design of the system (including the hull, power take-off, controller, mooring, etc.). 
-To this end, this paper considers some example applications of wave energy converter design with the help of the impedance matching conditions.
+To this end, this paper considers some example applications of wave energy converter design with the help of the impedance matching framework.
 \end{abstract}
 
 \end{frontmatter}
@@ -691,7 +691,7 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
 Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any linear network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$), as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
-Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
+Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{McCabe:2024aa,Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 Using \eqref{eq:eom_rectilinear_motion} and \eqref{eq:Z_mat_def}, we may write
 %
 \begin{equation}
@@ -807,23 +807,23 @@ Using these quantities, we may express three power gains (ratios of output power
 
 These power gains are efficiencies of the system/subsystems (i.e., they are ratios of power taken at two points in the system).
 They capture the effect of both \emph{losses} and \emph{reflections}.
-Reflection/transmission coefficients consider a single interface, and quantify only reflection/transmission at that interface.
-A typical illustration of a reflection coefficient ($\Gamma$) in show in \figurename~\ref{fig:wec_as_multiport_reflection_coefficient}, where $\Gamma$ is defined as the ratio of the reflected power to the incident power \cite{Kurokawa:1965aa}.
+Power reflection/transmission coefficients consider a single interface, and quantify only reflection/transmission at that interface.
+A typical illustration of a power reflection coefficient ($\Gamma$) is show in \figurename~\ref{fig:wec_as_multiport_reflection_coefficient}, where $\Gamma$ is defined as the ratio of the reflected power to the incident power looking from $Z_s$ towards $Z_L$ \cite{Kurokawa:1965aa}.
 %
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_reflection_coefficient.pdf}
-        \caption{Reflection coefficient ($\Gamma$) shown for a simple system.}
+        \caption{Power reflection coefficient ($\Gamma$) in a simple system looking from the source impedance ($Z_s$) towards the load impedance ($Z_L$).}
         \label{fig:wec_as_multiport_reflection_coefficient}
 \end{figure}
 %
 \begin{equation}
-        \Gamma =\left| \frac{Z_\ell - Z_s^*}{Z_\ell + Z_s} \right|^2
+        \Gamma =\left| \frac{Z_L - Z_s^*}{Z_L + Z_s} \right|^2
         \label{eq:reflection_coeff_impedances}
 \end{equation}
 %
-Note that the fraction of power transmitted is $1 - \Gamma$.
-We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_\ell = Z_s^*$ is satisfied, $\Gamma$ will be zero and all power will be transmitted.
+Note that the fraction of power transmitted (the ``power transmission coefficient'') is $1 - \Gamma$.
+We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_L = Z_s^*$ is satisfied, $\Gamma$ will be zero and all power will be transmitted.
 Note that we may calculate reflection/transmission coefficients at different points within the system (consider, e.g., \figurename~\ref{fig:wec_as_multiport_circuits}e, where we may examine power reflection/transmission at the input of the PTO by comparing $Z_{\textrm{in}}$ and $Z_i$).
 
 % ------------------------------------------------------------------
@@ -911,14 +911,16 @@ It should be noted that the range of values for $K_d$ and $J_d$ shown in \figure
 With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts) by narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) appears to have the opposite effect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
 While we might intuitively expect that changes to $K_d$ and $J_d$ would only affect the imaginary part of the impedances, we can see from \eqref{eq:expanded_z} that these terms do indeed affect the real part of the impedances as well.
 
-The resulting performance of these different designs can be characterized using the transducer gain defined in \eqref{eq:transducer_gain} as shown in \figurename~\ref{fig:wec_as_multiport_spring_inertia_transducer_gains}.
-As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the negative spring creates a broader impedance matching, and thus we observe that the ``wave-to-wire'' efficiency for the spring designs is somewhat broader than the shaft inertia designs.
+The resulting performance of these different designs can be characterized using the power reflection coefficient in \eqref{eq:reflection_coeff_impedances}.
+The power reflection coefficient is an appropriate tool to compare these design strategies as they alter the input impedance of the PTO, XX
+\figurename~\ref{wec_as_multiport_spring_inertia_power_reflection_coefficient} shows the power reflection coefficient at the input of the PTO 
+As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the negative spring creates a broader impedance matching, and thus we observe a broader range of very low power reflection at the input of the PTO in the spring designs than in the shaft inertia designs.
 
 \begin{figure}[tb]
         \centering
-        \includegraphics[width=1\columnwidth]{wec_as_multiport_spring_inertia_transducer_gains.pdf}
-        \caption{Available power gains for different levels of spring stiffness (top axes with red curves; $K_d=[0, -50, -100]$\,Nm/rad) and shaft inertia (bottom axes with blue curves; $I_d=[2, 11, 20]$\,kg\,m$^2$).}
-        \label{fig:wec_as_multiport_spring_inertia_transducer_gains}
+        \includegraphics[width=1\columnwidth]{wec_as_multiport_spring_inertia_power_reflection_coefficient.pdf}
+        \caption{Power take-off input power reflection coefficients for different levels of spring stiffness (top axes with red curves; $K_d=[0, -50, -100]$\,Nm/rad) and shaft inertia (bottom axes with blue curves; $I_d=[2, 11, 20]$\,kg\,m$^2$).}
+        \label{wec_as_multiport_spring_inertia_power_reflection_coefficient}
 \end{figure}
 
 Of course, we do not need to apply these design strategies exclusively, and in practice we would consider altering the shaft inertia and negative spring together, along with many other design parameters.
@@ -928,8 +930,8 @@ The inertia and restoring stiffness of a flap device, along with other propertie
 
 % ------------------------------------------------------------------
 \section{Discussion and conclusions}
-Expanding on \cite{Bacelli:2021aa}, this paper casts the WEC design problem as an impedance shaping problem.
-Sizing the hull, altering the drive-train, motor/generator selection, control design, and many more factors all have interrelated effects on the impedance matching and therefore on the power delivered to the load.
+Expanding on \cite{Bacelli:2021aa}, this paper casts WEC design as an impedance shaping problem.
+Sizing/shaping the hull, altering the drive-train, motor/generator selection, control design, and many more factors all have interrelated effects on the impedance matching and therefore on the power delivered to the load.
 In practice, the bi-conjugate impedance matching requirement expressed by \eqref{eq:bi_conj_matching} cannot be perfectly satisfied at all frequencies, and the cost of improving the matching condition must be balanced with the resulting benefits.
 Furthermore, this formulation does not capture constraints (e.g., maximum torque from a generator or maximum travel of a linear piston) and nonlinear dynamics, which eventually must be considered.
 Given these practical considerations, numerical optimization becomes a useful tool.
