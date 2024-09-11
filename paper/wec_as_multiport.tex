@@ -823,7 +823,7 @@ A typical illustration of a power reflection coefficient ($\Gamma$) is show in \
 \end{equation}
 %
 Note that the fraction of power transmitted (the ``power transmission coefficient'') is $1 - \Gamma$.
-We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_L = Z_s^*$ is satisfied, $\Gamma$ will be zero and all power will be transmitted.
+We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_L = Z_s^*$ is satisfied, $\Gamma$ will be zero and all power will be transmitted through the interface in question.
 Note that we may calculate reflection/transmission coefficients at different points within the system (consider, e.g., \figurename~\ref{fig:wec_as_multiport_circuits}e, where we may examine power reflection/transmission at the input of the PTO by comparing $Z_{\textrm{in}}$ and $Z_i$).
 
 % ------------------------------------------------------------------
@@ -846,28 +846,28 @@ In most cases, those papers consider mechanical power ($\mathcal{S}_{m}$) as the
 \end{equation}
 %
 As discussed in Section~\ref{sec:introduction}, the WEC control design problem is often defined to maximize mechanical power by satisfying impedance matching at the input of the PTO per \eqref{eq:bi_conj_matching_in}.
-This disregards the rest of the system and invites possibly deleterious effects, as illustrated in \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, which shows the resulting load impedances for two cases:
+This disregards the rest of the system and invites possibly deleterious effects, as illustrated in \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, which shows the load impedances and resulting transducer gains for two cases:
 
 \begin{itemize}
-        \item Controller to maximize \emph{mechanical} power: $C \vert_{Z_{\textrm{in}} = Z_i^*}$
-        \item Controller to maximize \emph{electrical} power: $C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$
+        \item A controller to maximize \emph{mechanical} power: $C \vert_{Z_{\textrm{in}} = Z_i^*}$
+        \item A controller to maximize \emph{electrical} power: $C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$
 \end{itemize}%
 %
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power_Bode.pdf}
-        \caption{Load impedances (top and middle axes) created by a controller designed to maximize mechanical power ($C \vert_{Z_{\textrm{in}} = Z_i^*}$) and a controller designed to maximize electrical power ($C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$) along with the transducer gains (bottom axes) for each controller.}
+        \caption{Load impedances (top and middle axes) created by a controller designed to maximize mechanical power ($C \vert_{Z_{\textrm{in}} = Z_i^*}$, shown with a dashed curve) and a controller designed to maximize electrical power ($C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$, shown with a solid curve) along with the transducer gains (bottom axes) for each controller.}
         \label{fig:wec_as_multiport_load_impedance_for_mech_power}
 \end{figure}
 %
 From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller load impedance is notably different from that of the controller that maximizes electrical power.
 At $\sim 0.575$\,Hz, both controllers have zero phase, but the magnitudes do not match.
 Away from resonance, the phases of the two controllers differ dramatically.
-Furthermore, the transducer gain of the two systems is strikingly different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} electrical power.
+Furthermore, the transducer gain of the two systems are strikingly different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} electrical power.
 
 The results in \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} use theoretical optimal controllers.
 While higher-order controllers can \emph{approach} a perfect realization of the optimal load impedance per \eqref{eq:bi_conj_matching_out}, perfect matching at all frequencies cannot be achieved in practice.\footnote{Per the Bode-Fano limit, impedance matching can be achieved over only a finite bandwidth -- the limit for the matching bandwidth is proportional to the ratio of resistance to reactance in the impedance.}
-However, as noted in \cite{Coe2020a}, real ocean sea states have relatively narrow bandwidths, meaning that a given controller only needs to match the load impedance over a narrow frequency range -- the controller can be updated to accommodate changing sea states \cite{Forbush:2022aa}.
+However, as noted in \cite{Coe2020a}, real ocean sea states have relatively narrow bandwidths, meaning that a given controller only needs to match the load impedance over a narrow frequency range -- the controller may be updated to accommodate changing sea states \cite{Forbush:2022aa}.
 These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_controllers_real_imag}, where PI controllers are tuned for waves with frequencies 0.4, 0.55, and 0.65\,Hz.
 While the three controllers each achieve perfect impedance matching at only a single frequency, we can see from the transducer gain that they perform quite well relative to the theoretical optimal over a limited frequency range.
 
@@ -906,15 +906,15 @@ In each case, we enforce \eqref{eq:bi_conj_matching_out} such that the theoretic
 \end{figure}
 
 Both of the considered design alterations (negative stiffness and increased shaft inertia) have the effect of improving impedance matching on the input port at lower frequencies.
-Recall also that the power transported by an ocean wave is inversely proportional to the wave frequency ($J \propto f^{-1}$) and that lower frequency (longer wavelength) waves can grow to larger amplitudes before breaking, meaning that this improved impedance matching at lower frequencies may be particularly advantageous.
+Recall also that the power transported by an ocean wave is inversely proportional to the wave frequency and that lower frequency (longer wavelength) waves can grow to larger amplitudes before breaking, meaning that this improved impedance matching at lower frequencies may be particularly advantageous.
 It should be noted that the range of values for $K_d$ and $J_d$ shown in \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances} is somewhat arbitrary and intended only to illustrate trends -- one cannot directly compare the effects of doubling the shaft inertia with doubling the negative spring stiffness in terms of an engineering decision.
 With this in mind, we can see that, for this specific example, adding shaft inertia (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_inertia}) appears to adversely affect the shape of the input impedance (both in terms of the real and imaginary parts) by narrowing the bandwidth over which a good matching with the intrinsic impedance is achieved, whereas adding a negative spring (\figurename~\ref{fig:wec_as_multiport_in_and_out_impedances_spring}) appears to have the opposite effect, generally increasing the bandwidth over which good matching with the intrinsic impedance occurs.
-While we might intuitively expect that changes to $K_d$ and $J_d$ would only affect the imaginary part of the impedances, we can see from \eqref{eq:expanded_z} that these terms do indeed affect the real part of the impedances as well.
+While we might intuitively expect that changes to $K_d$ and $J_d$ would only affect the imaginary part of the impedances, we can see from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances} and \eqref{eq:expanded_z} that these terms do indeed affect the real part of the impedances as well.
 
-The resulting performance of these different designs can be characterized using the power reflection coefficient in \eqref{eq:reflection_coeff_impedances}.
-The power reflection coefficient is an appropriate tool to compare these design strategies as they alter the input impedance of the PTO, XX
-\figurename~\ref{wec_as_multiport_spring_inertia_power_reflection_coefficient} shows the power reflection coefficient at the input of the PTO 
-As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the negative spring creates a broader impedance matching, and thus we observe a broader range of very low power reflection at the input of the PTO in the spring designs than in the shaft inertia designs.
+The resulting performance of these different designs can be characterized using the power reflection coefficient per \eqref{eq:reflection_coeff_impedances}.
+The power reflection coefficient is an appropriate tool to compare these design strategies as they alter the input impedance of the PTO.
+\figurename~\ref{wec_as_multiport_spring_inertia_power_reflection_coefficient} shows the power reflection coefficient at the input of the PTO.
+As noted from \figurename~\ref{fig:wec_as_multiport_in_and_out_impedances}, the negative spring creates a broader impedance matching, and thus we observe a broader range over which the power reflection at the input of the PTO  remains low in the spring designs than in the shaft inertia designs.
 
 \begin{figure}[tb]
         \centering
@@ -932,6 +932,8 @@ The inertia and restoring stiffness of a flap device, along with other propertie
 \section{Discussion and conclusions}
 Expanding on \cite{Bacelli:2021aa}, this paper casts WEC design as an impedance shaping problem.
 Sizing/shaping the hull, altering the drive-train, motor/generator selection, control design, and many more factors all have interrelated effects on the impedance matching and therefore on the power delivered to the load.
+The impedance matching problem is well-studied in other engineering fields, yielding a wealth of experience and tools that can be readily applied for WEC design.
+
 In practice, the bi-conjugate impedance matching requirement expressed by \eqref{eq:bi_conj_matching} cannot be perfectly satisfied at all frequencies, and the cost of improving the matching condition must be balanced with the resulting benefits.
 Furthermore, this formulation does not capture constraints (e.g., maximum torque from a generator or maximum travel of a linear piston) and nonlinear dynamics, which eventually must be considered.
 Given these practical considerations, numerical optimization becomes a useful tool.
