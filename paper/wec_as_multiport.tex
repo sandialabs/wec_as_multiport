@@ -92,6 +92,7 @@ This framework is then applied in a number of illustrative case studies (Section
 % ------------------------------------------------------------------
 \section{Multi-port networks}\label{sec:multi_port_networks}
 The multi-port network models popular in electronics and microwave systems~\cite{Marrocco:2008aa,CircuitFundamental} provide a useful construct for analyzing a WEC.
+The conventions applied herein are explained in more detail in Appendix~\ref{app:conventions}.
 Given that these models are not currently used broadly within the wave energy field, we will now review the fundamental concepts of multi-port network models.
 \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} provides a central reference for this discussion, with columns pertaining to different network model elements and representations/explanations of those elements shown in each row.
 First, let us consider one-port elements, which, as shown on the left hand side of \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}, relate a single effort variable ($e$) to a single flow variable ($q$) through an impedance ($Z$).
@@ -189,7 +190,8 @@ The scattering parameters for a multi-port are also of interest to us, as they d
         \label{eq:scattering_matrix}
 \end{equation}
 %
-Here, $a_k$ and $b_k$ are, respectively, the incident and reflected, square root of power on the $k^{\textrm{th}}$-port.
+Here, $a_k$ and $b_k$ are, respectively, the incident and reflected, square root of power on the $k^{\textrm{th}}$-port \cite{Amakawa:2016aa}.
+The ``scatter transfer'' formulation is similar to the $ABCD$ formulation, in that it can be used to easily understand the effect of cascading elements.
 
 An important property of a two-port element is that it can be collapsed into a one-port element if one of the ports is terminated with a load and has no independent sources. 
 Whereas the general two-port element has four variables, two of which are independent, in the scenario where one port is terminated with a load, the system loses a degree of freedom. 
@@ -952,24 +954,21 @@ Any subjective views or opinions that might be expressed in the paper do not nec
 
 % ------------------------------------------------------------------
 \appendix
-\section{Multi-port network impedance matching conventions}
+\section{Multi-port network impedance matching conventions}\label{app:conventions}
 Multi-port networks are applied across a wide variety of fields, in which a number of conventions and underlying assumptions are utilized.
 Two important conventions warrant discussion here:
 
 \begin{itemize}
-        \item \textbf{Sign conventions:} Throughout literature, there are many different sign conventions utilized for multi-port systems. 
-        In \figurename~\ref{fig:wec_as_multiport_circuits}a, we defined $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port elements, rather than entering. 
+        \item \textbf{Sign conventions:} Throughout literature, there are many different sign conventions utilized for multi-port systems.
+        In \figurename~\ref{fig:wec_as_multiport_circuits}a, we define $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port elements.
         This convention is beneficial in two ways:
         \begin{itemize}
-                 \item This convention allows for consistency when cascading two-ports. 
-                 With $q_{\textrm{out}} = -q_2$ in \eqref{eq:Z_mat_def_general} being positive out, we may ensure that the direction of the flow variable out of one cascaded stage (as it appears in the transmission matrix) is equal to the flow into the next stage. 
-                 This is shown in \eqref{eq:abcd_mat_def_general}, where the flow variables $q_1$ and $q_{\textrm{out}} = -q_2$ have the same power flow direction.
-                 %
-                 \item The power industry customarily to considers the flow variable $q_2$ as leaving the two-port. 
-                 Flow entering through the positive polarity of an element implies that the element is absorbing power~\cite{CircuitFundamental} -- this is known as the \textit{passive sign convention}.
-                 With the current $I_{\textrm{out}}$ flowing into the positive terminal of $\forall_{\textrm{out}}$, the load $Z_\ell$ absorbs power when power is positive.
+                \item This convention allows for consistency when cascading two-ports, e.g., when using the $ABCD$ formulation.
+                %
+                \item This is the preferred convention of the power industry, often referred to as the ``passive sign convention'' \cite{CircuitFundamental}.
+                In this convention, flow entering through the positive polarity of an element implies that the element is absorbing power.
         \end{itemize}
-        Yet, to follow the convention for standard two-port networks, we define the flow variables $q$ as vectors entering both sides of the two-port, as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} and \eqref{eq:Z_mat_def_general}. 
+        Yet, to follow the convention for standard two-port networks, we define the flow variables $q$ as vectors entering both sides of the two-port, as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} and \eqref{eq:Z_mat_def_general}.
         This means that $I_{\textrm{in}} = -I_{\textrm{out}}$, with the minus sign accounting for the opposite senses of the two currents.
         As a result, the impedance matrix and the transmission matrix follow the formulas found in most textbooks. 
         This allows us to directly adopt well-known input and output impedance formulas, methods to convert between impedance and transmission form, and other techniques for performing design analysis.
