@@ -153,6 +153,16 @@ class WEC:
     #         v = (Fexc - Fpto) / self.Zi
     #     return v
 
+
+    # def Spto(self, Zl=None): -> np.ndarray:
+    #     "Power scattering matrix per TODO"
+        
+    #     if Zl is None:
+    #         Zl = self.Zl_opt
+        
+    #     S11 = (self.Zpto[0,0] - np.conj(self.Zi))*(self.Zpto[1,1] + Zl) \
+    #         - (self.Zpto[0,1]*self.Zpto[1,0])
+
     def transducer_power_gain(self, Zl=None) -> np.ndarray:
         """Wave-to-wire efficiency (input power / power delivered to load)
         https://en.wikipedia.org/wiki/Power_gain#Transducer_power_gain"""
