@@ -1,47 +1,52 @@
-\documentclass[twocolumn]{autart}
+\documentclass[5p,times]{elsarticle}
 
-\usepackage{amsmath,amsfonts}
-\usepackage{algorithmic}
-\usepackage{algorithm}
-\usepackage{array}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{textcomp}
-\usepackage{stfloats}
-\usepackage{url}
-\usepackage{booktabs}
-\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% \usepackage{algorithmic}
+% \usepackage{algorithm}
+% \usepackage{array}
+% \usepackage{caption}
+% \usepackage{subcaption}
+% \usepackage{textcomp}
+% \usepackage{stfloats}
+% \usepackage{url}
+% \usepackage{booktabs}
+% \usepackage{verbatim}
+% \usepackage{xcolor}
 \usepackage{graphicx}
-\usepackage{xcolor}
 \graphicspath{{../gfx/}}
-\usepackage{cite}
+\usepackage{subfig}
+% \usepackage{cite}
 
 % \usepackage{draftwatermark}
 % \SetWatermarkScale{.85}
 % \SetWatermarkText{DRAFT}
 
-\newcommand{\rc}[1]{\textcolor{red}{#1}}
-\newcommand{\dg}[1]{\textcolor{purple}{#1}}
-\newcommand{\ak}[1]{\textcolor{teal}{#1}}
+\hyphenation{imped-ance}
+
+\journal{Mechatronics}
 
 \begin{document}
 \begin{frontmatter}
 
-\title{Co-design of a wave energy converter through bi-conjugate impedance matching\thanksref{footnoteinfo}}
+\title{Co-design of a wave energy converter through bi-conjugate impedance matching}
 
-\thanks[footnoteinfo]{Corresponding author R.~G.~Coe}
-
-\author[Sandia]{Ryan G. Coe}\ead{rcoe@sandia.gov},
-\author[Sandia]{Giorgio Bacelli}\ead{gbacell@sandia.gov},
-\author[Sandia]{Daniel Gaebele}\ead{dtgaebe@sandia.gov},
-\author[Sandia]{Alicia Keow}\ead{akeow@sandia.gov},
+\author[Sandia]{Ryan G. Coe\corref{cor1}}\ead{rcoe@sandia.gov}
+\author[Sandia]{Giorgio Bacelli}\ead{gbacell@sandia.gov}
+\author[Sandia]{Daniel Gaebele}\ead{dtgaebe@sandia.gov}
+\author[Sandia]{Alicia Keow}\ead{akeow@sandia.gov}
 \author[Sandia]{Dominic Forbush}\ead{dforbus@sandia.gov}
 
-\address[Sandia]{Sandia National Laboratories, Albuquerque, NM, USA}
+\cortext[cor1]{Corresponding author}
 
-\begin{keyword}
-wave energy converter (WEC), control co-design, impedance matching
-\end{keyword}
+\affiliation[Sandia]{organization={Sandia National Laboratories},
+            addressline={PO BOX 5800}, 
+            city={Albuquerque},
+            postcode={87123}, 
+            state={NM},
+            country={USA}}
+
 
 \begin{abstract}
 As with other oscillatory power conversion systems, the design of wave energy converters can be understood as an impedance matching problem. 
@@ -50,6 +55,21 @@ Satisfying these conditions maximizes power transfer to the load.
 In practice, these impedance matching conditions may be used to influence the design of the system (including the hull, power take-off, controller, mooring, etc.). 
 To this end, this paper considers some example applications of wave energy converter design with the help of the impedance matching framework.
 \end{abstract}
+
+%%Graphical abstract
+% \begin{graphicalabstract}
+% %\includegraphics{grabs}
+% \end{graphicalabstract}
+
+% %%Research highlights
+% \begin{highlights}
+% \item Multi-port model representation for wave energy converters (WECs)
+% \item Clear expression of control co-design problem
+% \end{highlights}
+
+\begin{keyword}
+wave energy converter (WEC), control co-design, impedance matching
+\end{keyword}
 
 \end{frontmatter}
 
@@ -83,7 +103,7 @@ Losses are due to friction or electrical resistance -- this effect is often two 
 Reflections, which are due to a mismatch in the system impedances, are generally underappreciated in WEC design.
 %%% Dom feels this is a bit of an over-simplification maybe better suited for a discussion section later on. While minimizing losses is important, friction and resistance are contributors to the real part of impedance and, especially in absence of other contributors (gear ratio, Kt) being called out explicitly I think this might yield confusion.
 
-This paper will further explore concepts of bi-conjugate impedance matching in wave energy previously raised by \cite{Bacelli:2021aa}, with the goal of generating a more practical understanding of the utility and application of this theory. 
+This paper further explores concepts of bi-conjugate impedance matching in wave energy previously raised by \cite{Bacelli:2021aa}, with the goal of generating a more practical understanding of the utility and application of this theory. 
 First, a basic review of network modeling and elements is presented (Section~\ref{sec:multi_port_networks}).
 Next, this framework is applied to a WEC (Section~\ref{sec:modeling_a_direct_drive_wec}).
 Finally, in a number of illustrative case studies are considered (Section~\ref{sec:illustrative_examples}).
@@ -899,24 +919,32 @@ The left-hand axes in each figure show $Z_{\textrm{in}}$ (colored curves) along 
 The right-hand axes in each figure show $Z_{\textrm{out}}$.
 In each case, we enforce \eqref{eq:bi_conj_matching_out} such that the theoretical optimal load impedance ($Z_\ell$) is used to maximize electrical power.
 
-\begin{figure}
-     \centering
-     \begin{subfigure}[b]{1\columnwidth}
-         \centering
-         \includegraphics[width=\textwidth]{wec_as_multiport_in_and_out_impedances_spring.pdf}
-         \caption{Varying levels of stiffness on shaft ($K_d=[0, -50, -100]$\,Nm/rad)}
-         \label{fig:wec_as_multiport_in_and_out_impedances_spring}
-     \end{subfigure}
-     \\
-     \begin{subfigure}[b]{1\columnwidth}
-         \centering
-         \includegraphics[width=\textwidth]{wec_as_multiport_in_and_out_impedances_inertia.pdf}
-         \caption{Varying levels of shaft inertia ($I_d=[2, 11, 20]$\,kg m$^2$)}
-         \label{fig:wec_as_multiport_in_and_out_impedances_inertia}
-     \end{subfigure}
-     \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve.}
-     \label{fig:wec_as_multiport_in_and_out_impedances}
+\begin{figure}[tb]
+        \subfloat[{Varying levels of stiffness on shaft ($K_d = [0, -50, -100]$\,Nm/rad)}\label{fig:wec_as_multiport_in_and_out_impedances_spring}]{\includegraphics[width=\columnwidth]{wec_as_multiport_in_and_out_impedances_spring.pdf}}
+        \\
+        \subfloat[{Varying levels of shaft inertia ($I_d=[2, 11, 20]$\,kg m$^2$)}\label{fig:wec_as_multiport_in_and_out_impedances_inertia}]{\includegraphics[width=\columnwidth]{wec_as_multiport_in_and_out_impedances_inertia.pdf}}
+        \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve.}
+        \label{fig:wec_as_multiport_in_and_out_impedances}
 \end{figure}
+
+% \begin{figure}
+%      \centering
+%      \begin{subfigure}[b]{1\columnwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{wec_as_multiport_in_and_out_impedances_spring.pdf}
+%          \caption{Varying levels of stiffness on shaft \\\hspace{\textwidth}($K_d=[0, -50, -100]$\,Nm/rad)}
+%          \label{fig:wec_as_multiport_in_and_out_impedances_spring}
+%      \end{subfigure}
+%      \\
+%      \begin{subfigure}[b]{1\columnwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{wec_as_multiport_in_and_out_impedances_inertia.pdf}
+%          \caption{Varying levels of shaft inertia ($I_d=[2, 11, 20]$\,kg m$^2$)}
+%          \label{fig:wec_as_multiport_in_and_out_impedances_inertia}
+%      \end{subfigure}
+%      \caption{Input port (left) and output port (right) impedances. Upper axes show real part ($\Re \{ Z \}$), lower axes show imaginary part ($\Im \{ Z \}$). Impedance matching condition on the input port per \eqref{eq:bi_conj_matching_in} illustrated by black dashed curve.}
+%      \label{fig:wec_as_multiport_in_and_out_impedances}
+% \end{figure}
 
 Both of the considered design alterations (negative stiffness and increased shaft inertia) have the effect of improving impedance matching on the input port at lower frequencies.
 Recall also that the power transported by an ocean wave is inversely proportional to the wave frequency and that lower frequency (longer wavelength) waves can grow to larger amplitudes before breaking, meaning that this improved impedance matching at lower frequencies may be particularly advantageous.
@@ -978,12 +1006,12 @@ Two important conventions warrant discussion here:
         \item \textbf{Complex source impedance:} It is common in many fields to assume a real source impedance (typically 50\,$\Omega$) \cite{Kurokawa:1965aa}, however the ``source impedance'' for a WEC in the formulation presented here is the intrinsic impedance, which is complex.
         We have therefore presented expressions that do not assume a real source impedance.
         %
-        \item \textbf{Kurokawa power wave scattering parameters:} There are at least three commonly used definitions for scattering parameters \cite{Kurokawa:1965aa,Amakawa:2016aa}.
+        \item \textbf{Scattering parameters:} There are at least three commonly used definitions for scattering parameters \cite{Kurokawa:1965aa,Amakawa:2016aa}.
         The ``Kurokawa power wave scattering parameters'' consider power and reference arbitrary complex source/load impedances, this formulation is used in this paper accordingly.
 \end{itemize}
 
 % ------------------------------------------------------------------
-\bibliographystyle{plain}
+\bibliographystyle{elsarticle-num}
 \bibliography{wec_as_multiport.bib}
 
 \end{document}
