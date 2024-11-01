@@ -130,6 +130,16 @@ class WEC:
     def Z_Thevenin(self) -> np.ndarray:
         """Thévenin impedance"""
         return self.Zout
+    
+    @property
+    def Thevenin_resonance_index(self) -> int:
+        """Index of Thévenin resonance frequency"""
+        return np.argmin(np.abs(np.angle(self.Z_Thevenin)))
+
+    @property
+    def Thevenin_resonance(self) -> float:
+        """Thévenin resonant frequency"""
+        return self.freq[self.Thevenin_resonance_index]
 
     @property
     def __detZpto__(self) -> np.array:
@@ -185,10 +195,6 @@ class WEC:
             Zl = self.Zl_opt
         return np.abs(self.Zpto[1, 0]/(Zl + self.Zpto[1, 1]))**2 * \
             np.real(Zl) / np.real(self.Zin(Zl=Zl))
-
-    def Zlm(self, Zl) -> np.ndarray:
-        """Mechanical load impedance"""
-        return self.Zin(Zl=Zl)
 
     def F_Thevenin(self, Fexc) -> np.ndarray:
         """Thévenin source"""

@@ -13,10 +13,7 @@ bem_data_fname = os.path.join(os.path.dirname(__file__),
 
 
 @pytest.fixture(scope="module")
-def wec(Rw=None):
-    if Rw is None:
-        Rw = 0.5
-
+def bem_data():
     if os.path.isfile(bem_data_fname):
         print("Found existing BEM file, loading")
         bem_data = wot.read_netcdf(bem_data_fname)
@@ -38,6 +35,13 @@ def wec(Rw=None):
         bem_data['excitation_force'] = bem_data['diffraction_force'] + \
             bem_data['Froude_Krylov_force']
         bem_data = wot.add_linear_friction(bem_data)
+    return bem_data
+    
+
+@pytest.fixture(scope="module")
+def wec(bem_data, Rw=None):
+    if Rw is None:
+        Rw = 0.5
 
     wec = wam.WEC(omega=bem_data['omega'].values,
                   N=12.4666,
@@ -49,6 +53,7 @@ def wec(Rw=None):
                   Kd=0,
                   Zi=np.squeeze(wot.hydrodynamic_impedance(bem_data)).values,
                   Hexc=np.squeeze(bem_data['excitation_force'].values))
+    
     return wec
 
 
@@ -67,11 +72,11 @@ def test_low_freq_wave_hydrostatics(wec):
     assert Fexc == pytest.approx(Fhs, rel=1e-1)
 
 
-def test_Zlm_matching(wec):
-    """Mechanical load impedance when maximizing mechanical power should 
+def test_Zin_matching(wec):
+    """PTO input impedance when maximizing mechanical power should 
     equal the complex conjugate of the intrinsic impedance"""
 
-    Z1 = wec.Zlm(Zl=wec.Zl_opt_mech)
+    Z1 = wec.Zin(Zl=wec.Zl_opt_mech)
     Z2 = np.conj(wec.Zi)
 
     np.testing.assert_allclose(Z1, Z2)
