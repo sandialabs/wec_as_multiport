@@ -29,13 +29,31 @@ jobs:
             papers/hull_aspect_ratios/hull_aspect_ratios.pdf
             papers/wec_as_multiport/wec_as_multiport.pdf
           compression-level: 1
-  job2:
+  # job2:
+  #   runs-on: ubuntu-latest
+  #   needs: build_latex
+  #   steps:
+  #     - env:
+  #         OUTPUT1: ${{needs.build_latex.outputs.output1}}
+  #       run: echo "Artifact ID from previous job is $OUTPUT1"
+
+  deploy:
     runs-on: ubuntu-latest
     needs: build_latex
     steps:
-      - env:
-          OUTPUT1: ${{needs.build_latex.outputs.output1}}
-        run: echo "Artifact ID from previous job is $OUTPUT1"
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+          merge-multiple: true
+      - name: deploy on orphan branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ GITHUB_WORKSPACE }}
+          publish_branch: build
+          force_orphan: true
+
   # deploy:
   #   # Edit here if compiling multiple papers
   #   needs: [build_latex]
