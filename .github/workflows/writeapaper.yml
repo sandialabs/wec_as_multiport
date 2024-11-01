@@ -42,7 +42,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ GITHUB_WORKSPACE }}
+          publish_dir: ${{ github.workspace }}
           publish_branch: build
           force_orphan: true
   # job2:
