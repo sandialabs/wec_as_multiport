@@ -1,4 +1,5 @@
 # WEC as a multi-port
+Modeling wave energy converters (WECs) using a multi-port network framework
 
 ## Goals
 
