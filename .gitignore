@@ -25,6 +25,7 @@ wec_as_multiport.egg-info/*
 *.cb
 *.cb2
 .*.lb
+*.spl
 *-converted-to.*
 # these rules might exclude image files for figures etc.
 # *.ps
