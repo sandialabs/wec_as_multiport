@@ -1,9 +1,11 @@
+# © 2024 National Technology & Engineering Solutions of Sandia, LLC
+# (NTESS). Under the terms of Contract DE-NA0003525 with NTESS, the U.S.
+# Government retains certain rights in this software.
 
 import numpy as np
 import copy
-from scipy.constants import golden
-from scipy.interpolate import interp1d
-from scipy.optimize import minimize_scalar
+
+from wec_as_multiport import util
 
 # import capytaine as cpy
 # import wecopttool as wot
@@ -19,14 +21,10 @@ __all__ = [
     "__Fexc__",
     "__Zin__",
     "__Zout__",
-    "figsize",
     "__pid_controller__",
     "power_reflection_coefficient",
     "power_transmission_coefficient",
-    "__find_zero_crossings__",
-    "__find_maximum_with_interpolation__",
 ]
-
 
 class WEC:
 
@@ -123,7 +121,7 @@ class WEC:
         """Hydrodynamic resonant frequency"""
         # return self.freq[self.hydrodynamic_resonance_index]
         try:
-            fn = __find_zero_crossings__(self.freq, np.angle(self.Zi))[0]
+            fn = util.find_zero_crossings(self.freq, np.angle(self.Zi))[0]
         except:
             fn = self.freq[self.hydrodynamic_resonance_index]
             # TODO add warning
@@ -151,7 +149,7 @@ class WEC:
     def Thevenin_resonance(self) -> float:
         """Thévenin resonant frequency"""
         # return self.freq[self.Thevenin_resonance_index]
-        return __find_zero_crossings__(self.freq, np.angle(self.Z_Thevenin))[0]
+        return util.find_zero_crossings(self.freq, np.angle(self.Z_Thevenin))[0]
         
 
     @property
@@ -344,88 +342,6 @@ def __Zin__(Z_2port, Zl) -> np.ndarray:
 def __Zout__(Z_2port, Zi) -> np.ndarray:
     return Z_2port[1, 1] - Z_2port[1, 0] * Z_2port[0, 1] \
         / (Zi + Z_2port[0, 0])
-        
-        
-def __find_maximum_with_interpolation__(x_data, y_data, method='cubic', bounds=None):
-    """
-    Sandia AI
-    Finds the maximum value of a function defined by data points using interpolation.
-
-    Parameters:
-    - x_data: array-like, the x-coordinates of the data points.
-    - y_data: array-like, the y-coordinates of the data points.
-    - method: str, the type of interpolation ('linear', 'quadratic', 'cubic', etc.).
-    - bounds: tuple, the bounds for the x-values to search for the maximum (min_x, max_x).
-
-    Returns:
-    - max_x: the x-coordinate of the maximum point.
-    - max_y: the maximum value of the interpolated function.
-    """
-    
-    # Step 1: Interpolate the data
-    interpolator = interp1d(x_data, y_data, kind=method, fill_value="extrapolate")
-
-    # Step 2: Define a function for optimization
-    def interpolated_function(x):
-        return interpolator(x)
-
-    # Step 3: Find the maximum using optimization
-    if bounds is None:
-        bounds = (min(x_data), max(x_data))
-    
-    result = minimize_scalar(lambda x: -interpolated_function(x), bounds=bounds, method='bounded')
-
-    # Get the maximum value and corresponding x
-    max_x = result.x
-    max_y = -result.fun
-
-    return max_x, max_y
-        
-        
-def __find_zero_crossings__(x, y):
-    """Generated from Google AI: Finds zero crossings in a 1D signal.
-
-    Args:
-        x (array-like): The x-coordinates of the data points.
-        y (array-like): The y-coordinates of the data points.
-
-    Returns:
-        array: The x-coordinates of the interpolated zero crossings.
-    """
-
-    # Find indices where the sign of y changes
-    sign_changes = np.where(np.diff(np.sign(y)))[0]
-
-    # Interpolate the zero crossings
-    zero_crossings = []
-    for i in sign_changes:
-        x1, x2 = x[i], x[i + 1]
-        y1, y2 = y[i], y[i + 1]
-
-        # Use linear interpolation to find the zero crossing
-        zero_crossing = x1 - y1 * (x2 - x1) / (y2 - y1)
-        zero_crossings.append(zero_crossing)
-
-    return np.array(zero_crossings)
-
-
-def figsize(wf=1, hf=1, columnwidth=250):
-    """Parameters:
-      - wf [float]:  width fraction in columnwidth units
-      - hf [float]:  height fraction in columnwidth units.
-                     Set by default to golden ratio.
-      - columnwidth [float]: width of the column in latex. Get this from LaTeX 
-                             using \showthe\columnwidth
-    Returns:  [fig_width,fig_height]: that should be given to matplotlib
-    https://stackoverflow.com/questions/29187618/matplotlib-and-latex-beamer-correct-size/30170343
-    """
-
-    hf = hf/golden
-    fig_width_pt = columnwidth*wf
-    inches_per_pt = 1.0/72.27               # Convert pt to inch
-    fig_width = fig_width_pt*inches_per_pt  # width in inches
-    fig_height = fig_width*hf      # height in inches
-    return [fig_width, fig_height]
 
 
 def __pid_controller__(omega, kp=0, ki=0, kd=0) -> np.ndarray:
