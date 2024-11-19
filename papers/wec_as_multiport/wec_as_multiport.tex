@@ -801,8 +801,8 @@ Similarly, when condition \eqref{eq:bi_conj_matching_out} is satisfied, the Th\'
 In the general case, when \eqref{eq:bi_conj_matching} is not necessarily satisfied, power delivered to the power take-off ($\mathcal{P}_{\textrm{in}}$) and power delivered to the load ($\mathcal{P}_\ell$) are as follows.
 \begin{subequations}
         \begin{align}
-                \mathcal{P}_{\textrm{in}} &= \frac{1}{2} v^2 \Re \left\{ Z_{\textrm{in}} \right\}\\
-                \mathcal{P}_\ell &= \frac{1}{2} I_{\textrm{out}}^2 \Re \left\{ Z_{\ell} \right\}
+                \mathcal{P}_{\textrm{in}} &= \frac{1}{2} \left| v \right|^2 \Re \left\{ Z_{\textrm{in}} \right\}\\
+                \mathcal{P}_\ell &= \frac{1}{2} \left| I_{\textrm{out}} \right|^2 \Re \left\{ Z_{\ell} \right\}
         \end{align}
 \end{subequations}
 
@@ -816,13 +816,19 @@ Using these quantities, we may express three ``power gains'' (ratios of output p
 %
 \begin{subequations}
 \begin{align}
-        G_T &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in,max}}}  = \frac{4 Z_{21}^2 \Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}}{((Z_{\ell} + Z_{22})(Z_i + Z_{11}) - Z_{12}Z_{21})^2} 
+        G_T 
+        &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in,max}}} 
+        = \frac{4 \left| Z_{21} \right|^2 \Re \left\{ Z_i \right\}\Re \left\{ Z_{\ell} \right\}}{ \left| (Z_{\ell} + Z_{22})(Z_i + Z_{11}) - Z_{12}Z_{21} \right|^2} 
         \label{eq:transducer_gain}
         \\[1em]
-        G_A &= \frac{\mathcal{P}_{\ell\textrm{,max}}}{\mathcal{P}_{\textrm{in,max}}} = \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{out}} \right\}}
+        G_A 
+        &= \frac{\mathcal{P}_{\ell\textrm{,max}}}{\mathcal{P}_{\textrm{in,max}}} 
+        = \left(\frac{Z_{21}}{Z_i + Z_{11}}\right)^2\frac{\Re \left\{ Z_i \right\}}{\Re \left\{ Z_{\textrm{out}} \right\}}
         \label{eq:available_gain}
         \\[1em]
-        G_O &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in}}}  =  \left(\frac{Z_{21}}{Z_{\ell} + Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} 
+        G_O 
+        &= \frac{\mathcal{P}_\ell}{\mathcal{P}_{\textrm{in}}} 
+        = \left(\frac{Z_{21}}{Z_{\ell} + Z_{22}}\right)^2\frac{\Re \left\{ Z_{\ell} \right\}}{\Re \left\{ Z_{\textrm{in}} \right\}} 
         \label{eq:operating_gain}
 \end{align}
 \label{eq:gains}
