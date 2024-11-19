@@ -26,6 +26,7 @@ __all__ = [
     "power_transmission_coefficient",
 ]
 
+
 class WEC:
 
     def __init__(self, omega, N, Kt, Rw, Lw, Jd, Bd, Kd, Zi, Hexc) -> None:
@@ -42,12 +43,15 @@ class WEC:
         self.Zi = Zi
         self.Hexc = Hexc
 
-    # def __repr__(self) -> str:
-    #     type_ = type(self)
-    #     module = type_.__module__
-    #     qualname = type_.__qualname__
-    #     repr_org = f"<{module}.{qualname} object at {hex(id(self))}>"
-    #     return repr_org + " :: " + self.__str__()
+    def __repr__(self) -> str:
+        type_ = type(self)
+        module = type_.__module__
+        qualname = type_.__qualname__
+        repr_org = f"<{module}.{qualname} object at {hex(id(self))}>"
+        rs = repr_org + "\n" + \
+            f'\tHydro. resonance:\t{self.hydrodynamic_resonance:.2f}Hz\n' + \
+            f'\tThèvenin. resonance:\t{self.Thevenin_resonance:.2f}Hz\n'
+        return rs
 
     @property
     def f1(self) -> float:
@@ -125,7 +129,7 @@ class WEC:
         except:
             fn = self.freq[self.hydrodynamic_resonance_index]
             # TODO add warning
-            
+
         return fn
 
     @property
@@ -139,7 +143,7 @@ class WEC:
     def Z_Thevenin(self) -> np.ndarray:
         """Thévenin impedance"""
         return self.Zout
-    
+
     @property
     def Thevenin_resonance_index(self) -> int:
         """Index of Thévenin resonance frequency"""
@@ -150,43 +154,23 @@ class WEC:
         """Thévenin resonant frequency"""
         # return self.freq[self.Thevenin_resonance_index]
         return util.find_zero_crossings(self.freq, np.angle(self.Z_Thevenin))[0]
-        
 
     @property
     def __detZpto__(self) -> np.array:
         """Determinant of Zpto"""
         return np.linalg.det(np.transpose(self.Zpto, [2, 0, 1]))
-    
+
     @property
     def Hexc_Thevenin(self) -> np.array:
         """Thévenin excitation transfer function"""
         return __H_Thevenin__(self.Zpto, self.Zi, self.Hexc)
-        
-
-    # TODO
-    # def Fpto(self, Fexc, Zl=None) -> np.ndarray:
-    #     """PTO force"""
-    #     if Zl is None:
-    #         Fpto = self.velocity(Fexc=Fexc, Fpto=None) * self.Zin(Zl=Zl)
-    #     else:
-    #         raise NotImplementedError() #TODO
-    #     return Fpto
-
-    # def velocity(self, Fexc, Fpto=None) -> np.ndarray:
-    #     """Rectilinear velocity"""
-    #     if Fpto is None:
-    #         v = Fexc / (self.Zi + self.Zin(Zl=self.Zl_opt))
-    #     else:
-    #         v = (Fexc - Fpto) / self.Zi
-    #     return v
-
 
     # def Spto(self, Zl=None): -> np.ndarray:
     #     "Power scattering matrix per TODO"
-        
+
     #     if Zl is None:
     #         Zl = self.Zl_opt
-        
+
     #     S11 = (self.Zpto[0,0] - np.conj(self.Zi))*(self.Zpto[1,1] + Zl) \
     #         - (self.Zpto[0,1]*self.Zpto[1,0])
 
@@ -227,32 +211,43 @@ class WEC:
         """Excitation spectrum"""
         return __Fexc__(self.Hexc, waves)
 
-    def power_mech(self, Fexc, Zl=None):
-        if Zl is None:
-            Zl = self.Zl_opt
-        raise NotImplementedError()  # TODO
-    
-    def power_variables_in(self, Fexc, Zl = None) -> np.ndarray:
+    def power_variables_in(self, Fexc, Zl=None) -> np.ndarray:
         """Power variables before Zpto"""
         if Zl is None:
-            Zl = self.Zl_opt 
+            Zl = self.Zl_opt
         # Fpto = self.Fpto(Fexc=Fexc, Zl=Zl)
         # v = self.velocity(Fexc=Fexc, Zl=Zl)
         v = Fexc / (self.Zi + self.Zin(Zl=Zl))
         Fpto = v * self.Zin(Zl=Zl)
-        return np.array([[Fpto],[v]])
-    
-    def power_variables_out(self, Fexc, Zl = None):
+        return np.array([[Fpto], [v]])
+
+    def power_variables_out(self, Fexc, Zl=None):
         """Power variables after Zpto"""
         if Zl is None:
             Zl = self.Zl_opt
-        vars_in = self.power_variables_in(Fexc, Zl = Zl)
+        vars_in = self.power_variables_in(Fexc, Zl=Zl)
         # return np.einsum('mnf,nkf->mkf', self.invABCDpto, vars_in)
         return np.einsum('mnf,nkf->mkf', self.Bpto, vars_in)
 
+    def power_mech(self, Fexc, Zl=None):
+        """Complex power at PTO input"""
+        Fpto, v = self.power_variables_in(Fexc=Fexc, Zl=Zl)
+        return 1/2*np.conj(np.squeeze(Fpto))*np.squeeze(v)
+
+    def active_power_mech(self, Fexc, Zl=None):
+        """Active power at PTO input"""
+        return __active_power__(self.power_mech(Fexc, Zl))
+
+    def reactive_power_mech(self, Fexc, Zl=None):
+        """Reactive power at PTO input"""
+        return __reactive_power__(self.power_mech(Fexc, Zl))
+
+    def apparent_power_mech(self, Fexc, Zl=None):
+        """Apparent power at PTO input"""
+        return __apparent_power__(self.power_mech(Fexc, Zl))
+
     def power(self, Fexc, Zl=None):
         """Complex power at load"""
-        # TODO - define in terms of Vout and Iout
         if Zl is None:
             Zl = self.Zl_opt
         return __power__(self.Zpto, self.Zi, Fexc, Zl)
@@ -350,7 +345,7 @@ def __pid_controller__(omega, kp=0, ki=0, kd=0) -> np.ndarray:
 
 def power_reflection_coefficient(Zs, Zl) -> np.ndarray:
     """Power reflection coefficient per Kurokawa 1965 eq. 14
-    
+
     K. Kurokawa, "Power Waves and the Scattering Matrix," in IEEE Transactions 
     on Microwave Theory and Techniques, vol. 13, no. 2, pp. 194-202, March 
     1965, doi: 10.1109/TMTT.1965.1125964.
@@ -361,10 +356,10 @@ def power_reflection_coefficient(Zs, Zl) -> np.ndarray:
 
 def power_transmission_coefficient(Zs, Zl) -> np.ndarray:
     """Power transmission coefficient per Kurokawa 1965
-    
+
     K. Kurokawa, "Power Waves and the Scattering Matrix," in IEEE Transactions 
     on Microwave Theory and Techniques, vol. 13, no. 2, pp. 194-202, March 
     1965, doi: 10.1109/TMTT.1965.1125964.
     """
-    
+
     return 1 - power_reflection_coefficient(Zs=Zs, Zl=Zl)
