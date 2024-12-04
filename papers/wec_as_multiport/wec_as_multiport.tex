@@ -459,11 +459,12 @@ Finally, we may define a load impedance ($Z_\ell$) that represents how current i
 %
 In practice, the load impedance will be defined by a controller ($C$).
 It is generally convenient to implement a feedback controller that commands motor current based on the angular velocity ($I_{\textrm{out}}$ and $v_s$, respectively, in \figurename~\ref{fig:wec_as_multiport_physical_diagram}).
+Thus, this chosen definition for $C$ and the resulting expression for the load impedance are
 %
 \begin{subequations}
 \begin{gather}
-        I_{\textrm{out}} = C v_s \\  
-        Z_\ell = \frac{1}{C} k_\tau - Z_w     
+        I_{\textrm{out}} = C v_s , \\  
+        Z_\ell = \frac{1}{C} k_\tau - Z_w .
 \end{gather}
 \end{subequations}
 %
