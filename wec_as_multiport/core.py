@@ -70,6 +70,11 @@ class WEC:
     @property
     def freq(self) -> np.ndarray:
         return self.omega/2/np.pi
+    
+    @property
+    def Km(self) -> float:
+        """Motor constant"""
+        return self.Kt/np.sqrt(self.Rw)
 
     @property
     def Zd(self) -> np.ndarray:
