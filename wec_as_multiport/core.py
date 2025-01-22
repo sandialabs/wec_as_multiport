@@ -29,7 +29,7 @@ __all__ = [
 
 class WEC:
 
-    def __init__(self, omega, N, Kt, Rw, Lw, Jd, Bd, Kd, Zi, Hexc) -> None:
+    def __init__(self, omega, N, Kt, Rw, Lw, Jd, Bd, Kd, Zi, Hexc, name=None) -> None:
 
         self.omega = omega
         self.N = N
@@ -42,6 +42,10 @@ class WEC:
 
         self.Zi = Zi
         self.Hexc = Hexc
+        
+        if name is None:
+            name = ''
+        self.name = name
 
     def __repr__(self) -> str:
         type_ = type(self)
@@ -49,8 +53,9 @@ class WEC:
         qualname = type_.__qualname__
         repr_org = f"<{module}.{qualname} object at {hex(id(self))}>"
         rs = repr_org + "\n" + \
+            f'\t\t{self.name}\n' + \
             f'\tHydro. resonance:\t{self.hydrodynamic_resonance:.2f}Hz\n' + \
-            f'\tThèvenin. resonance:\t{self.Thevenin_resonance:.2f}Hz\n'
+            f'\tThèvenin resonance:\t{self.Thevenin_resonance:.2f}Hz\n'
         return rs
 
     @property
