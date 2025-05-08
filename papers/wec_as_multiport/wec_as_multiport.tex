@@ -1,5 +1,7 @@
 \documentclass[5p,times]{elsarticle}
 
+\RequirePackage{snapshot}
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -15,7 +17,7 @@
 % \usepackage{verbatim}
 % \usepackage{xcolor}
 \usepackage{graphicx}
-\graphicspath{{./gfx/}}
+\graphicspath{{./},{./gfx/}}
 \usepackage{subfig}
 % \usepackage{cite}
 
@@ -86,6 +88,7 @@ The ultimate goal of a WEC is to deliver power to a load (e.g., DC power a batte
 Because the source power is purely oscillatory, the power flow between the stages in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} is generally shown to be bi-directional.
 In fact, the optimal condition requires that half the power be reflected \cite{Evans1976}.
 The conditions that ensure this optimal power transmission are shown at the top of \figurename~\ref{fig:wec_as_multiport_power_transfer_stages}.
+The variables $Z_i$, $Z_{\textrm{in}}$, $Z_{\textrm{out}}$, and $Z_\ell$ are impedances describing the system/control design, which will be defined fully in Section~\ref{sec:modeling_a_direct_drive_wec}.
 The first impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_i^* = Z_{\textrm{in}}$) is generally well-known and widely applied in WEC engineering, although it uses somewhat different notation since the input/output distinction within the PTO is not widely utilized. 
 The second impedance matching condition in \figurename~\ref{fig:wec_as_multiport_power_transfer_stages} ($Z_{\textrm{out}} = Z_\ell^*$) is mostly ignored and/or lumped with the first condition under the often unstated assumption that the PTO dynamics can be decoupled from the hydrodynamic system, thus limiting performance.
 The details of these impedance matching expressions will be addressed later in this paper.
@@ -93,35 +96,37 @@ The details of these impedance matching expressions will be addressed later in t
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_power_transfer_stages.pdf}
-        \caption{WEC power flow stages with impedance matching conditions.}
+        \caption{WEC power flow stages with impedance matching conditions: the intrinsic impedance ($Z_i$) should match the PTO input impedance ($Z_{\textrm{in}}$) and the PTO output impedance ($Z_{\textrm{out}}$) should match the load impedance ($Z_\ell$).}
         \label{fig:wec_as_multiport_power_transfer_stages}
 \end{figure}
 
 Power delivered to the load is affected by both losses and reflections in the WEC system.
 These two effects are distinct and must be addressed as such.
-Losses are due to friction or electrical resistance -- this effect is often two more intuitive of the two.
+Losses are due to friction or electrical resistance -- this effect is often the more intuitive of the two.
 Reflections, which are due to a mismatch in the system impedances, are generally underappreciated in WEC design.
 %%% Dom feels this is a bit of an over-simplification maybe better suited for a discussion section later on. While minimizing losses is important, friction and resistance are contributors to the real part of impedance and, especially in absence of other contributors (gear ratio, Kt) being called out explicitly I think this might yield confusion.
 
 This paper further explores concepts of bi-conjugate impedance matching in wave energy previously raised by \cite{Bacelli:2021aa}, with the goal of generating a more practical understanding of the utility and application of this theory. 
 First, a basic review of network modeling and elements is presented (Section~\ref{sec:multi_port_networks}).
 Next, this framework is applied to a WEC (Section~\ref{sec:modeling_a_direct_drive_wec}).
-Finally, in a number of illustrative case studies are considered (Section~\ref{sec:illustrative_examples}).
+Finally, a number of illustrative case studies are considered (Section~\ref{sec:illustrative_examples}).
 
 % ------------------------------------------------------------------
 \section{Multi-port networks}\label{sec:multi_port_networks}
 The multi-port network models popular in electronics and microwave systems~\cite{Marrocco:2008aa,CircuitFundamental} provide a useful construct for analyzing a WEC.
-Because they are utilized in many different applications, there are multiple conventions for multi-port network models -- Appendix~\ref{app:conventions} provides further discussion on this and explains the conventions employed in this paper.
+Because they are utilized in many different applications, there are multiple conventions for multi-port network models -- \ref{app:conventions} provides further discussion on this and explains the conventions employed in this paper.
 Given that these models are not currently used broadly within the wave energy field, we will now review the fundamental concepts of multi-port network models.
-\figurename~\ref{fig:wec_as_multiport_transformer_gyrator} provides a central reference for this discussion, with columns pertaining to different network model elements and representations/explanations of those elements shown in each row.
-First, let us consider one-port elements, which, as shown on the left hand side of \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}, relate a single effort variable ($e$) to a single flow variable ($q$) through an impedance ($Z$).
+Note that the multi-port network models employed herein are entirely equivalent to ``bond graph'' style diagrams that are popular in some mechatronics applications \cite{Karnopp:2012aa}.
+As multi-port style diagrams are more often employed for number of concepts related to impedance matching and power transfer, they are preferred here.
+The methods applied in this paper rely on the fundamental assumptions that the system considered is linear and time-invariant.
+\figurename~\ref{fig:general_multiport_definitions} provides a central reference for this discussion, with columns pertaining to different network model elements and representations/explanations of those elements shown in each row.
+First, let us consider one-port elements, which, as shown on the left hand side of \figurename~\ref{fig:general_multiport_definitions}, relate a single effort variable ($e$) to a single flow variable ($q$) through an impedance ($Z$).
 
 \begin{figure*}[tb]
 	\centering
 	\includegraphics[width=\textwidth]{wec_as_multiport_transformer_gyrator_impedance_Z_A.pdf}
-	\caption{General one- and two-port elements definition showing effort ($e$) and flow ($q$) at each port with diagrams and mathematical relationships for impedances, transformers, and gyrators.}
-	% \rc{XX-add impedance in parallel} \rc{XX-can we draw the variable relationship arrows for impedances}
-	\label{fig:wec_as_multiport_transformer_gyrator}
+	\caption{General one- and two-port elements definitions (see \ref{app:conventions} for more on sign conventions).}
+	\label{fig:general_multiport_definitions}
 \end{figure*}
 
 %
@@ -129,7 +134,7 @@ First, let us consider one-port elements, which, as shown on the left hand side 
         Z = \frac{e}{q}
 \end{equation}
 %
-Similarly, two-port elements relate two pairs of effort and flow variables (see the right hand side of \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).\footnote{As the ``multi-port'' name suggests, elements with more than two ports (three, four, etc.) may also be considered.}
+Similarly, two-port elements relate two pairs of effort and flow variables (see the right hand side of \figurename~\ref{fig:general_multiport_definitions}).\footnote{As the ``multi-port'' name suggests, elements with more than two ports (three, four, etc.) may also be considered.}
 %
 \begin{equation} \label{eq:Z_mat_def_general}
         \begin{bmatrix} e_1 \\ e_2 \end{bmatrix} = \begin{bmatrix} Z_{11} & Z_{12} \\ Z_{21} & Z_{22} \end{bmatrix} \begin{bmatrix} q_1 \\ q_2 \end{bmatrix},
@@ -147,7 +152,7 @@ The elements of any two-port impedance matrix may be defined as follows \cite{Ci
 \end{equation}
 %
 The product of the effort and flow variables on each port is power.
-Note also the sign conventions illustrated in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}, which result in power flow into the two-port network from both sides, summing to zero for a lossless system.
+Note also the sign conventions illustrated in \figurename~\ref{fig:general_multiport_definitions}, which result in power flow into the two-port network from both sides, summing to zero for a lossless system.
 %
 In addition to the ``impedance form'' shown in \eqref{eq:Z_mat_def_general}, there are many equivalent formulations for modeling two-port networks~\cite{CircuitFundamental}.
 Certain formulations may be easier to work with depending on the task at hand.
@@ -209,18 +214,18 @@ The scattering parameters for a multi-port are also of interest to us, as they d
         \label{eq:scattering_matrix}
 \end{equation}
 %
-Here, $a_k$ and $b_k$ are, respectively, the incoming and outgoing square root of power on the $k^{\textrm{th}}$-port \cite{Amakawa:2016aa}.\footnote{The ``Kurokawa power wave'' scattering parameters are used here; see Appendix~\ref{app:conventions} for further explanation.}
+Here, $a_k$ and $b_k$ are, respectively, the incoming and outgoing square root of power on the $k^{\textrm{th}}$-port \cite{Amakawa:2016aa}.\footnote{The ``Kurokawa power wave'' scattering parameters are used here; see \ref{app:conventions} for further explanation.}
 The scattering parameters depend on both the multi-port element and the connections at each port (e.g., the source and load impedances for a two-port) and thus are helpful in understanding the impedance matching of the mutli-port to adjacent elements.
 
 A two-port element can be collapsed into a one-port element if one of the ports is terminated with a load and has no independent sources. 
 Whereas the general two-port element has four variables, two of which are independent, in the scenario where one port is terminated with a load, the system loses a degree of freedom. 
 Thus, in this case, we may simplify the system as a one-port element (i.e., a single impedance). 
-With these general properties in hand, let us now consider some fundamental multi-port elements shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}.
+With these general properties in hand, let us now consider some fundamental multi-port elements shown in \figurename~\ref{fig:general_multiport_definitions}.
 
 % ------------------------------------------------------------------
 \subsection{Impedances (one-ports)}\label{sec:impedances}
 To incorporate dynamics and losses into the system description, we utilize one-port impedance elements, which describe how components \emph{impede} flow via opposing effort. 
-In general, for a series impedance in a closed loop (see ``series impedance'' in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}), we may write,
+In general, for a series impedance in a closed loop (see ``Series impedance'' in \figurename~\ref{fig:general_multiport_definitions}), we may write,
 %
 \begin{subequations}
         \begin{align}
@@ -246,7 +251,7 @@ which can be equivalently represented in $ABCD$ form as,
         \label{eq:impedance_abcd}%
 \end{equation}
 %
-Alternatively, if the impedance is connected in parallel (see ``shunt impedance'' in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}), we may write
+Alternatively, if the impedance is connected in parallel (see ``Shunt impedance'' in \figurename~\ref{fig:general_multiport_definitions}), we may write
 %
 \begin{subequations}
         \begin{align}
@@ -264,7 +269,7 @@ which can be equivalently represented in $ABCD$ form.
         \end{bmatrix}
         =
         \begin{bmatrix}
-                1 & 0 \\ \frac{1}{Z} & 1
+                1 & 0 \\ 1/Z & 1
         \end{bmatrix}
         \begin{bmatrix}
                 e_2 \\ - q_2
@@ -275,7 +280,7 @@ which can be equivalently represented in $ABCD$ form.
 % ------------------------------------------------------------------
 \subsection{Transformers}\label{sec:trasnformers}
 Electric transformers are widely known and understood to convert between different voltage levels.
-For an ideal transformer, we may define a constant $\gamma_{t}$ that relates the effort and flow variables (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).
+For an ideal transformer, we may define a constant $\gamma_{t}$ that relates the effort and flow variables (see \figurename~\ref{fig:general_multiport_definitions}).
 %
 \begin{subequations}
         \begin{align}
@@ -285,9 +290,9 @@ For an ideal transformer, we may define a constant $\gamma_{t}$ that relates the
         \label{eq:transformer_eom}%
 \end{subequations}
 %
-Note that, as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}, \eqref{eq:transformer_eom} relates the flow at port 1 to the flow at port 2 and effort at port 1 to the effort at port 2 (i.e., the flows are directly related to each other, as are the efforts).
+Note that, as shown in \figurename~\ref{fig:general_multiport_definitions}, \eqref{eq:transformer_eom} relates the flow at port 1 to the flow at port 2 and effort at port 1 to the effort at port 2 (i.e., the flows are directly related to each other, as are the efforts).
 In an electric transformer, the constant $\gamma_t$ is the ratio of windings on its primary and secondary sides ($\gamma_t=N_p/N_s$).
-A geared transmission is a mechanical example of a transformer (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}); in this case, $\gamma_{t}$ is the gear ratio.
+A geared transmission is a mechanical example of a transformer (see \figurename~\ref{fig:general_multiport_definitions}); in this case, $\gamma_{t}$ is the gear ratio.
 In $ABCD$ form, we may represent a transformer as
 %
 \begin{equation}
@@ -308,7 +313,7 @@ Recalling \eqref{eq:abcd_to_Z}, we may see that the impedance form representatio
 
 % ------------------------------------------------------------------
 \subsection{Gyrators}\label{sec:gyrators}
-Gyrators are effectively the opposites of transformers in that they relate the flow at one port to the effort at the other port (see \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).
+Gyrators are effectively the opposites of transformers in that they relate the flow at one port to the effort at the other port (see \figurename~\ref{fig:general_multiport_definitions}).
 In general, we may write
 %
 \begin{subequations}
@@ -338,7 +343,7 @@ In $ABCD$ form, a gyrator can be represented as
 %
 An electric motor/generator is a very relevant example of a gyrator.
 In that case, the gyration modulus is the motor constant ($\gamma_g=k_\tau$).
-The direction of the arrow in a gyrator schematic as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} indicates the directionality of the element: the \emph{positive} product of the flow at the arrow's tail with the gyration modulus gives the effort at the arrow's head ($e_2 = \gamma_g q_1$ as drawn in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} with the arrow pointing from port 1 to port 2) and the effort at the arrow's tail is the \emph{negative} product of the gyration modulus and effort at the head ($e_1= - \gamma_g q_2$ as drawn in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator}).
+The direction of the arrow in a gyrator schematic as shown in \figurename~\ref{fig:general_multiport_definitions} indicates the directionality of the element: the \emph{positive} product of the flow at the arrow's tail with the gyration modulus gives the effort at the arrow's head ($e_2 = \gamma_g q_1$ as drawn in \figurename~\ref{fig:general_multiport_definitions} with the arrow pointing from port 1 to port 2) and the effort at the arrow's tail is the \emph{negative} product of the gyration modulus and effort at the head ($e_1= - \gamma_g q_2$ as drawn in \figurename~\ref{fig:general_multiport_definitions}).
 Note that a cascade of two gyrators has the composite effect of a transformer.
 For example, two lossless electric motor/generators with coupled shafts would be equivalent to an electrical transformer with a winding ratio of $\gamma_t=N_p/N_s=\gamma_{g1}/\gamma_{g2}$.
 
@@ -715,7 +720,7 @@ Utilizing \eqref{eq:pto_impedance}, the expressions for $Z_{\textrm{in}}$ and $Z
 % ------------------------------------------------------------------
 \subsubsection{Th\'{e}venin equivalent system}\label{sec:thevenin_equivalent_system}
 Th\'{e}venin's theorem \cite{Thevenin:1883aa} states that any linear network may be described by a single source ($F_{\textrm{th}}$) and impedance ($Z_{\textrm{th}}$), as shown in \figurename~\ref{fig:wec_as_multiport_circuits}e.
-Th\'{e}venin equivalent networks for WECs have been considered by a number of authors \cite{McCabe:2024aa,Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
+A number of authors have employed Th\'{e}venin equivalent networks in various ways to model WECs \cite{McCabe:2024aa,Bacelli:2021aa,Blanco:2019aa,Bubbar:2018aa,Lewis:2013aa}.
 Using \eqref{eq:eom_rectilinear_motion} and \eqref{eq:Z_mat_def}, we may write
 %
 \begin{equation}
@@ -843,7 +848,7 @@ A typical illustration of a power reflection coefficient ($\Gamma_p$) is show in
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_reflection_coefficient.pdf}
-        \caption{Power reflection coefficient ($\Gamma$) in a simple system looking from the source impedance ($Z_s$) towards the load impedance ($Z_L$).}
+        \caption{Power reflection coefficient ($\Gamma_p$) in a simple system looking from the source impedance ($Z_s$) towards the load impedance ($Z_L$).}
         \label{fig:wec_as_multiport_reflection_coefficient}
 \end{figure}
 %
@@ -852,8 +857,8 @@ A typical illustration of a power reflection coefficient ($\Gamma_p$) is show in
         \label{eq:reflection_coeff_impedances}
 \end{equation}
 %
-The fraction of power transmitted (the ``power transmission coefficient'') is $1 - \Gamma$.
-We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_L = Z_s^*$ is satisfied, $\Gamma$ will be zero and all power will be transmitted through the interface in question.
+The fraction of power transmitted (the ``power transmission coefficient'') is $1 - \Gamma_p$.
+We can see from \eqref{eq:reflection_coeff_impedances} that when the matching condition $Z_L = Z_s^*$ is satisfied, $\Gamma_p$ will be zero and all power will be transmitted through the interface in question.
 Reflection/transmission coefficients may be considered at different points within the system (consider, e.g., \figurename~\ref{fig:wec_as_multiport_circuits}e, where we may examine power reflection/transmission at the input of the PTO by comparing $Z_{\textrm{in}}$ and $Z_i$).
 Note that the power gains and reflection coefficients can also be expressed in terms of the scattering parameters from \eqref{eq:scattering_matrix} \cite{Amakawa:2016aa}.
 %
@@ -889,32 +894,53 @@ As discussed in Section~\ref{sec:introduction}, the WEC control design problem i
 This disregards the rest of the system and invites possibly deleterious effects, as illustrated in \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, which shows the load impedances and resulting transducer gains for two cases:
 
 \begin{itemize}
-        \item A controller to maximize \emph{mechanical} power: $C \vert_{Z_{\textrm{in}} = Z_i^*}$
-        \item A controller to maximize \emph{electrical} power: $C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$
+        \item Optimal controller to maximize \emph{mechanical} power: $C \vert_{Z_{\textrm{in}} = Z_i^*}$
+        \item Optimal controller to maximize \emph{electrical} power: $C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$
 \end{itemize}%
 %
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_load_impedance_for_mech_power_Bode.pdf}
-        \caption{Load impedances (top and middle axes) created by a controller designed to maximize mechanical power ($C \vert_{Z_{\textrm{in}} = Z_i^*}$, shown with a dashed curve) and a controller designed to maximize electrical power ($C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$, shown with a solid curve) along with the transducer gains (bottom axes) for each controller.}
+        \caption{Comparison of theoretical optimal mechanical power maximizing controller ($C \vert_{Z_{\textrm{in}} = Z_i^*}$, shown with a dashed curve) and theoretical optimal electrical power maximizing controler ($C \vert_{Z_\ell = Z_{\mathrm{out}}^*}$, shown with a solid curve). Top and second axes show load impedances ($Z_\ell$); third axes shows transducer power gains ($\Gamma_p$); fourth and fifth axes show magnitude of PTO force and velocity per unit amplitude of wave elevation ($\left| \frac{F_{\mathrm{pto}}}{\eta} \right|$ and $\left| \frac{v}{\eta} \right|$, respectively).}
         \label{fig:wec_as_multiport_load_impedance_for_mech_power}
 \end{figure}
 %
+Note that in both of these cases, we examine a ``universal controller'' that is optimal (in terms of either mechanical or electrical power) at all frequencies.
+
 From \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we can see that the mechanical power maximizing controller load impedance is notably different from that of the controller that maximizes electrical power.
 At $\sim 0.575$\,Hz, both controllers have zero phase, but the magnitudes do not match.
 Away from resonance, the phases of the two controllers differ dramatically.
-Furthermore, the transducer gain of the two systems are strikingly different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} electrical power.
+Furthermore, the transducer gains (``wave-to-wire efficiency'') of the two systems are strikingly different, with the gain for the mechanical power maximizing controller \emph{negative} for much of the frequency range -- this means the controller designed to \emph{maximize} mechanical power actually \emph{consumes} net electrical power.
+More concretely, the controller that optimizes mechanical power for a regular wave at, e.g., 0.4\,Hz will consume electrical power.
+A similar net consumption effect may occur in irregular waves depending on the frequency distribution of power.
+
+Manipulating \eqref{eq:eom_rectilinear_motion}, we may write expressions for PTO force and velocity that will be required by these theoretical optimal controllers as normalized by the incident wave amplitude, $ |\eta |$.
+%
+\begin{subequations}
+\begin{align}
+\left| \frac{F_{\mathrm{pto}}}{\eta} \right| = \left| \frac{H_{\textrm{exc}}}{ 1 + \frac{Z_i}{Z_i}} \right| \\[1em]
+\left| \frac{v}{\eta} \right| = \left| \frac{H_{\textrm{exc}}}{Z_i + Z_\textrm{in}} \right|
+\end{align}
+\label{eq:normalized_in_vars}
+\end{subequations}
+%
+Note that the value of $Z_{\textrm{in}}$ used in \eqref{eq:normalized_in_vars} depends on whether we intend to maximize mechanical or electrical power.
+The normalized PTO force and velocity are shown in the bottom two axes of \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}.
+It has often been noted that optimally controlled WECs experience large forces and motion amplitudes.
+From the results shown in \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power}, we observe that condition to maximize mechanical power dramatically overstates the force and motion requirements relative to the more relevant condition which maximizes electrical power.
+For example, to maximize mechanical power versus electrical power, a regular wave at 0.4\,Hz will require twice the PTO force and 50\% higher velocities.
+Therefore, we may understand that when the optimal controller is properly defined (maximizing electrical not mechanical power), the WEC PTO's optimal forces and motions tend to be of much smaller amplitudes.\footnote{The spectral force and motion amplitudes presented \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} are agnostic to sea state. To understand statistical maxima of the PTO force and motion, one must consider a specific sea state.}
 
 The results in \figurename~\ref{fig:wec_as_multiport_load_impedance_for_mech_power} use theoretical optimal controllers.
 While higher-order controllers can \emph{approach} a perfect realization of the optimal load impedance per \eqref{eq:bi_conj_matching_out}, perfect matching at all frequencies cannot be achieved in practice.\footnote{Per the Bode-Fano limit, impedance matching can be achieved over only a finite bandwidth -- the limit for the matching bandwidth is proportional to the ratio of resistance to reactance in the impedance.}
-However, real ocean sea states have relatively narrow bandwidths \cite{Coe2020a}, meaning that a given controller only needs to match the load impedance over a narrow frequency range -- the controller may be updated to accommodate changing sea states \cite{Forbush:2022aa}.
-These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_controllers_real_imag}, where PI controllers are tuned for waves with frequencies 0.4, 0.55, and 0.65\,Hz.
-While the three controllers each achieve perfect impedance matching at only a single frequency, we can see from the transducer gain that they perform quite well relative to the theoretical optimal over a limited frequency range.
+However, real ocean sea states have relatively narrow bandwidths \cite{Coe2020a}, meaning that a given controller need only match the load impedance over a narrow frequency range -- the controller may be updated to accommodate changing sea states \cite{Forbush:2022aa}.
+These concepts are illustrated in \figurename~\ref{fig:gfx/wec_as_multiport_pi_controllers_real_imag}, where PI controllers are tuned to maximize electrical power for waves with frequencies 0.4, 0.55, and 0.65\,Hz.
+While the three controllers each achieve perfect impedance matching at only a single frequency, we can see from the transducer gain that they perform quite well relative to the theoretical optimal over a limited frequency range, and would thus likely be suitable for real ocean sea states.
 
 \begin{figure}[tb]
         \centering
         \includegraphics[width=1\columnwidth]{wec_as_multiport_pi_controllers_real_imag.pdf}
-        \caption{Optimal load impedance (black curve) and load impedances produced by three PI controllers (colored curves) tuned for different design frequencies (dashed vertical lines; $f_d = [0.4, 0.55, 0.65]$\,Hz) with corresponding transducer gains.}
+        \caption{Comparison of theoretical optimal electricity maximizing controller (black) with PI controllers (blue, yellow, and green) tuned to maximize electrical power at three difference design frequencies (dashed vertical lines; $f_d = [0.4, 0.55, 0.65]$\,Hz); top and middle axes show real and imaginary parts of the load impedances ($Z_\ell$); bottom axes show transducer gains ($G_T$).}
         \label{fig:gfx/wec_as_multiport_pi_controllers_real_imag}
 \end{figure}
 
@@ -981,9 +1007,19 @@ Sizing/shaping the hull, altering the drive-train, motor/generator selection, co
 These design considerations can be considered via a wealth of experience and tools developed in other engineering fields for impedance matching problems.
 
 In practice, the bi-conjugate impedance matching requirement expressed by \eqref{eq:bi_conj_matching} cannot be perfectly satisfied at all frequencies, and the cost of improving the matching condition must be balanced with the resulting benefits.
-Furthermore, this formulation does not capture constraints (e.g., maximum torque from a generator or maximum travel of a linear piston) and nonlinear dynamics, which eventually must be considered.
-Given these practical considerations, numerical optimization becomes a useful tool.
-Nonetheless, the linear modeling approach presented here provides a critical starting point and foundation to build from.
+Furthermore, this formulation cannot explicitly handle constraints (e.g., maximum torque from a generator or maximum travel of a linear piston) and nonlinear dynamics, which eventually must be considered.
+Therefore, models of the formulation presented in this paper should be used within a broader analysis framework.
+The formulations presented in this paper are entirely linear, and accordingly lend their application to clear understandings of trends, design trade-offs, and intuitive explanations for \emph{why} a system works well or does not.
+These functionalities are often beneficial early in the design process.
+While not covered in this paper, these multi-port based models may also be extended to include nonlinear effects (e.g., Coulomb friction, nonlinear electric machine losses) and solved in the time-domain to allow for explicit constraint handling at later stages in the design process \cite{Gaebele:2023wf}.
+When working with nonlinear models in the time-domain, we lose some of the analysis tools presented in this paper (e.g., straightforward calculation of the power reflections and power gains presented in Section~\ref{sec:performance_metrics}), but likely achieve higher model fidelity and accuracy.
+Therefore, application of nonlinear models may prove useful at later design stages, particularly when specific commercial off-the-shelf components are being considered.
+Note also that this paper employs entirely condition-agnostic performance metrics (i.e., they do not depend on sea state) to make the findings as general as possible.
+Practical design must, at some stage, however, consider relevant conditions, which may also be done with the framework illustrated here and/or with more complex models.
+
+The basic formulations presented in this paper provide a critical foundation for WEC co-design in which performance metrics are directly linked to hardware and control design decisions.
+Given the oscillatory power flow typical of most WEC devices, the effects of adopting a co-design approach are likely to be significant, as the interdependence of design decisions across various hardware subsystems and the control system is considerable.
+Ultimately, this framework not only streamlines the design process but also promotes innovation in the development of more holistically functional devices.
 
 % ------------------------------------------------------------------
 \section{Acknowledgements}
@@ -994,27 +1030,26 @@ Any subjective views or opinions that might be expressed in the paper do not nec
 
 % ------------------------------------------------------------------
 \appendix
-\section{Multi-port network impedance matching conventions}\label{app:conventions}
+\section{Multi-port network conventions}\label{app:conventions}
 Multi-port networks are applied across a wide variety of fields, in which a number of conventions and underlying assumptions are utilized.
 Two important conventions warrant discussion here:
 
 \begin{itemize}
         \item \textbf{Sign conventions:} Throughout literature, there are many different sign conventions utilized for multi-port systems.
-        In \figurename~\ref{fig:wec_as_multiport_circuits}a, we define $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port elements.
+        As shown in \figurename~\ref{fig:general_multiport_definitions}, the $ABCD$ and impedance forms use different sign conventions for flow directions.
+        While both conventions are used in this paper depending on the application, the $ABCD$ convention is employed in \figurename~\ref{fig:wec_as_multiport_circuits}a, where we define $v_s$ and $I_{\textrm{out}}$ as vectors leaving the two-port elements.
         This convention is beneficial in two ways:
         \begin{itemize}
                 \item To ensure consistency when cascading two-ports, e.g., when using the $ABCD$ formulation.
                 %
                 \item This is the power industry's preferred convention, often referred to as the ``passive sign convention''~\cite{CircuitFundamental}: flow entering through the positive polarity of an element implies that the element is absorbing power.
         \end{itemize}
-        Yet, to follow the convention for standard two-port networks, we define the flow variables $q$ as vectors entering both sides of the two-port, as shown in \figurename~\ref{fig:wec_as_multiport_transformer_gyrator} and \eqref{eq:Z_mat_def_general}.
-        As a result, the impedance matrix and the transmission matrix follow the formulas found in most textbooks. 
         %
         \item \textbf{Complex source impedance:} It is common in many fields to assume a real source impedance (typically 50\,$\Omega$) \cite{Kurokawa:1965aa}, however the ``source impedance'' for a WEC in the formulation presented here is the intrinsic impedance, which is complex.
         We have therefore presented expressions that do not assume a real source impedance.
         %
         \item \textbf{Scattering parameters:} There are at least three commonly used definitions for scattering parameters \cite{Kurokawa:1965aa,Amakawa:2016aa}.
-        The ``Kurokawa power wave scattering parameters'' consider power and reference arbitrary complex source/load impedances, this formulation is used in this paper accordingly.
+        As the ``Kurokawa power wave scattering parameters'' consider power and reference arbitrary complex source/load impedances, this is the convention favored in this paper.
 \end{itemize}
 
 % ------------------------------------------------------------------

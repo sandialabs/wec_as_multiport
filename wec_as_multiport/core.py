@@ -3,6 +3,7 @@
 # Government retains certain rights in this software.
 
 import numpy as np
+from scipy.optimize import minimize, Bounds
 import copy
 
 from wec_as_multiport import util
@@ -282,7 +283,7 @@ class WEC:
         """Maximum active mechanical power"""
         return __max_active_power__(self.Zi, Fexc)
 
-    def pi_opt(self, freq) -> tuple:
+    def pi_analytic(self, freq) -> tuple:
         """Optimal PI gains for a controller acting on current and shaft speed
         for a given frequency"""
         indx = np.argmin(np.abs(self.freq - freq))
@@ -290,6 +291,39 @@ class WEC:
         kp = np.real(Zc_opt[indx])
         ki = np.real(Zc_opt[indx]*1j*self.omega[indx])
         return (kp, ki)
+    
+    def pi_opt(self, waves, obj='elec', form='pi'):
+
+        def pi_power(x, Fexc):
+                kp = x[0]
+                ki = x[1]
+                
+                if form =='pi':
+                        Zl_C = self.Zl_C(self.pid_controller(kp=kp, ki=ki))
+                elif form == 'p':
+                        Zl_C = self.Zl_C(self.pid_controller(kp=kp))
+                if obj == 'elec':
+                        P = -1*self.active_power(Fexc=Fexc, Zl=Zl_C)
+                elif obj == 'mech':
+                        Fpto, v = self.power_variables_in(Fexc=Fexc, Zl=Zl_C)
+                        P = np.real(-1/2 * np.conj(np.squeeze(Fpto))*np.squeeze(v))
+                return P
+        
+        Fexc = self.Fexc(waves=waves.squeeze().values)
+        fp = self.freq[np.argmax(np.abs(waves.squeeze().values))]
+        res = minimize(
+            lambda x: np.sum(pi_power(x, Fexc=Fexc)),
+            x0=self.pi_analytic(fp),
+            bounds=Bounds(lb=[1e-10, -1*np.infty], ub=[np.infty, 0]),
+            )
+        
+        kp_opt = res['x'][0]
+        ki_opt = res['x'][1]
+        pow = -1*pi_power(res['x'], Fexc=Fexc)
+        if form == 'p':
+            return ((kp_opt), pow)
+        elif form == 'pi':
+            return ((kp_opt, ki_opt), pow)
 
     def pid_controller(self, kp=0, ki=0, kd=0) -> np.ndarray:
         """Controller impedance"""
