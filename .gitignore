@@ -18,6 +18,7 @@ wec_as_multiport.egg-info/*
 */__pycache__/*
 
 ## Core latex/pdflatex auxiliary files:
+*.dep
 *.aux
 *.lof
 *.log
