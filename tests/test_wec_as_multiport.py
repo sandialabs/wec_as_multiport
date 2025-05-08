@@ -115,7 +115,7 @@ def test_reflection(wec):
 def test_reflection_in_bounds(wec, design_freq):
     """This power reflection coefficient must be between 0 and 1"""
 
-    kp, ki = wec.pi_opt(design_freq)
+    kp, ki = wec.pi_analytic(freq=design_freq)
     C = wec.pid_controller(kp=kp, ki=ki)
     Zl_C = wec.Zl_C(C)
     gamma_pi = wam.power_reflection_coefficient(Zs=wec.Zi,
@@ -204,7 +204,7 @@ class TestPerfomanceAtFreqs:
 
     @pytest.fixture()
     def pi_load_impedance(self, wec, wave_freq):
-        kp, ki = wec.pi_opt(freq=wave_freq)
+        kp, ki = wec.pi_analytic(freq=wave_freq)
         C = wec.pid_controller(kp=kp, ki=ki)
         return wec.Zl_C(C)
 
