@@ -6,6 +6,8 @@ papers/hull_aspect_ratios/hull_aspect_ratios.pdf
 *.nc
 *.stl
 *.mat
+*.zip
+**/data/*
 
 ## VS Code
 *.vscode/*
