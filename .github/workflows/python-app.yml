@@ -30,12 +30,15 @@ jobs:
       run: pytest tests
   run_notebooks:
     runs-on: ubuntu-latest
-    container: kjarosh/latex:2025.1-minimal
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v4
     - name: Install libGLU for Linux
       run: sudo apt-get install libglu1
+    - name: Install LaTex
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive
     - name: Install Python
       uses: actions/setup-python@v5
       with:
