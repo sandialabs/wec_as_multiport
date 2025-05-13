@@ -38,7 +38,7 @@ jobs:
     - name: Install LaTex
       run: |
         sudo apt-get update
-        sudo apt-get install -y texlive
+        sudo apt-get install -y texlive-full
     - name: Install Python
       uses: actions/setup-python@v5
       with:
