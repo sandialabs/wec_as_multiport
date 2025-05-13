@@ -14,8 +14,11 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python
+    - name: Checkout the repo
+      uses: actions/checkout@v4
+    - name: Install libGLU for Linux
+      run: sudo apt-get install libglu1
+    - name: Install Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
