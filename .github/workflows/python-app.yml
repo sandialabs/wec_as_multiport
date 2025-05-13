@@ -46,8 +46,9 @@ jobs:
         pip install .
     - name: Install Jupyter, etc.
       run: pip install jupyter nbconvert
-    - name: Run Jupyter notebook
+    - name: Provide LaTex
       uses: wtfjoke/setup-tectonic@v3
+    - name: Run Jupyter notebook
       run: |
         jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb --output papers/wec_as_multiport/wec_as_multiport_executed.ipynb
     - name: Upload executed notebook and figure
