@@ -23,7 +23,7 @@ classifiers = [
 dependencies = [
     "numpy>=1.20, <2.0",
     "scipy",
-    "xarray",
+    "xarray==2025.3.1",
     "autograd",
     "capytaine>=2.2",
     "joblib",
