@@ -17,7 +17,7 @@ papers/hull_aspect_ratios/hull_aspect_ratios.pdf
 
 ## Python package
 wec_as_multiport.egg-info/*
-*/__pycache__/*
+**/__pycache__/*
 
 ## Core latex/pdflatex auxiliary files:
 *.dep
