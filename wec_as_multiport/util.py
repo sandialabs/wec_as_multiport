@@ -98,6 +98,7 @@ def depth_function(k, h=None):
     return D
 
 def w2k(w, h=None, g=9.81):
+    """Radial frequency to wave number"""
     if h is None:
         h = np.infty
     func = lambda k: __dispersion__(k=k, w=w, h=h, g=g)
@@ -105,6 +106,7 @@ def w2k(w, h=None, g=9.81):
     return fsolve(func, x0=x0)[0]
 
 def k2w(k, h=None, g=9.81):
+    """Wave number to radial frequency"""
     if h is None:
         h = np.infty
     func = lambda w: __dispersion__(k=k, w=w, h=h, g=g)
@@ -112,6 +114,7 @@ def k2w(k, h=None, g=9.81):
     return fsolve(func, x0=x0)[0]
 
 def __dispersion__(k, w, h=None, g=9.81):
+    """Dispersion relationship"""
     if h is None:
         h = np.infty
     return w**2 - g * k * np.tanh(k * h)
