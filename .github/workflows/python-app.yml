@@ -25,16 +25,42 @@ jobs:
         pip install flake8
         pip install .
     - name: Lint package with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
     - name: Test package with pytest
+      run: pytest tests
+  run_notebooks:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v4
+    - name: Install libGLU for Linux
+      run: sudo apt-get install libglu1
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    - name: Install Python package
       run: |
-        pytest tests
+        python -m pip install --upgrade pip
+        pip install .
+    - name: Install Jupyter, etc.
+      run: pip install jupyter nbconvert
+    - name: Run Jupyter Notebook
+      run: |
+        jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb --output papers/wec_as_multiport/wec_as_multiport_executed.ipynb
+    - name: Upload executed notebook and figure
+      uses: actions/upload-artifact@v4
+      id: artifact-upload-step
+      with:
+        name: notebooks
+        path: |
+          papers/wec_as_multiport/wec_as_multiport_executed.ipynb
+          papers/wec_as_multiport/gfx/*
+        compression-level: 0
   build_latex:
     runs-on: ubuntu-latest
+    needs: run_notebooks
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
@@ -56,7 +82,7 @@ jobs:
           compression-level: 0
   deploy_papers:
     runs-on: ubuntu-latest
-    needs: build_latex
+    needs: [run_notebooks, build_latex]
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
@@ -65,7 +91,7 @@ jobs:
           merge-multiple: true
       - name: Display file listing
         run: ls -R
-      - name: deploy on orphan branch
+      - name: Deploy on orphan branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
