@@ -30,6 +30,7 @@ jobs:
       run: pytest tests
   run_notebooks:
     runs-on: ubuntu-latest
+    container: kjarosh/latex:2025.1-minimal
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v4
@@ -46,8 +47,6 @@ jobs:
         pip install .
     - name: Install Jupyter, etc.
       run: pip install jupyter nbconvert
-    - name: Provide LaTex
-      uses: wtfjoke/setup-tectonic@v3
     - name: Run Jupyter notebook
       run: |
         jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb --output papers/wec_as_multiport/wec_as_multiport_executed.ipynb
