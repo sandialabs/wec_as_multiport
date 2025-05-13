@@ -18,7 +18,6 @@ jobs:
         with:
           work_in_root_file_dir: true
           root_file: |
-            papers/hull_aspect_ratios/hull_aspect_ratios.tex
             papers/wec_as_multiport/wec_as_multiport.tex
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
@@ -26,7 +25,6 @@ jobs:
         with:
           name: PDFs
           path: |
-            papers/hull_aspect_ratios/hull_aspect_ratios.pdf
             papers/wec_as_multiport/wec_as_multiport.pdf
           compression-level: 1
   deploy:
