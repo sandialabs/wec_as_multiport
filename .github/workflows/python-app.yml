@@ -38,7 +38,8 @@ jobs:
     - name: Install LaTex
       run: |
         sudo apt-get update
-        sudo apt-get install -y texlive-full
+        sudo apt-get install -y texlive
+        sudo apt install dvipng texlive-latex-extra texlive-fonts-recommended
     - name: Install Python
       uses: actions/setup-python@v5
       with:
@@ -52,16 +53,7 @@ jobs:
       run: pip install jupyter nbconvert
     - name: Run Jupyter notebook
       run: |
-        jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb --output papers/wec_as_multiport/wec_as_multiport_executed.ipynb
-    - name: Upload executed notebook and figure
-      uses: actions/upload-artifact@v4
-      id: artifact-upload-step
-      with:
-        name: notebooks
-        path: |
-          papers/wec_as_multiport/wec_as_multiport_executed.ipynb
-          papers/wec_as_multiport/gfx/*
-        compression-level: 0
+        jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb
   build_latex:
     runs-on: ubuntu-latest
     needs: run_notebooks
