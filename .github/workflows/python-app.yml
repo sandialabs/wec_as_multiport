@@ -8,10 +8,12 @@ jobs:
   build_and_test:
     permissions:
       contents: read
-    runs-on: ${{ matrix.runner }}
+    name: Build and test on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        runner: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v4
