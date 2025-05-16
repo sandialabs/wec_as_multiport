@@ -16,6 +16,7 @@ jobs:
     - name: Checkout the repo
       uses: actions/checkout@v4
     - name: Install libGLU for Linux
+      if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get install libglu1
     - name: Install Python
       uses: actions/setup-python@v5
