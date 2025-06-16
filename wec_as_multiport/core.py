@@ -5,6 +5,7 @@
 import numpy as np
 from scipy.optimize import minimize, Bounds
 import copy
+import warnings
 
 from wec_as_multiport import util
 
@@ -137,9 +138,11 @@ class WEC:
         # return self.freq[self.hydrodynamic_resonance_index]
         try:
             fn = util.find_zero_crossings(self.freq, np.angle(self.Zi))[0]
-        except:
+        except Exception as e:
             fn = self.freq[self.hydrodynamic_resonance_index]
-            # TODO add warning
+            warnings.warn(e + 
+                          "Cannot find zero crossing of phase angle," +
+                          "setting to min(abs(angle(Zi)))")
 
         return fn
 
@@ -163,8 +166,15 @@ class WEC:
     @property
     def Thevenin_resonance(self) -> float:
         """Thévenin resonant frequency"""
-        # return self.freq[self.Thevenin_resonance_index]
-        return util.find_zero_crossings(self.freq, np.angle(self.Z_Thevenin))[0]
+        try:
+            fn = util.find_zero_crossings(self.freq, np.angle(self.Z_Thevenin))[0]
+        except Exception as e:
+            fn = self.freq[self.Thevenin_resonance_index]
+            warnings.warn(e + 
+                          "Cannot find zero crossing of phase angle," +
+                          "setting to min(abs(angle(Z_Thevenin)))")
+            
+        return fn
 
     @property
     def __detZpto__(self) -> np.array:
@@ -240,46 +250,46 @@ class WEC:
         # return np.einsum('mnf,nkf->mkf', self.invABCDpto, vars_in)
         return np.einsum('mnf,nkf->mkf', self.Bpto, vars_in)
 
-    def power_mech(self, Fexc, Zl=None):
+    def power_mech(self, Fexc, Zl=None) -> np.array:
         """Complex power at PTO input"""
         Fpto, v = self.power_variables_in(Fexc=Fexc, Zl=Zl)
         return 1/2*np.conj(np.squeeze(Fpto))*np.squeeze(v)
 
-    def active_power_mech(self, Fexc, Zl=None):
+    def active_power_mech(self, Fexc, Zl=None) -> np.array:
         """Active power at PTO input"""
         return __active_power__(self.power_mech(Fexc, Zl))
 
-    def reactive_power_mech(self, Fexc, Zl=None):
+    def reactive_power_mech(self, Fexc, Zl=None) -> np.array:
         """Reactive power at PTO input"""
         return __reactive_power__(self.power_mech(Fexc, Zl))
 
-    def apparent_power_mech(self, Fexc, Zl=None):
+    def apparent_power_mech(self, Fexc, Zl=None) -> np.array:
         """Apparent power at PTO input"""
         return __apparent_power__(self.power_mech(Fexc, Zl))
 
-    def power(self, Fexc, Zl=None):
+    def power(self, Fexc, Zl=None) -> np.array:
         """Complex power at load"""
         if Zl is None:
             Zl = self.Zl_opt
         return __power__(self.Zpto, self.Zi, Fexc, Zl)
 
-    def active_power(self, Fexc, Zl=None):
+    def active_power(self, Fexc, Zl=None) -> np.array:
         """Active power at load"""
         return __active_power__(self.power(Fexc, Zl))
 
-    def reactive_power(self, Fexc, Zl=None):
+    def reactive_power(self, Fexc, Zl=None) -> np.array:
         """Reactive power at load"""
         return __reactive_power__(self.power(Fexc, Zl))
 
-    def apparent_power(self, Fexc, Zl=None):
+    def apparent_power(self, Fexc, Zl=None) -> np.array:
         """Apparent power at load"""
         return __apparent_power__(self.power(Fexc, Zl))
 
-    def max_active_power(self, Fexc):
+    def max_active_power(self, Fexc) -> np.array:
         """Maximum active power"""
         return __max_active_power__(self.Z_Thevenin, self.F_Thevenin(Fexc))
 
-    def max_active_power_mech(self, Fexc):
+    def max_active_power_mech(self, Fexc) -> np.array:
         """Maximum active mechanical power"""
         return __max_active_power__(self.Zi, Fexc)
 
@@ -309,7 +319,7 @@ class WEC:
                         P = np.real(-1/2 * np.conj(np.squeeze(Fpto))*np.squeeze(v))
                 return P
         
-        Fexc = self.Fexc(waves=waves.squeeze().values) # TODO - this is assuming waves is a dataset, not consistent...
+        Fexc = self.Fexc(waves=waves.squeeze().values) #TODO - assume waves is a np.array
         fp = self.freq[np.argmax(np.abs(waves.squeeze().values))]
         res = minimize(
             lambda x: np.sum(pi_power(x, Fexc=Fexc)),
