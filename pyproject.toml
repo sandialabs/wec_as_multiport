@@ -32,7 +32,7 @@ dependencies = [
     "ipykernel",
     "ipython",
     "nbconvert",
-    "wecopttool[geometry]",
+    "wecopttool[geometry]<=3.0",
     "pytest",    
     "ipywidgets",
     "fpdf",
