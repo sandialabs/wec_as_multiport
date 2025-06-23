@@ -35,4 +35,5 @@ dependencies = [
     "wecopttool[geometry]",
     "pytest",    
     "ipywidgets",
+    "fpdf",
 ]
