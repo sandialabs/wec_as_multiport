@@ -55,6 +55,7 @@ jobs:
       run: pip install jupyter nbconvert
     - name: Run Jupyter notebook
       uses: xu-cheng/texlive-action@v2
+      with:
         scheme: full
         run: |
           jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb
