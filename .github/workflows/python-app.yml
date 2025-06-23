@@ -34,9 +34,15 @@ jobs:
       run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
     - name: Test package with pytest
       run: pytest tests
-  run_notebooks:
-    name: Run Python notebooks
+  
+  compile_papers:
+    name: Compile papers
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        paper_dir: 
+          - wec_as_multiport
+          - template
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v4
@@ -58,36 +64,50 @@ jobs:
         pip install .
     - name: Install Jupyter, etc.
       run: pip install jupyter nbconvert
-    - name: Run Jupyter notebook
+    - name: Run Python scripts
       run: |
-        jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb
-  build_latex:
-    name: Build LaTex document
-    runs-on: ubuntu-latest
-    needs: run_notebooks
-    outputs:
-      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
-    steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v4
-      - name: Display file listing
+          pwd
+          echo "cd to ${{ matrix.paper_dir }}"
+          cd papers/${{ matrix.paper_dir }}
+          pwd
+          for script in *.py; do
+            if [ -f "$script" ]; then
+              echo "Running $script"
+              python "$script"
+            fi
+          done
+    - name: Run Python notebooks
+      run: |
+        pwd
+        echo "cd to ${{ matrix.paper_dir }}"
+        cd papers/${{ matrix.paper_dir }}
+        pwd
+        for notebook in *.ipynb; do
+          if [ -f "$notebook" ]; then
+            echo "Running $notebook"
+            jupyter nbconvert --to notebook --execute "$notebook"
+          fi
+        done
+    - name: Display directory listing
         run: ls -R
-      - name: Compile LaTeX document
+      - name: Compile LaTeX documents
         uses: xu-cheng/latex-action@v3
         with:
           work_in_root_file_dir: true
-          root_file: papers/wec_as_multiport/wec_as_multiport.tex
-      - name: Upload PDF file
+          working_directory: papers/${{ matrix.paper_dir }}
+          root_file: ${{ matrix.paper_dir }}.tex
+      - name: Upload PDF from LaTex
         uses: actions/upload-artifact@v4
-        id: artifact-upload-step
         with:
-          name: PDFs
-          path: papers/wec_as_multiport/wec_as_multiport.pdf
+          name: ${{ matrix.paper_dir }}
+          path: papers/${{ matrix.paper_dir }}/${{ matrix.paper_dir }}.pdf
           compression-level: 0
+          if-no-files-found: error
+  
   deploy_papers:
-    name: Deploy LaTex generated PDF
+    name: Deploy papers
     runs-on: ubuntu-latest
-    needs: [run_notebooks, build_latex]
+    needs: [compile_papers]
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
