@@ -48,7 +48,7 @@ jobs:
       uses: actions/checkout@v4
     - name: Install libGLU for Linux
       run: sudo apt-get install libglu1
-    - name: Install LaTex
+    - name: Install LaTex (for Python figures)
       run: |
         sudo apt-get update
         sudo apt-get install -y texlive
