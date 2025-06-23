@@ -89,37 +89,37 @@ jobs:
           fi
         done
     - name: Display directory listing
-        run: ls -R
-      - name: Compile LaTeX documents
-        uses: xu-cheng/latex-action@v3
-        with:
-          work_in_root_file_dir: true
-          working_directory: papers/${{ matrix.paper_dir }}
-          root_file: ${{ matrix.paper_dir }}.tex
-      - name: Upload PDF from LaTex
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.paper_dir }}
-          path: papers/${{ matrix.paper_dir }}/${{ matrix.paper_dir }}.pdf
-          compression-level: 0
-          if-no-files-found: error
+      run: ls -R
+    - name: Compile LaTeX documents
+      uses: xu-cheng/latex-action@v3
+      with:
+        work_in_root_file_dir: true
+        working_directory: papers/${{ matrix.paper_dir }}
+        root_file: ${{ matrix.paper_dir }}.tex
+    - name: Upload PDF from LaTex
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.paper_dir }}
+        path: papers/${{ matrix.paper_dir }}/${{ matrix.paper_dir }}.pdf
+        compression-level: 0
+        if-no-files-found: error
   
   deploy_papers:
     name: Deploy papers
     runs-on: ubuntu-latest
     needs: [compile_papers]
     steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: PDFs
-          merge-multiple: true
-      - name: Display file listing
-        run: ls -R
-      - name: Deploy on orphan branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ github.workspace }}
-          publish_branch: build
-          force_orphan: true
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: PDFs
+        merge-multiple: true
+    - name: Display file listing
+      run: ls -R
+    - name: Deploy on orphan branch
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ${{ github.workspace }}
+        publish_branch: build
+        force_orphan: true
