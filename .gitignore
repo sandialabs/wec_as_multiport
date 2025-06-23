@@ -1,6 +1,7 @@
-## LaTex generated PDFs
-papers/wec_as_multiport/wec_as_multiport.pdf
-papers/hull_aspect_ratios/hull_aspect_ratios.pdf
+## PDFs and images
+*.pdf
+*.png
+*.gif
 
 ## Data
 *.nc
