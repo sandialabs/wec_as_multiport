@@ -42,11 +42,6 @@ jobs:
       uses: actions/checkout@v4
     - name: Install libGLU for Linux
       run: sudo apt-get install libglu1
-    - name: Install LaTex
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive
-        sudo apt install dvipng texlive-latex-extra texlive-fonts-recommended cm-super
     - name: Install Python
       uses: actions/setup-python@v5
       with:
@@ -59,8 +54,10 @@ jobs:
     - name: Install Jupyter, etc.
       run: pip install jupyter nbconvert
     - name: Run Jupyter notebook
-      run: |
-        jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb
+      uses: xu-cheng/texlive-action@v2
+        scheme: full
+        run: |
+          jupyter nbconvert --to notebook --execute papers/wec_as_multiport/wec_as_multiport.ipynb
   build_latex:
     name: Build LaTex document
     runs-on: ubuntu-latest
