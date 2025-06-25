@@ -319,8 +319,8 @@ class WEC:
                         P = np.real(-1/2 * np.conj(np.squeeze(Fpto))*np.squeeze(v))
                 return P
         
-        Fexc = self.Fexc(waves=waves.squeeze().values) #TODO - assume waves is a np.array
-        fp = self.freq[np.argmax(np.abs(waves.squeeze().values))]
+        Fexc = self.Fexc(waves=waves)
+        fp = self.freq[np.argmax(np.abs(waves))]
         res = minimize(
             lambda x: np.sum(pi_power(x, Fexc=Fexc)),
             x0=self.pi_analytic(fp),
