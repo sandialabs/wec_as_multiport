@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+title: wec_as_multiport
+message: "If you use this software, please cite the paper from preferred-citation."
+type: software
+authors:
+  - given-names: "Ryan G."
+    family-names: Coe
+    orcid: "https://orcid.org/0000-0003-0738-3772"
+  - given-names: Giorgio
+    family-names: Bacelli
+    orcid: "https://orcid.org/0000-0002-1208-2352"
+  - given-names: "Daniel T."
+    family-names: Gaebele
+    orcid: "https://orcid.org/0000-0002-1209-0715"
+  - given-names: Alicia
+    family-names: Keow
+    orcid: "https://orcid.org/0000-0002-6656-594X"
+  - given-names: Dominic
+    family-names: Forbush
+    orcid: "https://orcid.org/0000-0001-8994-7257"
+preferred-citation:
+ type: article
+ title: "Co-design of a wave energy converter through bi-conjugate impedance matching"
+ year: 2024
+ journal: "Mechatronics (under review)"
+ doi: "10.2139/ssrn.4996206"
+ url: "https://dx.doi.org/10.2139/ssrn.4996206"
+ authors:
+  - given-names: "Ryan G."
+    family-names: Coe
+    orcid: "https://orcid.org/0000-0003-0738-3772"
+  - given-names: Giorgio
+    family-names: Bacelli
+    orcid: "https://orcid.org/0000-0002-1208-2352"
+  - given-names: "Daniel T."
+    family-names: Gaebele
+    orcid: "https://orcid.org/0000-0002-1209-0715"
+  - given-names: Alicia
+    family-names: Keow
+    orcid: "https://orcid.org/0000-0002-6656-594X"
+  - given-names: Dominic
+    family-names: Forbush
+    orcid: "https://orcid.org/0000-0001-8994-7257"
