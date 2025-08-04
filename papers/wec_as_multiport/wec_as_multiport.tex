@@ -19,6 +19,8 @@
 \usepackage{graphicx}
 \graphicspath{{./},{./gfx/}}
 \usepackage{subfig}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=false,}
 % \usepackage{cite}
 
 % \usepackage{draftwatermark}
@@ -104,12 +106,12 @@ Power delivered to the load is affected by both losses and reflections in the WE
 These two effects are distinct and must be addressed as such.
 Losses are due to friction or electrical resistance -- this effect is often the more intuitive of the two.
 Reflections, which are due to a mismatch in the system impedances, are generally underappreciated in WEC design.
-%%% Dom feels this is a bit of an over-simplification maybe better suited for a discussion section later on. While minimizing losses is important, friction and resistance are contributors to the real part of impedance and, especially in absence of other contributors (gear ratio, Kt) being called out explicitly I think this might yield confusion.
 
-This paper further explores concepts of bi-conjugate impedance matching in wave energy previously raised by \cite{Bacelli:2021aa}, with the goal of generating a more practical understanding of the utility and application of this theory. 
+This paper further explores concepts of bi-conjugate impedance matching in wave energy previously raised by \cite{Bacelli:2021aa}, with the goal of generating a more practical understanding of the utility and application of this theory.
 First, a basic review of network modeling and elements is presented (Section~\ref{sec:multi_port_networks}).
 Next, this framework is applied to a WEC (Section~\ref{sec:modeling_a_direct_drive_wec}).
 Finally, a number of illustrative case studies are considered (Section~\ref{sec:illustrative_examples}).
+Python code to reproduce this study is available online\footnote{\url{https://doi.org/10.5281/zenodo.16740055}}.
 
 % ------------------------------------------------------------------
 \section{Multi-port networks}\label{sec:multi_port_networks}
