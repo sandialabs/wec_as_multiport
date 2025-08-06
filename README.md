@@ -13,7 +13,7 @@ Modeling wave energy converters (WECs) using a multi-port network framework
 └── `wec_as_multiport`: Python package
 
 ## LaTeX
-This repo uses actions to compile PDFs from the LaTex source and deploy those PDFs to its [build branch](https://github.com/ryancoe/wec_as_multiport/blob/build)
+This repo uses actions to compile PDFs from the LaTex source and deploy those PDFs to its [build branch](/../build)
 
  - Edit the paper: edit the LaTex source (do not commit the PDF to the git repo, it is compiled by GitHub Automation)
  	- use "`XX`" to make a comment
