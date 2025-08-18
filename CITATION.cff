@@ -21,10 +21,12 @@ authors:
 preferred-citation:
  type: article
  title: "Co-design of a wave energy converter through bi-conjugate impedance matching"
- year: 2024
- journal: "Mechatronics (under review)"
- doi: "10.2139/ssrn.4996206"
- url: "https://dx.doi.org/10.2139/ssrn.4996206"
+ year: 2025
+ journal: "Mechatronics"
+ doi: "10.1016/j.mechatronics.2025.103395"
+ url: "https://www.sciencedirect.com/science/article/pii/S0957415825001047"
+ volume: 111
+ pages: 103395
  authors:
   - given-names: "Ryan G."
     family-names: Coe
@@ -32,7 +34,7 @@ preferred-citation:
   - given-names: Giorgio
     family-names: Bacelli
     orcid: "https://orcid.org/0000-0002-1208-2352"
-  - given-names: "Daniel T."
+  - given-names: Daniel
     family-names: Gaebele
     orcid: "https://orcid.org/0000-0002-1209-0715"
   - given-names: Alicia
